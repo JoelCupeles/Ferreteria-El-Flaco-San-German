@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ferretería El Flaco | San Germán, Puerto Rico</title>
+  <meta name="description" content="Ferretería El Flaco en San Germán PR. Herramientas, materiales de construcción, pinturas y servicio al cliente excepcional." />
+  <style>
+    :root{
+      --rojo:#e10600;
+      --negro:#111111;
+      --verde:#18a558;
+      --gris:#f4f4f6;
+      --texto:#222222;
+      --blanco:#ffffff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--texto);background:var(--gris)}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* Encabezado */
+    header{position:sticky;top:0;z-index:50;background:var(--blanco);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+    .container{max-width:1200px;margin:0 auto;padding:0 16px}
+    .topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--rojo),var(--negro));display:grid;place-items:center;color:var(--blanco);font-weight:800}
+    nav ul{display:flex;gap:18px;list-style:none;margin:0;padding:0}
+    nav a{padding:8px 10px;border-radius:8px;font-weight:600}
+    nav a:hover{background:var(--gris)}
+    .cta{background:var(--verde);color:var(--blanco)}
+
+    /* Hero */
+    .hero{background:linear-gradient(120deg,rgba(17,17,17,.96),rgba(17,17,17,.7)), url('https://images.unsplash.com/photo-1516387938699-a93567ec168e?q=80&w=1600&auto=format&fit=crop');background-size:cover;background-position:center;color:var(--blanco)}
+    .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:64px 0}
+    .hero h1{font-size:40px;line-height:1.1;margin:0 0 14px}
+    .hero p{opacity:.95;margin:0 0 18px}
+    .badges{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+    .badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:6px 10px;border-radius:999px;font-size:14px}
+    .hero .card{background:var(--blanco);color:var(--texto);border-radius:16px;padding:18px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .stat{background:var(--gris);border-radius:12px;padding:14px;text-align:center}
+    .stat b{display:block;font-size:22px}
+
+    /* Secciones */
+    section{padding:52px 0}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .section-title h2{margin:0;font-size:28px}
+    .section-title a{font-weight:600;color:var(--verde)}
+
+    /* Productos */
+    .products{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .card{background:var(--blanco);border-radius:14px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.05)}
+    .card .body{padding:14px}
+    .price{color:var(--rojo);font-weight:800}
+    .pill{display:inline-block;background:var(--negro);color:var(--blanco);padding:3px 8px;border-radius:999px;font-size:12px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+
+    /* Servicios */
+    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .service{padding:18px;border-radius:14px;background:linear-gradient(180deg,#fff, #fafafa);border:1px solid #eee}
+    .service h3{margin:0 0 6px}
+
+    /* Localización */
+    .map{border:0;width:100%;height:340px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.05)}
+
+    /* Contacto */
+    form{display:grid;gap:10px}
+    input, textarea{border:1px solid #e6e6ea;border-radius:10px;padding:12px;font:inherit;background:#fff}
+    button{border:0;background:var(--negro);color:#fff;padding:12px 16px;border-radius:10px;font-weight:700;cursor:pointer}
+    button:hover{opacity:.9}
+
+    /* Footer */
+    footer{background:var(--negro);color:#d9d9df;padding:22px 0;margin-top:22px}
+    .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
+    footer a{color:#d9f7e5}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero .wrap{grid-template-columns:1fr}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .services{grid-template-columns:1fr 1fr}
+      .foot{grid-template-columns:1fr}
+    }
+    @media (max-width: 600px){
+      .products{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container topbar">
+      <div class="brand">
+        <div class="logo">FEF</div>
+        <div>
+          <strong style="font-size:18px">Ferretería El Flaco</strong><br>
+          <small>San Germán, Puerto Rico</small>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#productos">Productos</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#ubicacion">Ubicación</a></li>
+          <li><a href="#contacto" class="cta">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container wrap">
+      <div>
+        <h1>Todo para tu proyecto en un solo lugar</h1>
+        <p>Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
+        <div class="badges">
+          <span class="badge">Marcas confiables</span>
+          <span class="badge">Entrega local</span>
+          <span class="badge">Cortamos llave</span>
+          <span class="badge" style="background:rgba(24,165,88,.18);border-color:rgba(24,165,88,.4);color:#eafff1">Soporte al cliente</span>
+        </div>
+        <a class="cta" href="#productos" style="display:inline-block;padding:12px 16px;border-radius:10px;margin-top:4px">Ver catálogo</a>
+      </div>
+      <div class="card">
+        <div class="grid-2">
+          <div class="stat"><b>+3,000</b> productos</div>
+          <div class="stat"><b>7 am a 6 pm</b> horario</div>
+          <div class="stat"><b>San Germán</b> servicio local</div>
+          <div class="stat"><b>Desde 2012</b> experiencia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Productos -->
+  <section id="productos">
+    <div class="container">
+      <div class="section-title">
+        <h2>Productos destacados</h2>
+        <a href="#">Ver todo</a>
+      </div>
+      <div class="products" id="productGrid">
+        <!-- Tarjetas generadas por JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+  <section id="servicios">
+    <div class="container">
+      <div class="section-title">
+        <h2>Servicios</h2>
+      </div>
+      <div class="services">
+        <div class="service">
+          <h3 style="color:var(--verde)">Corte de madera</h3>
+          <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
+        </div>
+        <div class="service">
+          <h3 style="color:var(--rojo)">Duplicado de llaves</h3>
+          <p>Servicio rápido y preciso para autos, hogar y candados.</p>
+        </div>
+        <div class="service">
+          <h3 style="color:var(--negro)">Entrega local</h3>
+          <p>Coordinamos la entrega de materiales en San Germán y zonas cercanas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ubicación -->
+  <section id="ubicacion">
+    <div class="container">
+      <div class="section-title">
+        <h2>Dónde estamos</h2>
+        <a href="https://maps.google.com" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+      <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3650.402812531397!2d-67.046!3d18.083!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSan%20Germ%C3%A1n%2C%20Puerto%20Rico!5e0!3m2!1ses!2sus!4v0000000000" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <p style="margin-top:10px">Dirección real aquí. Teléfono <a href="tel:+1787XXXXXXX">(787) XXX 1234</a> y WhatsApp <a href="#">escríbenos</a>.</p>
+    </div>
+  </section>
+
+  <!-- Contacto -->
+  <section id="contacto">
+    <div class="container">
+      <div class="section-title">
+        <h2>Contáctanos</h2>
+        <span></span>
+      </div>
+      <div class="card" style="padding:18px">
+        <form onsubmit="event.preventDefault(); alert('Gracias por escribir. Te contactaremos pronto.'); this.reset();">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <input required placeholder="Tu nombre" />
+            <input required type="email" placeholder="Tu correo" />
+          </div>
+          <textarea rows="4" placeholder="¿Qué necesitas? Lista de materiales, marca, medida, cantidad…"></textarea>
+          <button type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <h3 style="margin:0 0 6px;color:#fff">Ferretería El Flaco</h3>
+        <p>San Germán, Puerto Rico. Herramientas, materiales y servicio con cariño boricua.</p>
+        <p class="tags">
+          <span class="pill">Rojo</span>
+          <span class="pill" style="background:var(--verde)">Verde</span>
+          <span class="pill">Negro</span>
+        </p>
+      </div>
+      <div>
+        <strong>Horario</strong>
+        <p>Lunes a sábado 7 a 6<br>Domingo 9 a 2</p>
+      </div>
+      <div>
+        <strong>Contacto</strong>
+        <p>Tel (787) XXX 1234<br>Correo info@ferreteriaelflaco.com</p>
+      </div>
+    </div>
+    <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
+  </footer>
+
+  <script>
+    // Año automático
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // Datos de ejemplo de productos
+    const productos = [
+      {nombre:'Taladro inalámbrico 20V', precio:'$89.99', etiqueta:'Herramientas', foto:'https://images.unsplash.com/photo-1560185127-6ed189bf02f4?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Pintura látex interior 5 gal', precio:'$74.50', etiqueta:'Pinturas', foto:'https://images.unsplash.com/photo-1545259741-2ea3ebf61fa7?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Juego de llaves combinadas', precio:'$29.95', etiqueta:'Mecánica', foto:'https://images.unsplash.com/photo-1518544801976-3e2073a96f2a?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Escalera de aluminio 6 pies', precio:'$59.99', etiqueta:'Accesorios', foto:'https://images.unsplash.com/photo-1508898578281-774ac4893bd0?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Martillo de carpintero', precio:'$12.99', etiqueta:'Carpintería', foto:'https://images.unsplash.com/photo-1580480055273-228ff5388ef5?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Cinta métrica 8 m', precio:'$6.99', etiqueta:'Medición', foto:'https://images.unsplash.com/photo-1629805831710-ec5080a10fb6?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Juego de brochas 5 pzs', precio:'$9.99', etiqueta:'Pintura', foto:'https://images.unsplash.com/photo-1526313199968-70e399ffe597?q=80&w=800&auto=format&fit=crop'},
+      {nombre:'Guantes de trabajo', precio:'$4.50', etiqueta:'Seguridad', foto:'https://images.unsplash.com/photo-1584987020261-b94e116ca7f4?q=80&w=800&auto=format&fit=crop'}
+    ];
+
+    const grid = document.getElementById('productGrid');
+    productos.forEach(p => {
+      const el = document.createElement('article');
+      el.className = 'card';
+      el.innerHTML = `
+        <img src="${p.foto}" alt="${p.nombre}">
+        <div class="body">
+          <div class="tags"><span class="pill">${p.etiqueta}</span></div>
+          <h3 style="margin:6px 0 4px">${p.nombre}</h3>
+          <div class="price">${p.precio}</div>
+          <button style="margin-top:10px;width:100%">Solicitar cotización</button>
+        </div>
+      `;
+      grid.appendChild(el);
+    });
+  </script>
+</body>
+</html>
