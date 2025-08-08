@@ -49,7 +49,7 @@
     header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,#121212,#0c0c0c);border-bottom:1px solid var(--borde)}
     .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
     .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:48px;height:auto;border-radius:8px;display:block;box-shadow:none;background:none;color:inherit} 
+    .logo{width:48px;height:auto;border-radius:8px;display:block;box-shadow:none;background:none;color:inherit}
     .brand-title{line-height:1}
     .brand-title strong{font-size:18px}
     nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0}
@@ -83,7 +83,7 @@
     .card{background:#151517;border-radius:14px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.45);border:1px solid var(--borde);transition:transform .25s ease, box-shadow .25s ease}
     .card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.55)}
     .card .body{padding:14px}
-    .price{color:var(--rojo);font-weight:900;letter-spacing:.2px}
+    .price{display:none}
     .pill{display:inline-block;background:#0e0e0f;color:#fff;padding:3px 8px;border-radius:999px;font-size:12px;border:1px solid var(--borde)}
     .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 
@@ -209,7 +209,7 @@
         </div>
         <div class="service">
           <h3>Duplicado de llaves</h3>
-          <p>Servicio rápido y preciso para autos, hogar y candados.</p>
+          <p>Servicio rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
         </div>
         <div class="service">
           <h3>Entrega local</h3>
@@ -260,7 +260,6 @@
       <div>
         <h3 style="margin:0 0 6px;color:#fff">Ferretería El Flaco</h3>
         <p>San Germán, Puerto Rico. Herramientas, materiales y servicio con cariño boricua.</p>
-        
       </div>
       <div>
         <strong>Horario</strong>
@@ -291,12 +290,11 @@
     // Año automático
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // Datos de productos (puedes mover esto a /data/productos.json en el futuro)
+    // Datos de productos SIN precio
     const productos = [
-      {nombre:'Blower Troy-Bilt 25cc a mezcla', precio:149.99, categoria:'Ofertas', marca:'Troy-Bilt', foto:'assets/blower-troybilt-25cc.jpg?v=1'},
-      {nombre:'Trimmer RedMax Bcz230TS', precio:389.00, categoria:'Ofertas', marca:'RedMax', foto:'assets/redmax-bcz230ts.jpg'},
-      {nombre:'Cobre tipo K 1/2" rollo 60 pies', precio:199.00, categoria:'Plomería', marca:'Tipo K', foto:'assets/cobre-k-12-60ft.jpg'},
-      {nombre:'Pegamento para losas WECO W1000', precio:0.00, categoria:'Construcción', marca:'WECO', foto:'assets/weco-w1000.jpg'}
+      {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/dewalt-driver.webp'},
+      {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
+      {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'}
     ];
 
     // Cargar categorías en el select
@@ -320,7 +318,7 @@
           <div class="body">
             <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
             <h3 style="margin:6px 0 4px">${p.nombre}</h3>
-            <div class="price">$${p.precio.toFixed(2)}</div>
+            ${p.precio!=null?('<div class="price">$'+p.precio.toFixed(2)+'</div>'):''}
             <a href="https://api.whatsapp.com/send?phone=17878923930&text=${encodeURIComponent('Hola, quiero info del producto: '+p.nombre)}" target="_blank" rel="noopener"><button style="margin-top:10px;width:100%">Pedir cotización</button></a>
           </div>
         `;
