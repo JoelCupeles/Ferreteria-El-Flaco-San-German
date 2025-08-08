@@ -59,7 +59,21 @@
     .menu-btn{display:none;border:1px solid var(--borde);padding:8px 10px;border-radius:10px}
 
     /* Hero */
-    .hero{background:linear-gradient(120deg,rgba(0,0,0,.88),rgba(225,6,0,.15)), url('assets/ferreteria-de-noche.jpg');background-size:cover;background-position:center;color:var(--blanco);min-height:clamp(380px,50vh,540px)}
+    .hero{
+  /* Gradiente más transparente abajo para que se vea la foto */
+  background:
+    linear-gradient(180deg,
+      rgba(0,0,0,.60) 0%,
+      rgba(0,0,0,.45) 30%,
+      rgba(0,0,0,.25) 60%,
+      rgba(0,0,0,.05) 100%
+    ),
+    url('assets/ferreteria-de-noche.jpg');
+  background-size:cover;
+  background-position:center 48%;
+  color:var(--blanco);
+  min-height:clamp(420px,56vh,680px);
+}
     .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:56px 0}
     .hero h1{font-size:40px;line-height:1.1;margin:0 0 14px}
     .hero p{opacity:.95;margin:0 0 18px}
@@ -68,7 +82,24 @@
     .hero .card{background:#151517;border:1px solid var(--borde);color:var(--texto);border-radius:16px;padding:18px}
     .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
     .stat{background:#0f0f11;border:1px solid var(--borde);border-radius:12px;padding:14px;text-align:center}
-    .stat b{display:block;font-size:22px}
+    $1
+
+/* Empuja la tarjetera hacia el borde inferior del hero (sin romper en desktop) */
+.stats-card{
+  margin-top:clamp(80px,40vh,280px);
+  background:rgba(12,12,12,.70);
+  border:1px solid var(--borde);
+  backdrop-filter:blur(6px);
+}
+@media (min-width:980px){
+  .hero .wrap{align-items:start}
+  .stats-card{margin-top:clamp(20px,12vh,120px)}
+}
+@media (max-width:980px){
+  .hero{background-position:center 52%}
+  .stats-card{margin-top:clamp(120px,44vh,340px)}
+}
+
 
     /* Sections */
     section{padding:52px 0}
@@ -96,7 +127,42 @@
     /* Servicios */
     .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
     .service{padding:18px;border-radius:14px;background:#151517;border:1px solid var(--borde)}
-    .service h3{margin:0 0 6px;color:#fff}
+    $1
+
+/* Servicios fancy */
+.services.fancy{gap:16px}
+.feature{
+  position:relative;
+  background:
+    radial-gradient(120% 120% at -20% -20%, rgba(225,6,0,.20) 0%, transparent 55%),
+    #151517;
+  border:1px solid var(--borde);
+  border-radius:14px;
+  padding:20px 18px 16px;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  display:flex;flex-direction:column;gap:10px;
+}
+.feature:hover{
+  transform:translateY(-4px);
+  border-color:rgba(225,6,0,.35);
+  box-shadow:0 14px 30px rgba(0,0,0,.55);
+}
+.feature-icon{
+  font-size:28px;line-height:1;
+  width:44px;height:44px;border-radius:10px;
+  display:grid;place-items:center;
+  background:rgba(225,6,0,.12);border:1px solid rgba(225,6,0,.2);
+}
+.feature-cta{
+  align-self:flex-start;margin-top:auto;
+  background:linear-gradient(135deg, var(--rojo), #b10300);
+  color:#fff;font-weight:900;border-radius:10px;
+  padding:10px 12px;border:0;display:inline-block
+}
+@media (max-width:900px){
+  .services.fancy{grid-template-columns:1fr}
+}
+
 
     /* Ubicacion */
     .map{border:0;width:100%;height:360px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
@@ -213,7 +279,7 @@
         </div>
         <a class="cta" href="#productos" style="display:inline-block;padding:12px 16px;border-radius:10px;margin-top:4px">Ver catálogo</a>
       </div>
-      <div class="card">
+      <div class="card stats-card">
         <div class="grid-2">
           <div class="stat"><b>+3,000</b> productos</div>
           <div class="stat"><b>7:00 a 4:30</b> horario (Lun–Sáb)</div>
@@ -307,20 +373,28 @@
         <h2>Servicios</h2>
         <span></span>
       </div>
-      <div class="services">
-        <div class="service">
-          <h3>Corte de madera</h3>
-          <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
-        </div>
-        <div class="service">
-          <h3>Duplicado de llaves</h3>
-          <p>Servicio rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
-        </div>
-        <div class="service">
-          <h3>Alquiler de máquina de presión</h3>
-          <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
-        </div>
-      </div>
+      <div class="services fancy">
+  <article class="service feature">
+    <div class="feature-icon">🪚</div>
+    <h3>Corte de madera</h3>
+    <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
+    <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20corte%20de%20madera" target="_blank" rel="noopener">Cotizar corte</a>
+  </article>
+
+  <article class="service feature">
+    <div class="feature-icon">🔑</div>
+    <h3>Duplicado de llaves</h3>
+    <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
+    <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20necesito%20duplicar%20unas%20llaves" target="_blank" rel="noopener">Duplicar llaves</a>
+  </article>
+
+  <article class="service feature">
+    <div class="feature-icon">💦</div>
+    <h3>Alquiler de máquina de presión</h3>
+    <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
+    <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20alquilar%20una%20m%C3%A1quina%20de%20presi%C3%B3n" target="_blank" rel="noopener">Reservar alquiler</a>
+  </article>
+</div>
       <div class="card" style="margin-top:14px">
         <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ferreterriaelflaco/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ferreterriaelflaco/">Ferretería El Flaco</a></blockquote></div>
       </div>
