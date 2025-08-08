@@ -112,7 +112,16 @@
 
     /* Mobile */
     @media (max-width: 980px){
-      .hero .wrap{grid-template-columns:1fr}
+      .hero{background-position:15% center}
+      .hero .wrap{grid-template-columns:1fr; padding:44px 0}
+      .products{grid-template-columns:repeat(2,1fr)}
+      .services{grid-template-columns:1fr 1fr}
+      .foot{grid-template-columns:1fr}
+      .menu-btn{display:inline-block}
+      nav ul{display:none;position:absolute;right:16px;top:58px;background:#101012;border:1px solid var(--borde);border-radius:12px;padding:10px;flex-direction:column;width:240px}
+      nav ul.open{display:flex}
+      nav a{display:block}
+    }
       .products{grid-template-columns:repeat(2,1fr)}
       .services{grid-template-columns:1fr 1fr}
       .foot{grid-template-columns:1fr}
@@ -252,30 +261,30 @@
       <div class="reviews">
         <article class="review-card">
           <div class="review-head">
-            <div class="avatar">J</div>
+            <div class="avatar">G</div>
             <div>
-              <strong>Joel C.</strong><br><span class="stars">★★★★★</span>
+              <strong>Gabriel R. V.</strong><br><span class="stars">★★★★★</span>
             </div>
           </div>
-          <p style="margin:0">Buen servicio, rapidez, orientación y mejores precios que en otras ferreterías. Si no lo tienen, te lo consiguen.</p>
+          <p style="margin:0">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
         </article>
         <article class="review-card">
           <div class="review-head">
-            <div class="avatar">J</div>
+            <div class="avatar">R</div>
             <div>
-              <strong>Jesús R.</strong><br><span class="stars">★★★★★</span>
+              <strong>Roberto F.</strong><br><span class="stars">★★★★★</span>
             </div>
           </div>
-          <p style="margin:0">Excelente trato del personal. Siempre pendientes y resolviendo.</p>
+          <p style="margin:0">Gracias por su reseña y apoyo a esta empresa.</p>
         </article>
         <article class="review-card">
           <div class="review-head">
-            <div class="avatar">J</div>
+            <div class="avatar">D</div>
             <div>
-              <strong>Jorge O.</strong><br><span class="stars">★★★★★</span>
+              <strong>David B. R.</strong><br><span class="stars">★★★★★</span>
             </div>
           </div>
-          <p style="margin:0">Gracias por el patrocinio y su reseña. 100pre estaremos pendientes al servicio.</p>
+          <p style="margin:0">Muy bien surtido y las atenciones son insuperables.</p>
         </article>
       </div>
     </div>
@@ -298,11 +307,13 @@
           <p>Servicio rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
         </div>
         <div class="service">
-          <h3>Entrega local</h3>
-          <p>Coordinamos la entrega de materiales en San Germán y zonas cercanas.</p>
+          <h3>Alquiler de máquina de presión</h3>
+          <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
         </div>
       </div>
       <div class="card" style="margin-top:14px">
+        <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ferreterriaelflaco/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ferreterriaelflaco/">Ferretería El Flaco</a></blockquote></div>
+      </div> style="margin-top:14px">
         <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ferreterriaelflaco/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ferreterriaelflaco/">Ferretería El Flaco</a></blockquote></div>
       </div>
     </div>
@@ -454,3 +465,4 @@
   </script>
 </body>
 </html>
+
