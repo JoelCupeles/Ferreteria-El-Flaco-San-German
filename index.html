@@ -122,14 +122,6 @@
       nav ul.open{display:flex}
       nav a{display:block}
     }
-      .products{grid-template-columns:repeat(2,1fr)}
-      .services{grid-template-columns:1fr 1fr}
-      .foot{grid-template-columns:1fr}
-      .menu-btn{display:inline-block}
-      nav ul{display:none;position:absolute;right:16px;top:58px;background:#101012;border:1px solid var(--borde);border-radius:12px;padding:10px;flex-direction:column;width:240px}
-      nav ul.open{display:flex}
-      nav a{display:block}
-    }
     @media (max-width: 600px){
       .products{grid-template-columns:1fr}
     }
@@ -152,6 +144,7 @@
     .ig-card{background:#151517;border:1px solid var(--borde);border-radius:14px;padding:18px}
     .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
     .ig-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;background:#0e0e10}
+    .card .fb-page{max-width:100%;}
       /* Reviews (Google) */
     .reviews{display:grid;grid-template-columns:1fr;gap:14px}
     @media (min-width:900px){.reviews{grid-template-columns:repeat(3,1fr)}}
@@ -197,7 +190,7 @@
         <p>Est. en 1989. Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
         <div class="badges">
           <span class="badge">Marcas confiables</span>
-          <span class="badge">Entrega local</span>
+          <span class="badge">Alquiler de máquina de presión</span>
           <span class="badge">Corte de madera</span>
           <span class="badge">Duplicado de llaves</span>
         </div>
@@ -313,73 +306,7 @@
       </div>
       <div class="card" style="margin-top:14px">
         <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ferreterriaelflaco/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ferreterriaelflaco/">Ferretería El Flaco</a></blockquote></div>
-      </div> style="margin-top:14px">
-        <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/ferreterriaelflaco/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/ferreterriaelflaco/">Ferretería El Flaco</a></blockquote></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ubicación -->
-  <section id="ubicacion">
-    <div class="container">
-      <div class="section-title">
-        <h2>Dónde estamos</h2>
-        <a href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Abrir en Google Maps</a>
-      </div>
-      <iframe class="map" src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20Inc%20San%20Germ%C3%A1n&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <p style="margin-top:10px"><strong>Ferretería El Flaco Inc</strong>, HC 04 Box 13385, San Germán, 00683, Puerto Rico. Teléfono <a href="tel:+17878923930">(787) 892-3930</a> y WhatsApp <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">escríbenos</a>.</p>
-    </div>
-  </section>
-
-  <!-- Contacto -->
-  <section id="contacto">
-    <div class="container">
-      <div class="section-title">
-        <h2>Contáctanos</h2>
-        <span></span>
-      </div>
-      <div class="card" style="padding:18px">
-        <form action="https://formspree.io/f/tu_codigo" method="POST">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <input name="nombre" required placeholder="Tu nombre" />
-            <input name="email" required type="email" placeholder="Tu correo" />
-          </div>
-          <input name="telefono" placeholder="Teléfono" />
-          <textarea name="mensaje" rows="4" placeholder="¿Qué necesitas? Lista de materiales, marca, medida, cantidad…"></textarea>
-          <button type="submit">Enviar mensaje</button>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container foot">
-      <div>
-        <h3 style="margin:0 0 6px;color:#fff">Ferretería El Flaco</h3>
-        <p>San Germán, Puerto Rico. Herramientas, materiales y servicio con cariño boricua.</p>
-      </div>
-      <div>
-        <strong>Horario</strong>
-        <p>Lunes a Sábado 7:00 a 4:30<br>Cerrado domingo</p>
-      </div>
-      <div>
-        <strong>Contacto</strong>
-        <p>Tel (787) 892-3930<br>
-        <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a><br>
-        <a href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Facebook oficial</a> · <a href="https://share.google/dvr1Ooy7wO6Ku1w4d" target="_blank" rel="noopener">Deja tu reseña</a></p>
-      </div>
-    </div>
-    <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
-  </footer>
-
-  <!-- Mobile sticky action bar -->
-  <div class="mobile-bar" aria-label="Acciones rápidas">
-    <a href="tel:+17878923930">Llamar</a>
-    <a class="primary" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco" target="_blank" rel="noopener">WhatsApp</a>
-    <a href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
-  </div>
-
-  <a class="whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
@@ -465,4 +392,5 @@
   </script>
 </body>
 </html>
+
 
