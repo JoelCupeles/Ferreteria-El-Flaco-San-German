@@ -226,10 +226,10 @@
     <div class="container">
       <div class="section-title">
         <h2>Dónde estamos</h2>
-        <a href="https://www.google.com/maps/search/?api=1&query=Ferreter%C3%ADa+El+Flaco+Inc+San+Germ%C3%A1n" target="_blank" rel="noopener">Abrir en Google Maps</a>
+        <a href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Abrir en Google Maps</a>
       </div>
       <iframe class="map" src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20Inc%20San%20Germ%C3%A1n&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      <p style="margin-top:10px"><strong>Ferretería El Flaco Inc</strong>, HC 04 Box 13385, San Germán, 00683, Puerto Rico. Teléfono <a href="tel:+17878923930">(787) 892-3930</a> y WhatsApp <a href="https://wa.me/17878923930?text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">escríbenos</a>.</p>
+      <p style="margin-top:10px"><strong>Ferretería El Flaco Inc</strong>, HC 04 Box 13385, San Germán, 00683, Puerto Rico. Teléfono <a href="tel:+17878923930">(787) 892-3930</a> y WhatsApp <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">escríbenos</a>.</p>
     </div>
   </section>
 
@@ -275,7 +275,7 @@
     <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
   </footer>
 
-  <a class="whatsapp" href="https://wa.me/17878923930?text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+  <a class="whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
   <!-- Facebook SDK -->
   <div id="fb-root"></div>
@@ -292,7 +292,7 @@
 
     // Datos de productos (puedes mover esto a /data/productos.json en el futuro)
     const productos = [
-      {nombre:'Blower Troy-Bilt 25cc a mezcla', precio:149.99, categoria:'Ofertas', marca:'Troy-Bilt', foto:'assets/blower-troybilt-25cc.jpg'},
+      {nombre:'Blower Troy-Bilt 25cc a mezcla', precio:149.99, categoria:'Ofertas', marca:'Troy-Bilt', foto:'assets/blower-troybilt-25ccjpg.jpg'},
       {nombre:'Trimmer RedMax Bcz230TS', precio:389.00, categoria:'Ofertas', marca:'RedMax', foto:'assets/redmax-bcz230ts.jpg'},
       {nombre:'Cobre tipo K 1/2" rollo 60 pies', precio:199.00, categoria:'Plomería', marca:'Tipo K', foto:'assets/cobre-k-12-60ft.jpg'},
       {nombre:'Pegamento para losas WECO W1000', precio:0.00, categoria:'Construcción', marca:'WECO', foto:'assets/weco-w1000.jpg'}
@@ -320,7 +320,7 @@
             <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
             <h3 style="margin:6px 0 4px">${p.nombre}</h3>
             <div class="price">$${p.precio.toFixed(2)}</div>
-            <a href="https://wa.me/17878923930?text=${encodeURIComponent('Hola, quiero info del producto: '+p.nombre)}" target="_blank" rel="noopener"><button style="margin-top:10px;width:100%">Pedir cotización</button></a>
+            <a href="https://api.whatsapp.com/send?phone=17878923930&text=${encodeURIComponent('Hola, quiero info del producto: '+p.nombre)}" target="_blank" rel="noopener"><button style="margin-top:10px;width:100%">Pedir cotización</button></a>
           </div>
         `;
         grid.appendChild(el);
@@ -362,5 +362,3 @@
   </script>
 </body>
 </html>
-
-
