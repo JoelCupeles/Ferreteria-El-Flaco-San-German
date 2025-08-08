@@ -59,7 +59,7 @@
     .menu-btn{display:none;border:1px solid var(--borde);padding:8px 10px;border-radius:10px}
 
     /* Hero */
-    .hero{background:linear-gradient(120deg,rgba(0,0,0,.92),rgba(225,6,0,.45)), url('assets/ferreteria-de-noche.jpg');background-size:cover;background-position:center;color:var(--blanco);min-height:clamp(360px,48vh,520px)}
+    .hero{background:linear-gradient(120deg,rgba(0,0,0,.92),rgba(225,6,0,.25)), url('assets/ferreteria-de-noche.jpg');background-size:cover;background-position:center;color:var(--blanco);min-height:clamp(360px,48vh,520px)}
     .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;padding:64px 0}
     .hero h1{font-size:40px;line-height:1.1;margin:0 0 14px}
     .hero p{opacity:.95;margin:0 0 18px}
@@ -96,11 +96,13 @@
     .map{border:0;width:100%;height:360px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
 
     /* Contacto */
-    form{display:grid;gap:10px}
-    input, textarea{border:1px solid var(--borde);border-radius:10px;padding:12px;font:inherit;background:#0e0e11;color:#fff}
-    button{border:0;background:var(--rojo);color:#fff;padding:12px 16px;border-radius:10px;font-weight:800;cursor:pointer;letter-spacing:.3px;transition:transform .15s ease}
-    button:active{transform:scale(.98)}
-    button:hover{filter:brightness(1.05)}
+    .social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .btn-social{display:flex;align-items:center;gap:10px;justify-content:center;border-radius:14px;padding:16px;font-weight:900;border:1px solid var(--borde);background:#151517;color:#fff;text-align:center}
+    .btn-social svg{width:20px;height:20px}
+    .btn-facebook{background:#1877F2}
+    .btn-instagram{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
+    .btn-whatsapp{background:#25D366;color:#0b0b0b}
+    .btn-social:hover{filter:brightness(1.04);transform:translateY(-1px)}
 
     /* Footer */
     footer{background:#000;color:#bdbdc6;padding:22px 0;margin-top:22px;border-top:1px solid var(--borde)}
@@ -108,7 +110,8 @@
     footer a{color:#ffdede}
 
     /* WhatsApp Floating */
-    .whatsapp{position:fixed;right:18px;bottom:18px;z-index:80;background:#25D366;border-radius:999px;padding:14px 16px;color:#000;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.35)}
+    .whatsapp{position:fixed;right:18px;bottom:18px;z-index:80;background:#25D366;border-radius:999px;padding:14px 16px;color:#000;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.35);animation:pulse 2.4s infinite}
+    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.6)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
 
     /* Mobile */
     @media (max-width: 980px){
@@ -338,15 +341,21 @@
         <span></span>
       </div>
       <div class="card" style="padding:18px">
-        <form action="https://formspree.io/f/tu_codigo" method="POST">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-            <input name="nombre" required placeholder="Tu nombre" />
-            <input name="email" required type="email" placeholder="Tu correo" />
-          </div>
-          <input name="telefono" placeholder="Teléfono" />
-          <textarea name="mensaje" rows="4" placeholder="¿Qué necesitas? Lista de materiales, marca, medida, cantidad…"></textarea>
-          <button type="submit">Enviar mensaje</button>
-        </form>
+        <div class="social-grid">
+          <a class="btn-social btn-facebook" href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.51 17.52 2 12 2S2 6.51 2 12.06c0 5.01 3.66 9.16 8.44 9.94v-7.03H7.9v-2.91h2.54V9.41c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.91h-2.34V22c4.78-.78 8.44-4.93 8.44-9.94z"/></svg>
+            Facebook oficial
+          </a>
+          <a class="btn-social btn-instagram" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 015 5v10a5 5 0 01-5 5H7a5 5 0 01-5-5V7a5 5 0 015-5zm5 5a5 5 0 100 10 5 5 0 000-10zm6-1a1 1 0 100 2 1 1 0 000-2zm-6 3a3 3 0 110 6 3 3 0 010-6z"/></svg>
+            Instagram
+          </a>
+          <a class="btn-social btn-whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20informaci%C3%B3n" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.62-6.01C.122 5.281 5.403 0 12.057 0c3.18 0 6.167 1.24 8.413 3.488A11.82 11.82 0 0123.999 12c-.003 6.653-5.284 11.936-11.938 11.936a11.9 11.9 0 01-6.007-1.616L.057 24zm6.597-3.807c1.73.995 3.27 1.591 5.392 1.593 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.45 0-9.887 4.434-9.889 9.884a9.81 9.81 0 001.599 5.322l-.999 3.648 3.889-1.67zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.654-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.173.198-.297.297-.495.099-.198.05-.372-.025-.521-.074-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.064 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+        <p style="margin:12px 0 0;opacity:.9;text-align:center">También estamos en <a href="tel:+17878923930">(787) 892‑3930</a> · <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a></p>
       </div>
     </div>
   </section>
