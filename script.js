@@ -155,7 +155,7 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   });
 })();
 
-// Interactividad ligera en SERVICIOS
+// Interactividad en SERVICIOS (expandir + animación de entrada)
 (function(){
   const items = Array.from(document.querySelectorAll('.service-item[data-collapsible="true"]'));
   if(!items.length) return;
@@ -172,17 +172,15 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
   items.forEach(el=>io.observe(el));
 
-  // Tocar o presionar Enter/Espacio abre o cierra en móvil
+  // Abrir/cerrar en clic o teclado
   function toggleItem(el){
     const open = el.classList.toggle('open');
     el.setAttribute('aria-expanded', open ? 'true' : 'false');
   }
   items.forEach(el=>{
     el.addEventListener('click', (e)=>{
-      // Evita que un click en un enlace interno repliegue
       const tag = (e.target && e.target.tagName) || '';
       if(tag === 'A' || tag === 'BUTTON') return;
-      // En pantallas táctiles se pliega, en desktop solo si haces click explícito
       toggleItem(el);
     });
     el.addEventListener('keydown', (e)=>{
@@ -193,7 +191,7 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     });
   });
 
-  // Cierra otras tarjetas cuando abres una, para lectura limpia
+  // Cerrar otros para lectura limpia
   function closeOthers(current){
     items.forEach(it=>{ if(it!==current) { it.classList.remove('open'); it.setAttribute('aria-expanded','false'); } });
   }
