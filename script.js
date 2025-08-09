@@ -1,7 +1,7 @@
+<script>
 // ================================
-// script.js — versión estable 2025 (FIX carrusel + ofertas)
+// script.js — fix carrusel & dots 2025-08-09
 // ================================
-
 document.addEventListener('DOMContentLoaded', () => {
   // ===== Header height CSS var =====
   const headerEl = document.getElementById('siteHeader');
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
   // ========================
-  // Datos (productos / ofertas)
+  // Datos (productos/ofertas)
   // ========================
   const productos=[
     {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   // ========================
-  // UI Catálogo / Filtros
+  // UI Catálogo/Filtros
   // ========================
   const catSelect=document.getElementById('categoria');
   const grid=document.getElementById('productGrid');
@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cardHTML=p=>`
     <article class="card">
-      <img loading="lazy" src="${p.foto}" alt="${p.nombre}" onerror="this.onerror=null;this.src='assets/placeholder.jpg'">
+      <img loading="lazy" src="${p.foto}" alt="${p.nombre}">
       <div class="body">
         <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
         <h3>${p.nombre}</h3>
@@ -75,18 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!grid) return;
     grid.innerHTML=list.map(cardHTML).join('');
     buildDots(grid);
-    // Recalcular cuando carguen fotos (fix principal)
-    Array.from(grid.querySelectorAll('img')).forEach(img=>{
-      img.addEventListener('load', ()=> buildDots(grid), { once:true });
-    });
+    waitForImagesThen(()=>buildDots(grid), grid);
   }
   function renderOffers(){
     if(!offersGrid) return;
     offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     buildDots(offersGrid);
-    Array.from(offersGrid.querySelectorAll('img')).forEach(img=>{
-      img.addEventListener('load', ()=> buildDots(offersGrid), { once:true });
-    });
+    waitForImagesThen(()=>buildDots(offersGrid), offersGrid);
   }
 
   function filtrar(){
@@ -115,30 +110,32 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // ======================================
-  // Paginador de carrusel (máx 5 puntos)
+  // Dots por "snaps" reales de las cards
   // ======================================
   const MAX_DOTS = 5;
-  const state = new WeakMap(); // { rafId, onScroll }
+  const state = new WeakMap(); // { rafId, onScroll, snaps:number[] }
 
-  function pagesCount(el){
-    const w = el.clientWidth || 1;
-    return Math.max(1, Math.ceil((el.scrollWidth - w) / w) + 1);
+  function isDesktop(){ return window.matchMedia('(min-width: 900px)').matches; }
+
+  function getSnaps(el){
+    // posiciones horizontales de cada card
+    const cards = Array.from(el.querySelectorAll('.card'));
+    return cards.map(c => Math.max(0, c.offsetLeft));
   }
-  function activePage(el){
-    const w = el.clientWidth || 1;
-    const total = pagesCount(el);
-    const i = Math.round(el.scrollLeft / w);
-    return Math.min(Math.max(0, i), total - 1);
+
+  function nearestIndex(snaps, x){
+    if(snaps.length===0) return 0;
+    let idx = 0, best = Infinity;
+    for(let i=0;i<snaps.length;i++){
+      const d = Math.abs(snaps[i]-x);
+      if(d<best){ best=d; idx=i; }
+    }
+    return idx;
   }
-  function scrollToPage(el, i){
-    const w = el.clientWidth || 1;
-    el.scrollTo({ left: i * w, behavior:'smooth' });
-  }
-  function windowStart(curr, total, visible){
-    let start = curr - Math.floor(visible/2);
-    start = Math.max(0, start);
-    start = Math.min(start, Math.max(0, total - visible));
-    return start;
+
+  function scrollToSnap(el, snaps, i){
+    const left = snaps[Math.max(0, Math.min(i, snaps.length-1))] || 0;
+    el.scrollTo({ left, behavior:'smooth' });
   }
 
   function ensureDots(el){
@@ -154,20 +151,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderDotsFor(el){
     const dots = ensureDots(el);
-    const isDesktop = window.matchMedia('(min-width: 900px)').matches;
-    const total = pagesCount(el);
-
-    if(isDesktop || total<=1){
+    if(isDesktop()){
       dots.style.display='none';
       detach(el);
       return;
-    } else {
-      dots.style.display='flex';
     }
 
-    const curr = activePage(el);
+    const snaps = getSnaps(el);
+    const total = snaps.length;
+    if(total<=1){
+      dots.style.display='none';
+      detach(el);
+      return;
+    }
+    dots.style.display='flex';
+
+    // guarda snaps en el estado
+    let s = state.get(el) || {};
+    s.snaps = snaps;
+    state.set(el, s);
+
+    const curr = nearestIndex(snaps, el.scrollLeft);
     const visible = Math.min(MAX_DOTS, total);
-    const start = total>visible ? windowStart(curr, total, visible) : 0;
+
+    // ventana deslizante centrada
+    let start = curr - Math.floor(visible/2);
+    start = Math.max(0, Math.min(start, total - visible));
 
     const fr = document.createDocumentFragment();
     for(let i=0; i<visible; i++){
@@ -175,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const b = document.createElement('button');
       b.type='button';
       b.className = 'dot' + (pageIndex===curr ? ' active' : '');
-      b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
-      b.addEventListener('click', ()=> scrollToPage(el, pageIndex));
+      b.setAttribute('aria-label', `Ir a elemento ${pageIndex+1} de ${total}`);
+      b.addEventListener('click', ()=> scrollToSnap(el, snaps, pageIndex));
       fr.appendChild(b);
     }
     dots.replaceChildren(fr);
@@ -207,15 +216,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function buildDots(el){ renderDotsFor(el); }
 
-  // Recalcular dots cuando cambie el layout
+  // Recalcular dots tras carga de imágenes
+  function waitForImagesThen(cb, scopeEl){
+    const imgs = Array.from((scopeEl||document).querySelectorAll('img'));
+    let pending = imgs.length;
+    if(pending===0){ cb(); return; }
+    const done = ()=>{ pending--; if(pending<=0) cb(); };
+    imgs.forEach(img=>{
+      if(img.complete) { done(); }
+      else {
+        img.addEventListener('load', done, { once:true });
+        img.addEventListener('error', done, { once:true });
+      }
+    });
+  }
+
+  // Recalcular en cambios de layout
   window.addEventListener('resize', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
   window.addEventListener('orientationchange', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
-
-  // Recalcular dots si cambia el tamaño real de los carruseles
-  const ro = new ResizeObserver(()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
-  if(grid) ro.observe(grid);
-  if(offersGrid) ro.observe(offersGrid);
 });
+</script>
 
 
 
