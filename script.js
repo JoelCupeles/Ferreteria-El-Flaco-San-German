@@ -31,7 +31,7 @@ const productos=[
   {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
   {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'},
 
-  // NUEVO producto: Fluidmaster Better Than Wax
+  // Nuevo producto
   {nombre:'Fluidmaster Better Than Wax – Universal Toilet Seal', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'assets/fluidmaster-better-than-wax.jpg'}
 ];
 
@@ -85,7 +85,7 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
+// Carrusel con puntos (ventana deslizante)
 (function(){
   const MAX_DOTS = 5;
 
@@ -132,7 +132,7 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
         });
         dotsEl.appendChild(b);
       }
-      sync(); // set inicial de aria-current y mapeo de página
+      sync();
     }
 
     function sync(){
@@ -142,21 +142,19 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
       const btns = dotsEl.querySelectorAll('button');
       btns.forEach((b, i)=>{
-        const pageIndex = start + i; // página real a la que representa este punto
+        const pageIndex = start + i;
         b.dataset.pageIndex = String(pageIndex);
         b.setAttribute('aria-current', pageIndex===curr ? 'true' : 'false');
         b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
       });
     }
 
-    // Throttle con rAF
     let raf;
     function onScroll(){
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(sync);
     }
 
-    // ResizeObserver para recalcular puntos al cambiar el layout
     const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
     const ro = new RO(renderDots);
     ro.observe(scrollEl);
@@ -165,7 +163,6 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     renderDots();
   }
 
-  // Inicializa para cada set de puntos
   document.querySelectorAll('.carousel-dots').forEach(dots=>{
     const id = dots.getAttribute('data-for');
     const scroller = document.getElementById(id);
