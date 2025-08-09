@@ -164,6 +164,23 @@ footer a{color:#ffdede}
 /* ===== MOBILE ===== */
 @media (max-width:980px){
   .menu-btn{display:inline-flex}
+  nav ul{display:none;position:fixed;left:12px;right:12px;top:64px;background:#101214;border:1px solid var(--borde);border-radius:14px;padding:12px;flex-direction:column;gap:6px;z-index:3300}
+  nav ul.open{display:flex}
+  nav a{display:block}
+
+  .hero{background-position:center 48%}
+  .hero .wrap{grid-template-columns:1fr;padding:36px 0}
+  .stats-card{margin-top:clamp(18px,8vh,42px);transform:scale(.95);transform-origin:center top}
+  .grid-2{grid-template-columns:1fr}
+  .stat b{font-size:20px}
+
+  .services{grid-template-columns:1fr 1fr}
+  .foot{grid-template-columns:1fr}
+  .social-grid{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .services{grid-template-columns:1fr}
+}
   nav ul{display:none;position:absolute;right:16px;top:58px;background:#101214;border:1px solid var(--borde);border-radius:12px;padding:10px;flex-direction:column;width:240px;z-index:3200}
   nav ul.open{display:flex}
   nav a{display:block}
@@ -187,6 +204,19 @@ footer a{color:#ffdede}
 
 /* Facebook plugin: que nunca exceda el ancho */
 .fb-page, .fb-page iframe, .fb-page span { max-width:100% !important; width:100% !important; }
+/* ===== NAV BACKDROP (mobile) ===== */
+.nav-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);z-index:3050}
+body.nav-open{overflow:hidden}
+body.nav-open .nav-backdrop{display:block}
+
+/* ===== HERO flair ===== */
+.hero .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.btn-outline{background:transparent;border:1px solid var(--borde);color:#fff}
+.btn-outline:hover{background:rgba(255,255,255,.08)}
+
+/* Headline micro-gradient for a bit of wow */
+.hero h1 span.accent{background:linear-gradient(90deg,#fff, #ffdede, #fff);-webkit-background-clip:text;background-clip:text;color:transparent}
+
 </style>
 </head>
 <body>
@@ -212,6 +242,7 @@ footer a{color:#ffdede}
         <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
     </nav>
+<div class="nav-backdrop" id="navBackdrop"></div>
   </div>
 </header>
 
@@ -219,7 +250,7 @@ footer a{color:#ffdede}
   <div class="container wrap">
     <div>
       <div style="opacity:.9;margin-bottom:6px">Desde <b>1989</b> • Llaves al instante</div>
-      <h1>Servicio personalizado por más de 30 años</h1>
+      <h1><span class="accent">Servicio personalizado</span> por más de 30 años</h1>
       <p>Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
       <div class="badges">
         <span class="badge">Marcas confiables</span>
@@ -227,7 +258,11 @@ footer a{color:#ffdede}
         <span class="badge">Corte de madera</span>
         <span class="badge">Duplicado de llaves</span>
       </div>
-      <a class="btn btn-primary" href="#productos">Ver catálogo</a>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#productos">Ver catálogo</a>
+        <a class="btn btn-outline" href="tel:+17878923930">Llamar ahora</a>
+        <a class="btn btn-outline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
     </div>
     <div class="stats-card">
       <div class="grid-2">
@@ -409,11 +444,16 @@ footer a{color:#ffdede}
 // Menú móvil (encima del hero)
 const menuBtn=document.getElementById('menuBtn');
 const menuList=document.getElementById('menuList');
-menuBtn?.addEventListener('click',()=>{
-  menuList.classList.toggle('open');
-  const isOpen=menuList.classList.contains('open');
-  menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-});
+const navBackdrop=document.getElementById('navBackdrop');
+function toggleMenu(force){
+  const willOpen = typeof force==='boolean'? force : !menuList.classList.contains('open');
+  menuList.classList.toggle('open', willOpen);
+  document.body.classList.toggle('nav-open', willOpen);
+  menuBtn?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+}
+menuBtn?.addEventListener('click',()=>toggleMenu());
+navBackdrop?.addEventListener('click',()=>toggleMenu(false));
+Array.from(document.querySelectorAll('nav a[href^="#"]')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 
 // Año
 const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
@@ -476,5 +516,3 @@ window.addEventListener('scroll',()=>{hdr.style.boxShadow=window.scrollY>6?'0 6p
 </script>
 </body>
 </html>
-
-
