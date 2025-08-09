@@ -43,8 +43,7 @@ section{padding:clamp(28px,5vw,56px) 0}
 
 /* ===== NAV ===== */
 header{position:sticky;top:0;z-index:3000;background:rgba(10,11,14,.76);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--borde);transition:.25s transform,.25s box-shadow}
-body.scrolled-down header{transform:translateY(-8px);}
-body.scrolled-up header{transform:translateY(0);box-shadow:0 6px 16px rgba(0,0,0,.35);}
+/* header permanece visible; solo sombra en scroll */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
 .brand{display:flex;gap:12px;align-items:center;min-width:0}
 .logo{width:44px;border-radius:10px}
@@ -219,7 +218,7 @@ body.nav-open .nav-backdrop{display:block}
 .tips{background:linear-gradient(180deg, rgba(225,6,0,.06), transparent 60%)}
 .tips-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
 .tips .card{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden}
-.tips img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/10}
+.tips img{width:100%;height:auto;object-fit:contain;aspect-ratio:auto;max-height:420px;background:#0e0f12}
 .tips .content{padding:18px}
 .tips h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,26px)}
 .tips p{margin:0 0 12px;color:var(--muted)}
@@ -393,21 +392,21 @@ body.nav-open .nav-backdrop{display:block}
         <div class="feature-icon">🪚</div>
         <h3>Corte de madera</h3>
         <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
-        <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20corte%20de%20madera" target="_blank" rel="noopener">Cotizar corte</a>
+        
       </article>
 
       <article class="feature">
         <div class="feature-icon">🔑</div>
         <h3>Duplicado de llaves</h3>
         <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
-        <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20necesito%20duplicar%20unas%20llaves" target="_blank" rel="noopener">Duplicar llaves</a>
+        
       </article>
 
       <article class="feature">
         <div class="feature-icon">💦</div>
         <h3>Alquiler de máquina de presión</h3>
         <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
-        <a class="feature-cta" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20alquilar%20una%20m%C3%A1quina%20de%20presi%C3%B3n" target="_blank" rel="noopener">Reservar alquiler</a>
+        
       </article>
     </div>
 
@@ -480,14 +479,16 @@ let menuBtn=document.getElementById('menuBtn');
 let menuList=document.getElementById('menuList');
 let navBackdrop=document.getElementById('navBackdrop');
 if(!navBackdrop){ navBackdrop=document.createElement('div'); navBackdrop.id='navBackdrop'; navBackdrop.className='nav-backdrop'; document.body.appendChild(navBackdrop); }
+let canCloseBackdrop=false;
 function toggleMenu(force){
   const willOpen = typeof force==='boolean'? force : !menuList.classList.contains('open');
   menuList.classList.toggle('open', willOpen);
   document.body.classList.toggle('nav-open', willOpen);
   menuBtn?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  if(willOpen){ canCloseBackdrop=false; setTimeout(()=>{canCloseBackdrop=true;},180); }
 }
-menuBtn?.addEventListener('click',()=>toggleMenu());
-navBackdrop.addEventListener('click',()=>toggleMenu(false));
+menuBtn?.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMenu(); });
+navBackdrop.addEventListener('click', ()=>{ if(canCloseBackdrop) toggleMenu(false); });
 Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 
 // Año
@@ -547,17 +548,9 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
 // Header sombra on scroll
 const hdr=document.getElementById('siteHeader');
-let lastY=window.scrollY, ticking=false;
-function onScroll(){
-  const y=window.scrollY;
-  hdr.style.boxShadow = y>6 ? '0 6px 16px rgba(0,0,0,.35)' : 'none';
-  const dir = y>lastY ? 'down' : 'up';
-  document.body.classList.toggle('scrolled-down', dir==='down' && y>80);
-  document.body.classList.toggle('scrolled-up', dir==='up' || y<=80);
-  lastY=y; ticking=false;
-}
-window.addEventListener('scroll',()=>{ if(!ticking){ window.requestAnimationFrame(onScroll); ticking=true; } });
-onScroll();
+window.addEventListener('scroll',()=>{
+  hdr.style.boxShadow = window.scrollY>6 ? '0 6px 16px rgba(0,0,0,.35)' : 'none';
+});
 // Hero ticker dinámico
 (function(){
   const el=document.getElementById('heroTicker');
@@ -574,6 +567,5 @@ onScroll();
 </body>
 </html>
 
-</html>
 
 
