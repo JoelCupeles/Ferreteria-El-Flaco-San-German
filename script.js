@@ -1,5 +1,5 @@
 // =======================================
-// script.js — v12 FIX: Ofertas + Dots siempre visibles en móvil
+// script.js — v20: Ofertas SIEMPRE + Dots en móvil
 // =======================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   const ofertas = [
+    // Asegúrate que este archivo EXISTE exactamente así: assets/oferta-weco.jpg
     { nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg' }
   ];
 
@@ -66,7 +67,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Tarjeta base (si falla la imagen, igual se ve la tarjeta)
   const cardHTML = (p) => `
     <article class="card">
       <img loading="lazy" src="${p.foto}" alt="${p.nombre}"
@@ -89,9 +89,10 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.innerHTML = list.map(cardHTML).join('');
     hydrateCarousel(grid);
   }
+
   function renderOffers() {
     if (!offersGrid) return;
-    // AÚN si la imagen falla, la tarjeta se pinta. Si no ves nada, el problema no es la imagen.
+    // SIEMPRE pinta (aunque la imagen falle): si no ves nada, no es la foto — es que el JS no cargó.
     offersGrid.innerHTML = ofertas.map(cardHTML).join('');
     hydrateCarousel(offersGrid);
   }
@@ -115,16 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
   renderOffers();
 
   // ===== Hero ticker =====
-  (function ticker(){
+  (function(){
     const el = document.getElementById('heroTicker');
     if (!el) return;
     const frases = ['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
-    let i = 0;
-    setInterval(() => { i = (i + 1) % frases.length; el.innerHTML = frases[i]; }, 2500);
+    let i = 0; setInterval(() => { i = (i + 1) % frases.length; el.innerHTML = frases[i]; }, 2500);
   })();
 
   // =======================================
-  // Carrusel con dots (SIEMPRE visibles en móvil)
+  // Carrusel + dots (móvil)
   // =======================================
   const MAX_DOTS = 5;
   const state = new WeakMap(); // { onScroll, rafId }
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return dots;
   }
 
-  // Snaps por tarjeta
+  // snaps por tarjeta
   function getSnaps(listEl){
     const cards = Array.from(listEl.querySelectorAll('.card'));
     return cards.map(c => Math.max(0, c.offsetLeft));
@@ -176,9 +176,9 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Siempre mostrar dots en móvil cuando hay >=1 tarjeta
+    // Mostrar dots incluso con 1 tarjeta (verás 1 punto)
     const snaps = getSnaps(listEl);
-    const total = Math.max(1, snaps.length); // si hay 1 item, habrá 1 dot
+    const total = Math.max(1, snaps.length);
     const curr  = nearestIndex(snaps, listEl.scrollLeft);
     const visible = Math.min(MAX_DOTS, total);
 
@@ -197,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.replaceChildren(fr);
     dots.style.display = 'flex';
 
-    // listeners
     let s = state.get(listEl) || {};
     if (!s.onScroll){
       s.onScroll = () => {
@@ -226,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!listEl) return;
     renderDots(listEl);
 
-    // Recalcular cuando carguen imágenes (por si cambian anchos)
+    // Recalcular con imágenes
     const imgs = Array.from(listEl.querySelectorAll('img'));
     let pending = imgs.length;
     if (pending === 0) { renderDots(listEl); }
@@ -239,8 +238,9 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Recalcular si cambia el tamaño real del contenedor
+    // Recalcular si cambia el tamaño
     const ro = new ResizeObserver(() => renderDots(listEl));
     ro.observe(listEl);
   }
 });
+
