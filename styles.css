@@ -83,9 +83,9 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .service-item{
   display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:flex-start;
   background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:16px;
-  transition:transform .12s ease, border-color .12s ease;
+  transition:transform .12s ease, border-color .12s ease, background-color .12s ease;
 }
-.service-item:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.16) }
+.service-item:hover{ transform:translateY(-1px); border-color:rgba(255,255,255,.16); background:linear-gradient(180deg,#17181c,#15161a) }
 .service-icon{
   width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
   font-size:22px;background:rgba(225,6,0,.10);border:1px solid rgba(225,6,0,.22);
@@ -124,7 +124,7 @@ footer a{color:#ffdede}
   .social-grid{grid-template-columns:1fr}
 }
 @media (max-width:620px){
-  /* nada extra: servicios ya es 1 columna por defecto */
+  /* servicios ya es una columna por defecto */
 }
 
 /* Safety */
@@ -159,4 +159,3 @@ footer a{color:#ffdede}
   .carousel-dots{ display:none }
   .fade-mask{ -webkit-mask-image:none; mask-image:none }
 }
-
