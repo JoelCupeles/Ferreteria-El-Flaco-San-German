@@ -1,7 +1,7 @@
 // Altura real del header
 const headerEl = document.getElementById('siteHeader');
 function setHeaderHeight(){
-  const h = headerEl.offsetHeight || 64;
+  const h = headerEl ? (headerEl.offsetHeight || 64) : 64;
   document.documentElement.style.setProperty('--header-h', h + 'px');
 }
 setHeaderHeight();
@@ -12,17 +12,22 @@ window.addEventListener('orientationchange', setHeaderHeight);
 const menuBtn = document.getElementById('menuBtn');
 const menuList = document.getElementById('menuList');
 function toggleMenu(force){
+  if(!menuList || !menuBtn) return;
   const willOpen = typeof force==='boolean' ? force : !menuList.classList.contains('open');
   menuList.classList.toggle('open', willOpen);
   menuBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 }
-menuBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(); });
-Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+if(menuBtn){
+  menuBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(); });
+  Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+}
 
 // Año en footer
 const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-// Productos sin precios (demo)
+// ========================
+// Datos (productos/ofertas)
+// ========================
 const productos=[
   {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
   {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -36,14 +41,18 @@ const ofertas=[
   {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
 ];
 
-// Cargar categorías
+// ========================
+// UI Catálogo/Filtros
+// ========================
 const catSelect=document.getElementById('categoria');
-const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
-categorias.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSelect.appendChild(o);});
-
 const grid=document.getElementById('productGrid');
 const offersGrid=document.getElementById('offersGrid');
 const search=document.getElementById('search');
+
+if (catSelect) {
+  const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
+  categorias.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSelect.appendChild(o);});
+}
 
 const cardHTML=p=>`
   <article class="card">
@@ -56,10 +65,20 @@ const cardHTML=p=>`
     </div>
   </article>`;
 
-function render(list){ grid.innerHTML=list.map(cardHTML).join(''); }
+// Render + “dots” seguros
+function render(list){
+  if(!grid) return;
+  grid.innerHTML=list.map(cardHTML).join('');
+  buildDots(grid);      // ← crea/actualiza los 5 puntitos máx
+}
+function renderOffers(){
+  if(!offersGrid) return;
+  offersGrid.innerHTML=ofertas.map(cardHTML).join('');
+  buildDots(offersGrid); // ← también para Ofertas
+}
 function filtrar(){
-  const q=(search.value||'').toLowerCase().trim();
-  const c=catSelect.value;
+  const q=(search && search.value ? search.value : '').toLowerCase().trim();
+  const c=catSelect ? catSelect.value : '';
   const list=productos.filter(p=>{
     const okCat=!c||p.categoria===c;
     const okQ=!q||(`${p.nombre} ${p.marca}`).toLowerCase().includes(q);
@@ -67,14 +86,16 @@ function filtrar(){
   });
   render(list);
 }
-search.addEventListener('input',filtrar);
-catSelect.addEventListener('change',filtrar);
+if(search) search.addEventListener('input',filtrar);
+if(catSelect) catSelect.addEventListener('change',filtrar);
+
+// Render inicial (si existen los contenedores)
 render(productos);
+renderOffers();
 
-// Ofertas
-offersGrid.innerHTML=ofertas.map(cardHTML).join('');
-
-// Hero ticker
+// ========================
+// Hero ticker (no tocar productos)
+// ========================
 (function(){
   const el=document.getElementById('heroTicker');
   if(!el) return;
@@ -82,96 +103,162 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
-(function(){
-  const MAX_DOTS = 5; // <-- ajusta aquí cuántos puntos quieres como máximo
+// ========================
+// Paginador de “puntitos” (máx 5)
+// ========================
 
-  function pagesCount(scrollEl){
-    const pageW = scrollEl.clientWidth || 1;
-    // 1 página si no hay overflow horizontal
-    if (scrollEl.scrollWidth <= pageW + 2) return 1;
-    // redondeo al entero más cercano de "pantallas" completas
-    return Math.max(1, Math.round(scrollEl.scrollWidth / pageW));
+/*
+  ¿Cómo funciona?
+  - Se crea un contenedor .dots justo después de cada carrusel (.products).
+  - En móviles (layout horizontal con scroll), muestra hasta 5 puntos.
+    Si hay más ítems, la “ventana” de 5 se mueve alrededor del activo.
+  - En desktop (>=900px, grilla sin scroll), se ocultan los puntos.
+  - Al hacer click en un punto -> scroll al card correspondiente.
+  - Se actualiza al hacer scroll, al renderizar y al cambiar tamaño.
+*/
+
+function buildDots(track){
+  if(!track) return;
+  // Asegurar un wrapper de dots único por carrusel
+  let dotsWrap = track.nextElementSibling && track.nextElementSibling.classList && track.nextElementSibling.classList.contains('dots')
+    ? track.nextElementSibling
+    : null;
+  if(!dotsWrap){
+    dotsWrap = document.createElement('div');
+    dotsWrap.className = 'dots';
+    dotsWrap.setAttribute('aria-label','Indicadores del carrusel');
+    dotsWrap.setAttribute('role','tablist');
+    track.after(dotsWrap);
   }
 
-  function currentPageIndex(scrollEl){
-    const pageW = scrollEl.clientWidth || 1;
-    return Math.round(scrollEl.scrollLeft / pageW);
+  const isDesktop = window.matchMedia('(min-width: 900px)').matches;
+  const items = Array.from(track.children);
+  const total = items.length;
+
+  // En desktop (grilla), ocultamos
+  if(isDesktop || total <= 1){
+    dotsWrap.style.display = 'none';
+    // Quitar listeners previos si existen
+    detachScrollHandler(track);
+    return;
+  } else {
+    dotsWrap.style.display = 'flex';
   }
 
-  function scrollToPage(scrollEl, i){
-    const pageW = scrollEl.clientWidth || 1;
-    scrollEl.scrollTo({ left: i * pageW, behavior:'smooth' });
+  // Estado por carrusel
+  ensureCarouselState(track);
+
+  // Inicializar/actualizar estructura
+  updateDots(track, dotsWrap);
+
+  // Listeners de scroll/resize
+  attachScrollHandler(track, () => updateDots(track, dotsWrap));
+}
+
+// Estado por carrusel en un WeakMap
+const carouselState = new WeakMap();
+function ensureCarouselState(track){
+  if(!carouselState.has(track)){
+    carouselState.set(track, { activeIndex: 0, rafId: null, onScroll: null });
+  }
+  return carouselState.get(track);
+}
+
+// Calcular índice activo según scrollLeft
+function getActiveIndex(track){
+  const items = Array.from(track.children);
+  const sl = track.scrollLeft;
+  let best = 0;
+  let bestDist = Infinity;
+  for(let i=0;i<items.length;i++){
+    const card = items[i];
+    const dist = Math.abs(card.offsetLeft - sl);
+    if(dist < bestDist){
+      bestDist = dist;
+      best = i;
+    }
+  }
+  return best;
+}
+
+function updateDots(track, dotsWrap){
+  const state = ensureCarouselState(track);
+  const items = Array.from(track.children);
+  const total = items.length;
+  if(total === 0){
+    dotsWrap.innerHTML = '';
+    return;
   }
 
-  function calcWindowStart(curr, total, maxDots){
-    // Mantiene la ventana centrada en la medida de lo posible
-    const half = Math.floor(maxDots/2);
-    let start = curr - half;
-    start = Math.max(0, start);
-    start = Math.min(start, Math.max(0, total - maxDots));
-    return start;
-  }
+  // Índice activo actual
+  const active = getActiveIndex(track);
+  state.activeIndex = active;
 
-  function setupDots(scrollEl, dotsEl){
-    if(!scrollEl || !dotsEl) return;
+  // Ventana de hasta 5
+  const MAX = 5;
+  let start = Math.max(0, Math.min(active - 2, total - MAX));
+  if(total <= MAX) start = 0;
+  const end = Math.min(total - 1, start + MAX - 1);
 
-    let total = pagesCount(scrollEl);
-
-    function renderDots(){
-      total = pagesCount(scrollEl);
-      dotsEl.innerHTML = '';
-
-      const visible = Math.min(MAX_DOTS, total);
-      for(let i=0;i<visible;i++){
-        const b=document.createElement('button');
-        b.type='button';
-        b.addEventListener('click', ()=>{
-          const target = Number(b.dataset.pageIndex || 0);
-          scrollToPage(scrollEl, target);
-        });
-        dotsEl.appendChild(b);
+  // Construir puntos visibles
+  const fr = document.createDocumentFragment();
+  for(let realIdx = start; realIdx <= end; realIdx++){
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'dot' + (realIdx === active ? ' active' : '');
+    btn.setAttribute('role','tab');
+    btn.setAttribute('aria-selected', realIdx === active ? 'true' : 'false');
+    btn.dataset.index = String(realIdx);
+    btn.addEventListener('click', ()=>{
+      const card = track.children[realIdx];
+      if(card){
+        card.scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
       }
-      sync(); // set inicial de aria-current y mapeo de página
-    }
-
-    function sync(){
-      const curr = currentPageIndex(scrollEl);
-      const visible = Math.min(MAX_DOTS, total);
-      const start = total > visible ? calcWindowStart(curr, total, visible) : 0;
-
-      const btns = dotsEl.querySelectorAll('button');
-      btns.forEach((b, i)=>{
-        const pageIndex = start + i; // página real a la que representa este punto
-        b.dataset.pageIndex = String(pageIndex);
-        b.setAttribute('aria-current', pageIndex===curr ? 'true' : 'false');
-        b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
-      });
-    }
-
-    // Throttle con rAF
-    let raf;
-    function onScroll(){
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(sync);
-    }
-
-    // ResizeObserver para recalcular puntos al cambiar el layout
-    const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
-    const ro = new RO(renderDots);
-    ro.observe(scrollEl);
-
-    scrollEl.addEventListener('scroll', onScroll, { passive:true });
-    renderDots();
+    });
+    fr.appendChild(btn);
   }
 
-  // Inicializa para cada set de puntos
-  document.querySelectorAll('.carousel-dots').forEach(dots=>{
-    const id = dots.getAttribute('data-for');
-    const scroller = document.getElementById(id);
-    setupDots(scroller, dots);
-  });
-})();
+  // Opcional: indicadores de que hay más (al inicio/fin)
+  // Los dejamos simples para no recargar visualmente.
 
-})();
+  // Reemplazar contenido sin parpadeo
+  dotsWrap.replaceChildren(fr);
+}
+
+// Manejo de scroll con rAF (una sola callback por carrusel)
+function attachScrollHandler(track, onChange){
+  const state = ensureCarouselState(track);
+  if(state.onScroll) return; // ya conectado
+  state.onScroll = () => {
+    if(state.rafId) return;
+    state.rafId = requestAnimationFrame(()=>{
+      state.rafId = null;
+      onChange();
+    });
+  };
+  track.addEventListener('scroll', state.onScroll, { passive: true });
+  window.addEventListener('resize', state.onScroll, { passive: true });
+  window.addEventListener('orientationchange', state.onScroll, { passive: true });
+}
+
+function detachScrollHandler(track){
+  const state = carouselState.get(track);
+  if(!state || !state.onScroll) return;
+  track.removeEventListener('scroll', state.onScroll);
+  window.removeEventListener('resize', state.onScroll);
+  window.removeEventListener('orientationchange', state.onScroll);
+  state.onScroll = null;
+  if(state.rafId){ cancelAnimationFrame(state.rafId); state.rafId = null; }
+}
+
+// Recalcular dots al cambiar layout (ej. al filtrar)
+window.addEventListener('resize', ()=>{
+  if(grid) buildDots(grid);
+  if(offersGrid) buildDots(offersGrid);
+});
+window.addEventListener('orientationchange', ()=>{
+  if(grid) buildDots(grid);
+  if(offersGrid) buildDots(offersGrid);
+});
+
 
