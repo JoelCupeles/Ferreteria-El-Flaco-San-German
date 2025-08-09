@@ -1,6 +1,10 @@
-// Aseguramos que todo corre tras construir el DOM
+// ================================
+// script.js — versión estable 2025
+// ================================
+
+// Ejecutar tras construir el DOM
 document.addEventListener('DOMContentLoaded', () => {
-  // ===== Util: altura del header =====
+  // ===== Header height CSS var =====
   const headerEl = document.getElementById('siteHeader');
   function setHeaderHeight(){
     const h = headerEl ? (headerEl.offsetHeight || 64) : 64;
@@ -10,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', setHeaderHeight);
   window.addEventListener('orientationchange', setHeaderHeight);
 
-  // ===== Menú móvil simple =====
+  // ===== Menú móvil =====
   const menuBtn = document.getElementById('menuBtn');
   const menuList = document.getElementById('menuList');
   function toggleMenu(force){
@@ -36,7 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
     {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
     {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
     {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
-    {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'}
+    {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'},
+
+    // === NUEVO PRODUCTO ===
+    {nombre:'Fluidmaster Better Than Wax – Toilet Seal', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'assets/fluidmaster-better-than-wax.jpg'}
+    // si tu archivo se llama distinto (ej. fuidmaster-toilet-seal.jpg),
+    // cambia el valor de foto a ese nombre exacto.
   ];
 
   const ofertas=[
@@ -70,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function render(list){
     if(!grid) return;
     grid.innerHTML=list.map(cardHTML).join('');
-    buildDots(grid); // crea/actualiza los puntitos (máx 5)
+    buildDots(grid); // crea/actualiza puntitos (máx 5)
   }
   function renderOffers(){
     if(!offersGrid) return;
@@ -103,100 +112,101 @@ document.addEventListener('DOMContentLoaded', () => {
     let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
   })();
 
-  // ========================
-  // Paginador “máx 5 puntos”
-  // ========================
-  const carouselState = new WeakMap();
+  // ======================================
+  // Paginador de carrusel — basado en PÁGINAS
+  //  - Máximo 5 puntos (ventana deslizante)
+  //  - Desktop (>=900px): oculto automáticamente
+  // ======================================
+  const MAX_DOTS = 5;
+  const state = new WeakMap(); // { rafId, onScroll }
 
-  function ensureState(track){
-    if(!carouselState.has(track)){
-      carouselState.set(track, { rafId:null, onScroll:null, lastActive:0 });
-    }
-    return carouselState.get(track);
+  function pagesCount(el){
+    const w = el.clientWidth || 1;
+    return Math.max(1, Math.ceil(el.scrollWidth / w));
+  }
+  function activePage(el){
+    const w = el.clientWidth || 1;
+    return Math.round(el.scrollLeft / w);
+  }
+  function scrollToPage(el, i){
+    const w = el.clientWidth || 1;
+    el.scrollTo({ left: i * w, behavior:'smooth' });
+  }
+  function windowStart(curr, total, visible){
+    // centra la ventana cuando sea posible
+    let start = curr - Math.floor(visible/2);
+    start = Math.max(0, start);
+    start = Math.min(start, Math.max(0, total - visible));
+    return start;
   }
 
-  function getActiveIndex(track){
-    const items = Array.from(track.children);
-    if(items.length===0) return 0;
-    const sl = track.scrollLeft;
-    let best = 0, bestDist = Infinity;
-    for(let i=0;i<items.length;i++){
-      const card = items[i];
-      const dist = Math.abs(card.offsetLeft - sl);
-      if(dist < bestDist){ bestDist = dist; best = i; }
+  function ensureDots(el){
+    let dots = el.nextElementSibling && el.nextElementSibling.classList && el.nextElementSibling.classList.contains('dots')
+      ? el.nextElementSibling : null;
+    if(!dots){
+      dots = document.createElement('div');
+      dots.className = 'dots';
+      el.after(dots);
     }
-    return best;
+    return dots;
   }
 
-  function updateDots(track, dotsWrap){
-    const items = Array.from(track.children);
-    const total = items.length;
-    if(total<=1){
-      dotsWrap.style.display='none';
-      return;
-    }
-
+  function renderDotsFor(el){
+    const dots = ensureDots(el);
     const isDesktop = window.matchMedia('(min-width: 900px)').matches;
-    if(isDesktop){
-      dotsWrap.style.display='none';
+    const total = pagesCount(el);
+
+    if(isDesktop || total<=1){
+      dots.style.display='none';
+      detach(el);
       return;
     } else {
-      dotsWrap.style.display='flex';
+      dots.style.display='flex';
     }
 
-    const active = getActiveIndex(track);
-    const MAX = 5;
-    let start = Math.max(0, Math.min(active - 2, total - MAX));
-    if(total <= MAX) start = 0;
-    const end = Math.min(total - 1, start + MAX - 1);
+    const curr = activePage(el);
+    const visible = Math.min(MAX_DOTS, total);
+    const start = total>visible ? windowStart(curr, total, visible) : 0;
 
     const fr = document.createDocumentFragment();
-    for(let realIdx = start; realIdx <= end; realIdx++){
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'dot' + (realIdx === active ? ' active' : '');
-      btn.setAttribute('aria-label', `Ir a elemento ${realIdx+1} de ${total}`);
-      btn.dataset.index = String(realIdx);
-      btn.addEventListener('click', ()=>{
-        const card = track.children[realIdx];
-        if(card) card.scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
-      });
-      fr.appendChild(btn);
+    for(let i=0; i<visible; i++){
+      const pageIndex = start + i;
+      const b = document.createElement('button');
+      b.type='button';
+      b.className = 'dot' + (pageIndex===curr ? ' active' : '');
+      b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
+      b.addEventListener('click', ()=> scrollToPage(el, pageIndex));
+      fr.appendChild(b);
     }
-    dotsWrap.replaceChildren(fr);
+    dots.replaceChildren(fr);
+    attach(el);
   }
 
-  function attachScrollHandler(track, dotsWrap){
-    const state = ensureState(track);
-    if(state.onScroll) return; // ya conectado
-    state.onScroll = ()=>{
-      if(state.rafId) return;
-      state.rafId = requestAnimationFrame(()=>{
-        state.rafId = null;
-        updateDots(track, dotsWrap);
-      });
+  function attach(el){
+    let s = state.get(el);
+    if(s && s.onScroll) return;
+    s = s || {};
+    s.onScroll = ()=>{
+      if(s.rafId) return;
+      s.rafId = requestAnimationFrame(()=>{ s.rafId=null; renderDotsFor(el); });
     };
-    track.addEventListener('scroll', state.onScroll, { passive:true });
-    window.addEventListener('resize', state.onScroll, { passive:true });
-    window.addEventListener('orientationchange', state.onScroll, { passive:true });
+    state.set(el, s);
+    el.addEventListener('scroll', s.onScroll, { passive:true });
+    window.addEventListener('resize', s.onScroll, { passive:true });
+    window.addEventListener('orientationchange', s.onScroll, { passive:true });
   }
-
-  function buildDots(track){
-    if(!track) return;
-    // crear/obtener el contenedor de dots adyacente
-    let dotsWrap = track.nextElementSibling && track.nextElementSibling.classList && track.nextElementSibling.classList.contains('dots')
-      ? track.nextElementSibling
-      : null;
-    if(!dotsWrap){
-      dotsWrap = document.createElement('div');
-      dotsWrap.className = 'dots';
-      track.after(dotsWrap);
-    }
-    updateDots(track, dotsWrap);
-    attachScrollHandler(track, dotsWrap);
+  function detach(el){
+    const s = state.get(el);
+    if(!s || !s.onScroll) return;
+    el.removeEventListener('scroll', s.onScroll);
+    window.removeEventListener('resize', s.onScroll);
+    window.removeEventListener('orientationchange', s.onScroll);
+    s.onScroll = null;
+    if(s.rafId){ cancelAnimationFrame(s.rafId); s.rafId=null; }
   }
+  function buildDots(el){ renderDotsFor(el); }
 
-  // Recalcular cuando cambia layout
+  // Recalcular dots cuando cambie el layout
   window.addEventListener('resize', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
   window.addEventListener('orientationchange', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
 });
