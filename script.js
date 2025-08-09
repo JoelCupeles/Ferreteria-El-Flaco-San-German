@@ -22,7 +22,7 @@ Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('cl
 // Año en footer
 const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-// Productos sin precios
+// Productos sin precios (demo)
 const productos=[
   {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
   {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -82,66 +82,96 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// ===== Carrusel: puntos de paginación y sincronización con scroll =====
+// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
 (function(){
+  const MAX_DOTS = 5; // <-- ajusta aquí cuántos puntos quieres como máximo
+
+  function pagesCount(scrollEl){
+    const pageW = scrollEl.clientWidth || 1;
+    // 1 página si no hay overflow horizontal
+    if (scrollEl.scrollWidth <= pageW + 2) return 1;
+    // redondeo al entero más cercano de "pantallas" completas
+    return Math.max(1, Math.round(scrollEl.scrollWidth / pageW));
+  }
+
+  function currentPageIndex(scrollEl){
+    const pageW = scrollEl.clientWidth || 1;
+    return Math.round(scrollEl.scrollLeft / pageW);
+  }
+
+  function scrollToPage(scrollEl, i){
+    const pageW = scrollEl.clientWidth || 1;
+    scrollEl.scrollTo({ left: i * pageW, behavior:'smooth' });
+  }
+
+  function calcWindowStart(curr, total, maxDots){
+    // Mantiene la ventana centrada en la medida de lo posible
+    const half = Math.floor(maxDots/2);
+    let start = curr - half;
+    start = Math.max(0, start);
+    start = Math.min(start, Math.max(0, total - maxDots));
+    return start;
+  }
+
   function setupDots(scrollEl, dotsEl){
     if(!scrollEl || !dotsEl) return;
 
-    function pages(){
-      const pageWidth = scrollEl.clientWidth;
-      // Si el carrusel no se desborda, 1 página
-      if (scrollEl.scrollWidth <= pageWidth + 2) return 1;
-      return Math.round(scrollEl.scrollWidth / pageWidth);
-    }
+    let total = pagesCount(scrollEl);
 
     function renderDots(){
-      const n = pages();
+      total = pagesCount(scrollEl);
       dotsEl.innerHTML = '';
-      for(let i=0;i<n;i++){
+
+      const visible = Math.min(MAX_DOTS, total);
+      for(let i=0;i<visible;i++){
         const b=document.createElement('button');
         b.type='button';
-        b.setAttribute('aria-label','Ir a página '+(i+1));
-        b.addEventListener('click',()=>scrollToIndex(i));
+        b.addEventListener('click', ()=>{
+          const target = Number(b.dataset.pageIndex || 0);
+          scrollToPage(scrollEl, target);
+        });
         dotsEl.appendChild(b);
       }
-      sync();
-    }
-
-    function indexFromScroll(){
-      const pageWidth = scrollEl.clientWidth || 1;
-      return Math.round(scrollEl.scrollLeft / pageWidth);
-    }
-
-    function scrollToIndex(i){
-      const pageWidth = scrollEl.clientWidth;
-      scrollEl.scrollTo({ left: i * pageWidth, behavior:'smooth' });
+      sync(); // set inicial de aria-current y mapeo de página
     }
 
     function sync(){
-      const i = indexFromScroll();
+      const curr = currentPageIndex(scrollEl);
+      const visible = Math.min(MAX_DOTS, total);
+      const start = total > visible ? calcWindowStart(curr, total, visible) : 0;
+
       const btns = dotsEl.querySelectorAll('button');
-      btns.forEach((b,idx)=> b.setAttribute('aria-current', idx===i ? 'true':'false'));
+      btns.forEach((b, i)=>{
+        const pageIndex = start + i; // página real a la que representa este punto
+        b.dataset.pageIndex = String(pageIndex);
+        b.setAttribute('aria-current', pageIndex===curr ? 'true' : 'false');
+        b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
+      });
     }
 
+    // Throttle con rAF
     let raf;
     function onScroll(){
       cancelAnimationFrame(raf);
-      raf=requestAnimationFrame(sync);
+      raf = requestAnimationFrame(sync);
     }
 
-    // Recalcular en cambios de layout
-    const ro = new ResizeObserver(renderDots);
+    // ResizeObserver para recalcular puntos al cambiar el layout
+    const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
+    const ro = new RO(renderDots);
     ro.observe(scrollEl);
 
     scrollEl.addEventListener('scroll', onScroll, { passive:true });
     renderDots();
   }
 
-  // Inicializar para cada contenedor de puntos
+  // Inicializa para cada set de puntos
   document.querySelectorAll('.carousel-dots').forEach(dots=>{
     const id = dots.getAttribute('data-for');
     const scroller = document.getElementById(id);
     setupDots(scroller, dots);
   });
+})();
+
 })();
 
