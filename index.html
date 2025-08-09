@@ -202,6 +202,16 @@ body.nav-open .nav-backdrop{display:block}
 /* Headline micro-gradient for a bit of wow */
 .hero h1 span.accent{background:linear-gradient(90deg,#fff, #ffdede, #fff);-webkit-background-clip:text;background-clip:text;color:transparent}
 
+/* ===== TIPS ===== */
+.tips{background:linear-gradient(180deg, rgba(225,6,0,.06), transparent 60%)}
+.tips-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
+.tips .card{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden}
+.tips img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/10}
+.tips .content{padding:18px}
+.tips h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,26px)}
+.tips p{margin:0 0 12px;color:var(--muted)}
+@media(max-width:980px){.tips-wrap{grid-template-columns:1fr}.tips img{aspect-ratio:16/10}}
+
 </style>
 </head>
 <body>
@@ -297,6 +307,28 @@ body.nav-open .nav-backdrop{display:block}
         <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500"></a>
         <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón"></a>
         <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/Dewalt-driver.webp" alt="DeWalt Driver"></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tips" class="tips">
+  <div class="container">
+    <div class="section-title">
+      <h2>Tips rápidos</h2>
+      <a href="#contacto">¿Tienes dudas? Escríbenos</a>
+    </div>
+    <div class="tips-wrap">
+      <div class="card">
+        <img loading="lazy" src="assets/colores-en-cintas-de-aislar-tips.jpg" alt="Colores en cintas de aislar — tips">
+      </div>
+      <div class="content">
+        <h3>¿Qué significan los colores en las cintas de aislar?</h3>
+        <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
+          <a class="btn btn-outline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+        </div>
       </div>
     </div>
   </div>
@@ -512,4 +544,5 @@ onScroll();
 </script>
 </body>
 </html>
+
 
