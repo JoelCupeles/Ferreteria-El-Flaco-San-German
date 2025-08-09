@@ -139,7 +139,7 @@ footer a{color:#ffdede}
   .hero .wrap{ padding:48px 0 }
 }
 
-/* ===== UI carrusel: puntos y fade ===== */
+/* ===== UI carrusel: fade y puntos con ventana deslizante ===== */
 .fade-mask{
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
@@ -159,4 +159,5 @@ footer a{color:#ffdede}
   .carousel-dots{ display:none }
   .fade-mask{ -webkit-mask-image:none; mask-image:none }
 }
+
 
