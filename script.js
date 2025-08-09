@@ -82,46 +82,37 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
+// Carrusel: puntos con ventana deslizante
 (function(){
-  const MAX_DOTS = 5; // <-- ajusta aquí cuántos puntos quieres como máximo
+  const MAX_DOTS = 5;
 
   function pagesCount(scrollEl){
     const pageW = scrollEl.clientWidth || 1;
-    // 1 página si no hay overflow horizontal
     if (scrollEl.scrollWidth <= pageW + 2) return 1;
-    // redondeo al entero más cercano de "pantallas" completas
     return Math.max(1, Math.round(scrollEl.scrollWidth / pageW));
   }
-
   function currentPageIndex(scrollEl){
     const pageW = scrollEl.clientWidth || 1;
     return Math.round(scrollEl.scrollLeft / pageW);
   }
-
   function scrollToPage(scrollEl, i){
     const pageW = scrollEl.clientWidth || 1;
     scrollEl.scrollTo({ left: i * pageW, behavior:'smooth' });
   }
-
   function calcWindowStart(curr, total, maxDots){
-    // Mantiene la ventana centrada en la medida de lo posible
     const half = Math.floor(maxDots/2);
     let start = curr - half;
     start = Math.max(0, start);
     start = Math.min(start, Math.max(0, total - maxDots));
     return start;
   }
-
   function setupDots(scrollEl, dotsEl){
     if(!scrollEl || !dotsEl) return;
-
     let total = pagesCount(scrollEl);
 
     function renderDots(){
       total = pagesCount(scrollEl);
       dotsEl.innerHTML = '';
-
       const visible = Math.min(MAX_DOTS, total);
       for(let i=0;i<visible;i++){
         const b=document.createElement('button');
@@ -132,40 +123,31 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
         });
         dotsEl.appendChild(b);
       }
-      sync(); // set inicial de aria-current y mapeo de página
+      sync();
     }
-
     function sync(){
       const curr = currentPageIndex(scrollEl);
       const visible = Math.min(MAX_DOTS, total);
       const start = total > visible ? calcWindowStart(curr, total, visible) : 0;
-
       const btns = dotsEl.querySelectorAll('button');
       btns.forEach((b, i)=>{
-        const pageIndex = start + i; // página real a la que representa este punto
+        const pageIndex = start + i;
         b.dataset.pageIndex = String(pageIndex);
         b.setAttribute('aria-current', pageIndex===curr ? 'true' : 'false');
         b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
       });
     }
-
-    // Throttle con rAF
     let raf;
     function onScroll(){
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(sync);
     }
-
-    // ResizeObserver para recalcular puntos al cambiar el layout
     const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
     const ro = new RO(renderDots);
     ro.observe(scrollEl);
-
     scrollEl.addEventListener('scroll', onScroll, { passive:true });
     renderDots();
   }
-
-  // Inicializa para cada set de puntos
   document.querySelectorAll('.carousel-dots').forEach(dots=>{
     const id = dots.getAttribute('data-for');
     const scroller = document.getElementById(id);
@@ -173,3 +155,50 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   });
 })();
 
+// Interactividad ligera en SERVICIOS
+(function(){
+  const items = Array.from(document.querySelectorAll('.service-item[data-collapsible="true"]'));
+  if(!items.length) return;
+
+  // IntersectionObserver para animar entrada
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  items.forEach(el=>io.observe(el));
+
+  // Tocar o presionar Enter/Espacio abre o cierra en móvil
+  function toggleItem(el){
+    const open = el.classList.toggle('open');
+    el.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  items.forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      // Evita que un click en un enlace interno repliegue
+      const tag = (e.target && e.target.tagName) || '';
+      if(tag === 'A' || tag === 'BUTTON') return;
+      // En pantallas táctiles se pliega, en desktop solo si haces click explícito
+      toggleItem(el);
+    });
+    el.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        toggleItem(el);
+      }
+    });
+  });
+
+  // Cierra otras tarjetas cuando abres una, para lectura limpia
+  function closeOthers(current){
+    items.forEach(it=>{ if(it!==current) { it.classList.remove('open'); it.setAttribute('aria-expanded','false'); } });
+  }
+  items.forEach(el=>{
+    el.addEventListener('click', ()=> closeOthers(el));
+    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') closeOthers(el); });
+  });
+})();
