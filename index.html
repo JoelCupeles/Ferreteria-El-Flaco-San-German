@@ -45,6 +45,9 @@
     img{max-width:100%;display:block}
     .container{max-width:1200px;margin:0 auto;padding:0 16px}
 
+    /* Prevent sideways scroll on small screens */
+    html,body{max-width:100%;overflow-x:hidden}
+
     /* Header */
     header{position:sticky;top:0;z-index:60;background:linear-gradient(180deg,#121212,#0c0c0c);border-bottom:1px solid var(--borde)}
     .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
@@ -82,18 +85,18 @@
     /* Empuja la tarjetera hacia el borde inferior del hero */
     .stats-card{margin-top:clamp(80px,40vh,280px);background:rgba(12,12,12,.70);border:1px solid var(--borde);backdrop-filter:blur(6px)}
     @media (min-width:980px){.hero .wrap{align-items:start}.stats-card{margin-top:clamp(20px,12vh,120px)}}
-    @media (max-width:980px){.hero{background-position:center 52%}.stats-card{margin-top:clamp(120px,44vh,340px)}}
+    @media (max-width:980px){.hero{background-position:center 52%}.hero .wrap{padding:38px 0 16px}.hero-eyebrow{font-size:13px}.stats-card{margin-top:clamp(120px,46vh,360px)}}
 
     /* Sections */
-    section{padding:36px 0}
+    section{padding:28px 0}
     .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
     .section-title h2{margin:0;font-size:28px}
-    .section-title a{font-weight:700;color:#ffdede}
+    .section-title a{font-weight:700;color:#ffdede;white-space:nowrap}
 
     /* Productos → carrusel móvil, grid escritorio */
     .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
     .filters input,.filters select{background:#0e0e11;color:#fff;border:1px solid var(--borde);border-radius:10px;padding:10px}
-    .products{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%)}
+    .products{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;-webkit-overflow-scrolling:touch;scrollbar-width:none;mask-image:linear-gradient(90deg,transparent 0,#000 24px,#000 calc(100% - 24px),transparent 100%);contain:content}
     .products::-webkit-scrollbar{display:none}
     .card{background:#151517;border-radius:14px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.45);border:1px solid var(--borde);transition:transform .25s ease, box-shadow .25s ease;scroll-snap-align:start}
     .card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.55)}
@@ -117,7 +120,7 @@
 
     /* Ofertas (carrusel) */
     .ofertas-wrap{background:#0e0e10}
-    .ofertas{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .ofertas{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px;-webkit-overflow-scrolling:touch;scrollbar-width:none;contain:content}
     .ofertas::-webkit-scrollbar{display:none}
     .offer-card{position:relative;background:#151517;border:1px solid var(--borde);border-radius:16px;overflow:hidden;scroll-snap-align:start;box-shadow:0 10px 24px rgba(0,0,0,.45)}
     .offer-media{aspect-ratio:16/9;object-fit:cover;width:100%}
@@ -163,7 +166,7 @@
     /* Typography tweaks */
     html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
     body{line-height:1.6}
-    .hero h1{font-size:clamp(28px,4.8vw,44px)}
+    .hero h1{font-size:clamp(26px,6vw,38px)}
     .cta, button{min-height:48px}
 
     /* Mobile sticky action bar */
@@ -517,4 +520,5 @@
   </script>
 </body>
 </html>
+
 
