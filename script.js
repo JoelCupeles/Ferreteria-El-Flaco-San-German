@@ -29,7 +29,10 @@ const productos=[
   {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
   {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
   {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
-  {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'}
+  {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'},
+
+  // NUEVO producto: Fluidmaster Better Than Wax
+  {nombre:'Fluidmaster Better Than Wax – Universal Toilet Seal', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'assets/fluidmaster-better-than-wax.jpg'}
 ];
 
 const ofertas=[
@@ -82,7 +85,7 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// Carrusel: puntos con ventana deslizante
+// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
 (function(){
   const MAX_DOTS = 5;
 
@@ -91,14 +94,17 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     if (scrollEl.scrollWidth <= pageW + 2) return 1;
     return Math.max(1, Math.round(scrollEl.scrollWidth / pageW));
   }
+
   function currentPageIndex(scrollEl){
     const pageW = scrollEl.clientWidth || 1;
     return Math.round(scrollEl.scrollLeft / pageW);
   }
+
   function scrollToPage(scrollEl, i){
     const pageW = scrollEl.clientWidth || 1;
     scrollEl.scrollTo({ left: i * pageW, behavior:'smooth' });
   }
+
   function calcWindowStart(curr, total, maxDots){
     const half = Math.floor(maxDots/2);
     let start = curr - half;
@@ -106,13 +112,16 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     start = Math.min(start, Math.max(0, total - maxDots));
     return start;
   }
+
   function setupDots(scrollEl, dotsEl){
     if(!scrollEl || !dotsEl) return;
+
     let total = pagesCount(scrollEl);
 
     function renderDots(){
       total = pagesCount(scrollEl);
       dotsEl.innerHTML = '';
+
       const visible = Math.min(MAX_DOTS, total);
       for(let i=0;i<visible;i++){
         const b=document.createElement('button');
@@ -123,80 +132,43 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
         });
         dotsEl.appendChild(b);
       }
-      sync();
+      sync(); // set inicial de aria-current y mapeo de página
     }
+
     function sync(){
       const curr = currentPageIndex(scrollEl);
       const visible = Math.min(MAX_DOTS, total);
       const start = total > visible ? calcWindowStart(curr, total, visible) : 0;
+
       const btns = dotsEl.querySelectorAll('button');
       btns.forEach((b, i)=>{
-        const pageIndex = start + i;
+        const pageIndex = start + i; // página real a la que representa este punto
         b.dataset.pageIndex = String(pageIndex);
         b.setAttribute('aria-current', pageIndex===curr ? 'true' : 'false');
         b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
       });
     }
+
+    // Throttle con rAF
     let raf;
     function onScroll(){
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(sync);
     }
+
+    // ResizeObserver para recalcular puntos al cambiar el layout
     const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
     const ro = new RO(renderDots);
     ro.observe(scrollEl);
+
     scrollEl.addEventListener('scroll', onScroll, { passive:true });
     renderDots();
   }
+
+  // Inicializa para cada set de puntos
   document.querySelectorAll('.carousel-dots').forEach(dots=>{
     const id = dots.getAttribute('data-for');
     const scroller = document.getElementById(id);
     setupDots(scroller, dots);
-  });
-})();
-
-// Interactividad en SERVICIOS (expandir + animación de entrada)
-(function(){
-  const items = Array.from(document.querySelectorAll('.service-item[data-collapsible="true"]'));
-  if(!items.length) return;
-
-  // IntersectionObserver para animar entrada
-  const io = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  items.forEach(el=>io.observe(el));
-
-  // Abrir/cerrar en clic o teclado
-  function toggleItem(el){
-    const open = el.classList.toggle('open');
-    el.setAttribute('aria-expanded', open ? 'true' : 'false');
-  }
-  items.forEach(el=>{
-    el.addEventListener('click', (e)=>{
-      const tag = (e.target && e.target.tagName) || '';
-      if(tag === 'A' || tag === 'BUTTON') return;
-      toggleItem(el);
-    });
-    el.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter' || e.key === ' '){
-        e.preventDefault();
-        toggleItem(el);
-      }
-    });
-  });
-
-  // Cerrar otros para lectura limpia
-  function closeOthers(current){
-    items.forEach(it=>{ if(it!==current) { it.classList.remove('open'); it.setAttribute('aria-expanded','false'); } });
-  }
-  items.forEach(el=>{
-    el.addEventListener('click', ()=> closeOthers(el));
-    el.addEventListener('keydown', (e)=>{ if(e.key==='Enter' || e.key===' ') closeOthers(el); });
   });
 })();
