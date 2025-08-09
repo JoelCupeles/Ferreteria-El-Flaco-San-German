@@ -42,7 +42,6 @@
         <li><a href="#ofertas">Ofertas</a></li>
         <li><a href="#reseñas">Reseñas</a></li>
         <li><a href="#servicios">Servicios</a></li>
-        <!-- Eliminado Instagram del navbar -->
         <li><a href="#ubicacion">Ubicación</a></li>
         <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
@@ -106,8 +105,6 @@
   </div>
 </section>
 
-<!-- Sección de Instagram eliminada -->
-
 <section id="tips" class="tips">
   <div class="container">
     <div class="section-title">
@@ -164,30 +161,44 @@
 <section id="servicios">
   <div class="container">
     <div class="section-title"><h2>Servicios</h2><span></span></div>
-    <div class="services">
-      <article class="feature">
-        <div class="feature-icon">🪚</div>
-        <h3>Corte de madera</h3>
-        <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
-      </article>
 
-      <article class="feature">
-        <div class="feature-icon">🔑</div>
-        <h3>Duplicado de llaves</h3>
-        <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
-      </article>
+    <!-- Nuevo layout minimalista -->
+    <ul class="service-list">
+      <li class="service-item">
+        <div class="service-icon">🪚</div>
+        <div class="service-body">
+          <h3>Corte de madera <span class="badge-free">Sin costo</span></h3>
+          <p>Trae tu medida y nos encargamos del corte para que montes al llegar.</p>
+        </div>
+      </li>
 
-      <article class="feature">
-        <div class="feature-icon">💦</div>
-        <h3>Alquiler de máquina de presión</h3>
-        <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
-      </article>
-    </div>
+      <li class="service-item">
+        <div class="service-icon">🔩</div>
+        <div class="service-body">
+          <h3>Corte de tubos de verja y varilla <span class="badge-free">Sin costo</span></h3>
+          <p>Te lo dejamos listo para instalar, sin esperas largas.</p>
+        </div>
+      </li>
 
-    <div class="feature" style="margin-top:14px">
-      <h3 style="margin:0 0 8px">Corte de tubos de verja y varilla</h3>
-      <p style="margin:0">Trae tu medida y te lo dejamos listo para instalar.</p>
-    </div>
+      <li class="service-item">
+        <div class="service-icon">🔑</div>
+        <div class="service-body">
+          <h3>Duplicado de llaves</h3>
+          <p>Hogar y candados <strong>(no autos)</strong>. Preciso y al momento.</p>
+        </div>
+      </li>
+
+      <li class="service-item">
+        <div class="service-icon">💦</div>
+        <div class="service-body">
+          <h3>Alquiler de máquina de presión</h3>
+          <p>Limpieza de pisos, techos y exteriores. Renta por día.</p>
+          <div class="service-cta">
+            <a class="btn btn-primary" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20ver%20disponibilidad%20de%20la%20m%C3%A1quina%20de%20presi%C3%B3n." target="_blank" rel="noopener">Ver disponibilidad</a>
+          </div>
+        </div>
+      </li>
+    </ul>
 
     <div class="card" style="margin-top:14px">
       <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
@@ -249,3 +260,4 @@
 <script src="script.js" defer></script>
 </body>
 </html>
+
