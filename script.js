@@ -81,3 +81,67 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   const frases=['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
+
+// ===== Carrusel: puntos de paginación y sincronización con scroll =====
+(function(){
+  function setupDots(scrollEl, dotsEl){
+    if(!scrollEl || !dotsEl) return;
+
+    function pages(){
+      const pageWidth = scrollEl.clientWidth;
+      // Si el carrusel no se desborda, 1 página
+      if (scrollEl.scrollWidth <= pageWidth + 2) return 1;
+      return Math.round(scrollEl.scrollWidth / pageWidth);
+    }
+
+    function renderDots(){
+      const n = pages();
+      dotsEl.innerHTML = '';
+      for(let i=0;i<n;i++){
+        const b=document.createElement('button');
+        b.type='button';
+        b.setAttribute('aria-label','Ir a página '+(i+1));
+        b.addEventListener('click',()=>scrollToIndex(i));
+        dotsEl.appendChild(b);
+      }
+      sync();
+    }
+
+    function indexFromScroll(){
+      const pageWidth = scrollEl.clientWidth || 1;
+      return Math.round(scrollEl.scrollLeft / pageWidth);
+    }
+
+    function scrollToIndex(i){
+      const pageWidth = scrollEl.clientWidth;
+      scrollEl.scrollTo({ left: i * pageWidth, behavior:'smooth' });
+    }
+
+    function sync(){
+      const i = indexFromScroll();
+      const btns = dotsEl.querySelectorAll('button');
+      btns.forEach((b,idx)=> b.setAttribute('aria-current', idx===i ? 'true':'false'));
+    }
+
+    let raf;
+    function onScroll(){
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(sync);
+    }
+
+    // Recalcular en cambios de layout
+    const ro = new ResizeObserver(renderDots);
+    ro.observe(scrollEl);
+
+    scrollEl.addEventListener('scroll', onScroll, { passive:true });
+    renderDots();
+  }
+
+  // Inicializar para cada contenedor de puntos
+  document.querySelectorAll('.carousel-dots').forEach(dots=>{
+    const id = dots.getAttribute('data-for');
+    const scroller = document.getElementById(id);
+    setupDots(scroller, dots);
+  });
+})();
+
