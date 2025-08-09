@@ -1,4 +1,4 @@
-// ===== Altura real del header =====
+// Altura real del header
 const headerEl = document.getElementById('siteHeader');
 function setHeaderHeight(){
   const h = headerEl.offsetHeight || 64;
@@ -8,7 +8,7 @@ setHeaderHeight();
 window.addEventListener('resize', setHeaderHeight);
 window.addEventListener('orientationchange', setHeaderHeight);
 
-// ===== Menú móvil — versión mínima =====
+// Menú móvil simple
 const menuBtn = document.getElementById('menuBtn');
 const menuList = document.getElementById('menuList');
 function toggleMenu(force){
@@ -17,15 +17,13 @@ function toggleMenu(force){
   menuBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
 }
 menuBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(); });
-// Cerrar sólo cuando el usuario navega a un enlace
 Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 
-// ===== Año en el footer =====
-const yEl = document.getElementById('y');
-if (yEl) yEl.textContent = new Date().getFullYear();
+// Año en footer
+const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-// ===== Datos de productos y ofertas (sin precios) =====
-const productos = [
+// Productos sin precios
+const productos=[
   {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
   {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
   {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
@@ -34,65 +32,53 @@ const productos = [
   {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'}
 ];
 
-const ofertas = [
+const ofertas=[
   {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
 ];
 
-// ===== Cargar categorías en el <select> =====
-const catSelect = document.getElementById('categoria');
-const categorias = [...new Set(productos.map(p=>p.categoria))].sort();
-categorias.forEach(c=>{
-  const o=document.createElement('option');
-  o.value=c; o.textContent=c;
-  catSelect.appendChild(o);
-});
+// Cargar categorías
+const catSelect=document.getElementById('categoria');
+const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
+categorias.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSelect.appendChild(o);});
 
-// ===== Render de tarjetas =====
-const grid = document.getElementById('productGrid');
-const offersGrid = document.getElementById('offersGrid');
-const search = document.getElementById('search');
+const grid=document.getElementById('productGrid');
+const offersGrid=document.getElementById('offersGrid');
+const search=document.getElementById('search');
 
-const cardHTML = p => `
+const cardHTML=p=>`
   <article class="card">
     <img loading="lazy" src="${p.foto}" alt="${p.nombre}">
     <div class="body">
       <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
       <h3>${p.nombre}</h3>
-      ${p.precio!=null ? ('<div class="price">$'+p.precio.toFixed(2)+'</div>') : ''}
+      ${p.precio!=null?('<div class="price">$'+p.precio.toFixed(2)+'</div>'):''}
       <a class="btn btn-primary" href="https://api.whatsapp.com/send?phone=17878923930&text=${encodeURIComponent('Hola, quiero info del producto: '+p.nombre)}" target="_blank" rel="noopener">Pedir cotización</a>
     </div>
   </article>`;
 
-// Pintar catálogo inicial
-function render(list){ grid.innerHTML = list.map(cardHTML).join(''); }
-render(productos);
-
-// Filtros (búsqueda + categoría)
+function render(list){ grid.innerHTML=list.map(cardHTML).join(''); }
 function filtrar(){
-  const q = (search.value||'').toLowerCase().trim();
-  const c = catSelect.value;
-  const list = productos.filter(p=>{
-    const okCat = !c || p.categoria === c;
-    const okQ = !q || (`${p.nombre} ${p.marca}`).toLowerCase().includes(q);
-    return okCat && okQ;
+  const q=(search.value||'').toLowerCase().trim();
+  const c=catSelect.value;
+  const list=productos.filter(p=>{
+    const okCat=!c||p.categoria===c;
+    const okQ=!q||(`${p.nombre} ${p.marca}`).toLowerCase().includes(q);
+    return okCat&&okQ;
   });
   render(list);
 }
-search.addEventListener('input', filtrar);
-catSelect.addEventListener('change', filtrar);
+search.addEventListener('input',filtrar);
+catSelect.addEventListener('change',filtrar);
+render(productos);
 
 // Ofertas
-offersGrid.innerHTML = ofertas.map(cardHTML).join('');
+offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
-// ===== Hero ticker (cambia cada 2.5s) =====
+// Hero ticker
 (function(){
-  const el = document.getElementById('heroTicker');
+  const el=document.getElementById('heroTicker');
   if(!el) return;
-  const frases = ['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
-  let i = 0;
-  setInterval(()=>{
-    i = (i+1)%frases.length;
-    el.innerHTML = frases[i];
-  }, 2500);
+  const frases=['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
+  let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
