@@ -1,10 +1,7 @@
-// ================================
-// script.js — versión estable 2025
-// ================================
+// script.js — versión estable 2025 con fixes de carrusel
 
-// Ejecutar tras construir el DOM
 document.addEventListener('DOMContentLoaded', () => {
-  // ===== Header height CSS var =====
+  // altura dinámica del header
   const headerEl = document.getElementById('siteHeader');
   function setHeaderHeight(){
     const h = headerEl ? (headerEl.offsetHeight || 64) : 64;
@@ -14,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', setHeaderHeight);
   window.addEventListener('orientationchange', setHeaderHeight);
 
-  // ===== Menú móvil =====
+  // menú móvil
   const menuBtn = document.getElementById('menuBtn');
   const menuList = document.getElementById('menuList');
   function toggleMenu(force){
@@ -28,12 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
     Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
   }
 
-  // ===== Año en footer =====
+  // año en footer
   const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-  // ========================
-  // Datos (productos/ofertas)
-  // ========================
+  // datos
   const productos=[
     {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
     {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -41,20 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
     {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
     {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
     {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'},
-
-    // === NUEVO PRODUCTO ===
     {nombre:'Fluidmaster Better Than Wax – Toilet Seal', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'assets/fluidmaster-better-than-wax.jpg'}
-    // si tu archivo se llama distinto (ej. fuidmaster-toilet-seal.jpg),
-    // cambia el valor de foto a ese nombre exacto.
   ];
 
   const ofertas=[
     {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
   ];
 
-  // ========================
-  // UI Catálogo/Filtros
-  // ========================
+  // UI catálogo y filtros
   const catSelect=document.getElementById('categoria');
   const grid=document.getElementById('productGrid');
   const offersGrid=document.getElementById('offersGrid');
@@ -67,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cardHTML=p=>`
     <article class="card">
-      <img loading="lazy" src="${p.foto}" alt="${p.nombre}">
+      <img loading="lazy" src="${p.foto}" alt="${p.nombre}" onerror="this.onerror=null;this.src='assets/placeholder.jpg';">
       <div class="body">
         <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
         <h3>${p.nombre}</h3>
@@ -79,12 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
   function render(list){
     if(!grid) return;
     grid.innerHTML=list.map(cardHTML).join('');
-    buildDots(grid); // crea/actualiza puntitos (máx 5)
+    buildDots(grid);
+    Array.from(grid.querySelectorAll('img')).forEach(img=>{
+      img.addEventListener('load', ()=> buildDots(grid), { once:true });
+    });
   }
   function renderOffers(){
     if(!offersGrid) return;
     offersGrid.innerHTML=ofertas.map(cardHTML).join('');
     buildDots(offersGrid);
+    Array.from(offersGrid.querySelectorAll('img')).forEach(img=>{
+      img.addEventListener('load', ()=> buildDots(offersGrid), { once:true });
+    });
   }
 
   function filtrar(){
@@ -100,11 +95,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if(search) search.addEventListener('input',filtrar);
   if(catSelect) catSelect.addEventListener('change',filtrar);
 
-  // Render inicial
+  // render inicial
   render(productos);
   renderOffers();
 
-  // ===== Hero ticker =====
+  // ticker del hero
   (function(){
     const el=document.getElementById('heroTicker');
     if(!el) return;
@@ -112,28 +107,25 @@ document.addEventListener('DOMContentLoaded', () => {
     let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
   })();
 
-  // ======================================
-  // Paginador de carrusel — basado en PÁGINAS
-  //  - Máximo 5 puntos (ventana deslizante)
-  //  - Desktop (>=900px): oculto automáticamente
-  // ======================================
+  // paginador de carrusel con dots
   const MAX_DOTS = 5;
-  const state = new WeakMap(); // { rafId, onScroll }
+  const state = new WeakMap();
 
   function pagesCount(el){
     const w = el.clientWidth || 1;
-    return Math.max(1, Math.ceil(el.scrollWidth / w));
+    return Math.max(1, Math.ceil((el.scrollWidth - w) / w) + 1);
   }
   function activePage(el){
     const w = el.clientWidth || 1;
-    return Math.round(el.scrollLeft / w);
+    const total = pagesCount(el);
+    const i = Math.round(el.scrollLeft / w);
+    return Math.min(Math.max(0, i), total - 1);
   }
   function scrollToPage(el, i){
     const w = el.clientWidth || 1;
     el.scrollTo({ left: i * w, behavior:'smooth' });
   }
   function windowStart(curr, total, visible){
-    // centra la ventana cuando sea posible
     let start = curr - Math.floor(visible/2);
     start = Math.max(0, start);
     start = Math.min(start, Math.max(0, total - visible));
@@ -206,10 +198,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function buildDots(el){ renderDotsFor(el); }
 
-  // Recalcular dots cuando cambie el layout
+  // recalcular en cambios de layout
   window.addEventListener('resize', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
   window.addEventListener('orientationchange', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
+
+  const ro = new ResizeObserver(()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
+  if(grid) ro.observe(grid);
+  if(offersGrid) ro.observe(offersGrid);
 });
+
 
 
 
