@@ -53,18 +53,33 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 /* ===== PRODUCTOS ===== */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .filters input,.filters select{background:#121317;color:#fff;border:1px solid var(--borde);border-radius:12px;padding:10px}
+
+/* Carrusel en mobile / grilla en desktop */
 .products{
-  display:grid;grid-auto-flow:column;grid-auto-columns:85%;
-  gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
-  scrollbar-width:none;padding-bottom:10px;margin:0 -8px;padding-left:8px;padding-right:8px
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:85%;
+  gap:14px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:10px;
+  margin:0 -8px;
+  padding-left:8px;
+  padding-right:8px;
 }
 .products::-webkit-scrollbar{display:none}
 .products .card{scroll-snap-align:start;width:100%;max-width:460px}
 @media(min-width:900px){
   .products{
-    grid-auto-flow:initial;grid-auto-columns:initial;
+    grid-auto-flow:initial;
+    grid-auto-columns:initial;
     grid-template-columns:repeat(4, minmax(240px, 1fr));
-    overflow:visible;scroll-snap-type:none;margin:0;padding:0
+    overflow:visible;
+    scroll-snap-type:none;
+    margin:0;
+    padding:0;
   }
 }
 
