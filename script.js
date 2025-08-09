@@ -1,5 +1,5 @@
 // =======================================
-// script.js — fix robusto carrusel + ofertas (v11)
+// script.js — v12 FIX: Ofertas + Dots siempre visibles en móvil
 // =======================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const offersGrid = document.getElementById('offersGrid');
   const search     = document.getElementById('search');
 
-  // Opciones de categoría
   if (catSelect) {
     const categorias = [...new Set(productos.map(p => p.categoria))].sort();
     categorias.forEach(c => {
@@ -67,9 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Tarjeta base (si falla la imagen, igual se ve la tarjeta)
   const cardHTML = (p) => `
     <article class="card">
-      <img loading="lazy" src="${p.foto}" alt="${p.nombre}">
+      <img loading="lazy" src="${p.foto}" alt="${p.nombre}"
+           onerror="this.onerror=null;this.src='assets/placeholder.jpg'">
       <div class="body">
         <div class="tags">
           <span class="pill">${p.categoria}</span>
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function renderOffers() {
     if (!offersGrid) return;
+    // AÚN si la imagen falla, la tarjeta se pinta. Si no ves nada, el problema no es la imagen.
     offersGrid.innerHTML = ofertas.map(cardHTML).join('');
     hydrateCarousel(offersGrid);
   }
@@ -122,10 +124,10 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   // =======================================
-  // Carrusel con dots (robusto en mobile)
+  // Carrusel con dots (SIEMPRE visibles en móvil)
   // =======================================
   const MAX_DOTS = 5;
-  const state = new WeakMap(); // { onScroll, rafId, snaps:number[] }
+  const state = new WeakMap(); // { onScroll, rafId }
 
   const isDesktop = () => window.matchMedia('(min-width: 900px)').matches;
 
@@ -142,8 +144,8 @@ document.addEventListener('DOMContentLoaded', () => {
     return dots;
   }
 
+  // Snaps por tarjeta
   function getSnaps(listEl){
-    // snaps = offsetLeft de cada tarjeta .card
     const cards = Array.from(listEl.querySelectorAll('.card'));
     return cards.map(c => Math.max(0, c.offsetLeft));
   }
@@ -165,25 +167,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderDots(listEl){
     const dots = ensureDotsEl(listEl);
-
-    // Desktop: oculto; Mobile: solo si hay overflow y >1 card
     const cards = listEl.querySelectorAll('.card').length;
-    const hasOverflow = (listEl.scrollWidth - listEl.clientWidth) > 2;
 
-    if (isDesktop() || cards <= 1 || !hasOverflow){
+    // Desktop: oculto por diseño
+    if (isDesktop() || cards === 0){
       dots.style.display = 'none';
       detachCarousel(listEl);
       return;
     }
 
-    // guardar snaps y construir
+    // Siempre mostrar dots en móvil cuando hay >=1 tarjeta
     const snaps = getSnaps(listEl);
-    const total = snaps.length;
+    const total = Math.max(1, snaps.length); // si hay 1 item, habrá 1 dot
     const curr  = nearestIndex(snaps, listEl.scrollLeft);
     const visible = Math.min(MAX_DOTS, total);
 
-    let start = curr - Math.floor(visible / 2);
-    start = Math.max(0, Math.min(start, total - visible));
+    let start = Math.max(0, Math.min(curr - Math.floor(visible/2), total - visible));
 
     const fr = document.createDocumentFragment();
     for (let i = 0; i < visible; i++){
@@ -198,33 +197,18 @@ document.addEventListener('DOMContentLoaded', () => {
     dots.replaceChildren(fr);
     dots.style.display = 'flex';
 
-    // guardar estado + listeners
+    // listeners
     let s = state.get(listEl) || {};
-    s.snaps = snaps;
-    state.set(listEl, s);
-    attachCarousel(listEl);
-  }
-
-  function onScrollFactory(listEl){
-    return () => {
-      let s = state.get(listEl) || {};
-      if (s.rafId) return;
-      s.rafId = requestAnimationFrame(() => {
-        s.rafId = null;
-        renderDots(listEl);
-      });
+    if (!s.onScroll){
+      s.onScroll = () => {
+        if (s.rafId) return;
+        s.rafId = requestAnimationFrame(() => { s.rafId = null; renderDots(listEl); });
+      };
+      listEl.addEventListener('scroll', s.onScroll, { passive:true });
+      window.addEventListener('resize', s.onScroll, { passive:true });
+      window.addEventListener('orientationchange', s.onScroll, { passive:true });
       state.set(listEl, s);
-    };
-  }
-
-  function attachCarousel(listEl){
-    let s = state.get(listEl) || {};
-    if (s.onScroll) return; // ya conectado
-    s.onScroll = onScrollFactory(listEl);
-    state.set(listEl, s);
-    listEl.addEventListener('scroll', s.onScroll, { passive: true });
-    window.addEventListener('resize', s.onScroll, { passive: true });
-    window.addEventListener('orientationchange', s.onScroll, { passive: true });
+    }
   }
 
   function detachCarousel(listEl){
@@ -240,11 +224,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function hydrateCarousel(listEl){
     if (!listEl) return;
-
-    // construir una vez
     renderDots(listEl);
 
-    // recalc cuando carguen imágenes dentro del carrusel
+    // Recalcular cuando carguen imágenes (por si cambian anchos)
     const imgs = Array.from(listEl.querySelectorAll('img'));
     let pending = imgs.length;
     if (pending === 0) { renderDots(listEl); }
@@ -252,12 +234,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const done = () => { pending--; if (pending <= 0) renderDots(listEl); };
       if (img.complete) done();
       else {
-        img.addEventListener('load', done,  { once: true });
-        img.addEventListener('error', done, { once: true });
+        img.addEventListener('load', done,  { once:true });
+        img.addEventListener('error', done, { once:true });
       }
     });
 
-    // observar cambios reales de tamaño del contenedor (Roboto)
+    // Recalcular si cambia el tamaño real del contenedor
     const ro = new ResizeObserver(() => renderDots(listEl));
     ro.observe(listEl);
   }
