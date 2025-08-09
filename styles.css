@@ -17,8 +17,8 @@ section{padding:clamp(28px,5vw,56px) 0}
 .section-title h2{margin:0;line-height:1.1;font-size:28px}
 .section-title a{font-weight:800;color:#ffdede;white-space:nowrap}
 
-/* NAV */
-header{position:fixed;top:0;left:0;right:0;z-index:3000;background:#0b0c0f;border-bottom:1px solid var(--borde)}
+/* ===== NAV (ultra simple & iOS-proof) ===== */
+header{position:fixed;top:0;left:0;right:0;z-index:3000;background:#0b0c0f;/* sin blur para evitar bugs */border-bottom:1px solid var(--borde)}
 body{padding-top:var(--header-h)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
 .brand{display:flex;gap:12px;align-items:center;min-width:0}
@@ -31,7 +31,7 @@ nav ul::-webkit-scrollbar{display:none}
 nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;color:#f2f2f6;border:1px solid transparent}
 .menu-btn{display:none;border:0;padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;cursor:pointer}
 
-/* HERO */
+/* ===== HERO ===== */
 .hero{color:#fff;display:flex;align-items:center;min-height:clamp(520px,76vh,760px);background:url('assets/ferreteria-de-noche.jpg') center 46%/cover no-repeat}
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;width:100%}
 .hero h1{font-size:clamp(28px,5.1vw,50px);line-height:1.08;margin:0 0 10px}
@@ -46,7 +46,7 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .stat{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:14px;text-align:center}
 .stat b{display:block;font-size:22px}
 
-/* PRODUCTOS */
+/* ===== PRODUCTOS ===== */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .filters input,.filters select{background:#121317;color:#fff;border:1px solid var(--borde);border-radius:12px;padding:10px}
 .products{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:10px;margin:0 -8px;padding-left:8px;padding-right:8px}
@@ -63,14 +63,14 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .card .btn{width:100%;margin-top:10px}
 .price{display:none}
 
-/* INSTAGRAM */
+/* ===== INSTAGRAM ===== */
 .ig-card{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:18px}
 .ig-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .ig-grid img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:10px;background:#0e0f12}
 .ig-handle{display:inline-flex;gap:8px;align-items:center;font-weight:800}
 .ig-handle::before{content:"";width:8px;height:8px;border-radius:999px;background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
 
-/* REVIEWS */
+/* ===== REVIEWS ===== */
 .reviews{display:grid;grid-template-columns:1fr;gap:14px}
 @media (min-width:900px){.reviews{grid-template-columns:repeat(3,1fr)}}
 .review-card{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:16px;min-height:160px;display:flex;flex-direction:column;gap:8px}
@@ -80,12 +80,12 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#111214;border:1px solid var(--borde);border-radius:999px;padding:6px 10px;font-weight:800}
 .btn-ghost{display:inline-block;border:1px solid var(--borde);padding:10px 12px;border-radius:12px}
 
-/* SERVICIOS */
+/* ===== SERVICIOS ===== */
 .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .feature{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:20px 18px 16px}
 .feature-icon{font-size:28px;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(225,6,0,.12);border:1px solid rgba(225,6,0,.22)}
 
-/* MAPA / CONTACTO */
+/* ===== MAPA / CONTACTO ===== */
 .map{border:0;width:100%;height:360px;border-radius:14px}
 .social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .btn-social{display:flex;align-items:center;gap:10px;justify-content:center;border-radius:14px;padding:16px;font-weight:900;border:0;background:var(--card);color:#fff;text-align:center}
@@ -93,12 +93,12 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .btn-instagram{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
 .btn-whatsapp{background:linear-gradient(135deg,var(--verde),var(--verde2));color:#0a0b0c}
 
-/* FOOTER */
+/* ===== FOOTER ===== */
 footer{background:#000;color:#bdbdc6;padding:22px 0;margin-top:22px;border-top:1px solid var(--borde)}
 .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
 footer a{color:#ffdede}
 
-/* MOBILE */
+/* ===== MOBILE ===== */
 @media (max-width:980px){
   .menu-btn{display:inline-flex}
   nav ul{display:block;position:fixed;left:12px;right:12px;top:var(--header-h);background:#101214;border:1px solid var(--borde);border-radius:14px;padding:12px;z-index:3300;opacity:0;pointer-events:none;transform:translateY(-6px)}
@@ -120,3 +120,6 @@ footer a{color:#ffdede}
 .container, nav, .hero, .services, footer { max-width:100vw; overflow-x:clip; }
 .fb-page, .fb-page iframe, .fb-page span { max-width:100% !important; width:100% !important; }
 
+/* ===== AJUSTE SOLICITADO: ocultar palabras/botones del hero sin mover nada ===== */
+.hero .badges,
+.hero .cta-row { visibility: hidden; pointer-events: none; }
