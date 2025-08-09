@@ -32,11 +32,11 @@
       <img src="assets/Logo-flaco.jpg" alt="Ferretería El Flaco logo" class="logo">
       <div class="brand-title">
         <strong>Ferretería El Flaco</strong><br>
-        <small>San Germán, Puerto Rico</small>
+        <small class="muted">San Germán, Puerto Rico</small>
       </div>
     </div>
     <nav>
-      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuList">Menú</button>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuList" aria-label="Abrir menú">Menú</button>
       <ul id="menuList">
         <li><a href="#productos">Productos</a></li>
         <li><a href="#ofertas">Ofertas</a></li>
@@ -62,10 +62,14 @@
         <span class="badge">Corte de madera</span>
         <span class="badge">Duplicado de llaves</span>
       </div>
+      <!-- Un solo CTA fuerte en el hero -->
       <div class="cta-row">
         <a class="btn btn-primary" href="#productos">Ver catálogo</a>
-        <a class="btn btn-outline" href="tel:+17878923930">Llamar ahora</a>
-        <a class="btn btn-outline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
+      </div>
+      <!-- Enlaces secundarios como texto, sin competir visualmente -->
+      <div class="hero-links">
+        <a href="tel:+17878923930">Llamar ahora</a>
+        <a href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
       </div>
     </div>
     <div class="stats-card">
@@ -111,11 +115,24 @@
       <a class="ig-handle" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">@ferreteriael_flaco787.892.3930</a>
     </div>
     <div class="ig-card">
-      <p style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. ¡Síguenos para verlo primero!</p>
+      <p class="muted" style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. ¡Síguenos para verlo primero!</p>
       <div class="ig-grid" id="igGrid">
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500"></a>
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón"></a>
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/Dewalt-driver.webp" alt="DeWalt Driver"></a>
+        <!-- 3 posts minimalistas: imagen cuadrada, caption en una línea, CTA secundario -->
+        <article class="ig-post">
+          <img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500 en tienda">
+          <div class="ig-caption">Crossco 5500 — Sellador acrílico 2 en 1</div>
+          <a class="btn-ghost" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver en Instagram</a>
+        </article>
+        <article class="ig-post">
+          <img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón">
+          <div class="ig-caption">Gardner 100% Silicón — Flat Roof Coat-N-Seal</div>
+          <a class="btn-ghost" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver en Instagram</a>
+        </article>
+        <article class="ig-post">
+          <img loading="lazy" src="assets/Dewalt-driver.webp" alt="Taladro DeWalt 20V">
+          <div class="ig-caption">DeWalt 20V — driver favorito de los pros</div>
+          <a class="btn-ghost" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver en Instagram</a>
+        </article>
       </div>
     </div>
   </div>
@@ -133,10 +150,10 @@
       </div>
       <div class="content">
         <h3>¿Qué significan los colores en las cintas de aislar?</h3>
-        <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
+        <p class="muted">Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
-          <a class="btn btn-outline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+          <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener" class="muted">Preguntar por WhatsApp</a>
         </div>
       </div>
     </div>
@@ -157,21 +174,21 @@
           <div class="avatar">G</div>
           <div><strong>Gabriel R. V.</strong><br><span class="stars">★★★★★</span></div>
         </div>
-        <p style="margin:0">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
+        <p>Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
       </article>
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">R</div>
           <div><strong>Roberto F.</strong><br><span class="stars">★★★★★</span></div>
         </div>
-        <p style="margin:0">Gracias por su reseña y apoyo a esta empresa.</p>
+        <p>Gracias por su reseña y apoyo a esta empresa.</p>
       </article>
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">D</div>
           <div><strong>David B. R.</strong><br><span class="stars">★★★★★</span></div>
         </div>
-        <p style="margin:0">Muy bien surtido y las atenciones son insuperables.</p>
+        <p>Muy bien surtido y las atenciones son insuperables.</p>
       </article>
     </div>
   </div>
@@ -202,7 +219,12 @@
 
     <div class="feature" style="margin-top:14px">
       <h3 style="margin:0 0 8px">Corte de tubos de verja y varilla</h3>
-      <p style="margin:0">Trae tu medida y te lo dejamos listo para instalar.</p>
+      <p class="muted" style="margin:0">Trae tu medida y te lo dejamos listo para instalar.</p>
+    </div>
+
+    <!-- Un solo CTA al final de la sección -->
+    <div class="services-cta">
+      <a class="btn btn-primary" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20informaci%C3%B3n%20sobre%20servicios" target="_blank" rel="noopener">Pedir info por WhatsApp</a>
     </div>
 
     <div class="card" style="margin-top:14px">
@@ -233,7 +255,7 @@
         <a class="btn-social btn-instagram" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Instagram</a>
         <a class="btn-social btn-whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20informaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
       </div>
-      <p style="margin:12px 0 0;opacity:.9;text-align:center">También en <a href="tel:+17878923930">(787) 892-3930</a> · <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a></p>
+      <p class="muted" style="margin:12px 0 0;text-align:center">También en <a href="tel:+17878923930">(787) 892-3930</a> · <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a></p>
     </div>
   </div>
 </section>
@@ -242,15 +264,15 @@
   <div class="container foot">
     <div>
       <h3 style="margin:0 0 6px;color:#fff">Ferretería El Flaco</h3>
-      <p>San Germán, Puerto Rico. Herramientas, materiales y servicio con cariño boricua.</p>
+      <p class="muted">San Germán, Puerto Rico. Herramientas, materiales y servicio con cariño boricua.</p>
     </div>
     <div>
       <strong>Horario</strong>
-      <p>Lunes a Sábado 7:00 a 4:30<br>Cerrado domingo</p>
+      <p class="muted">Lunes a Sábado 7:00 a 4:30<br>Cerrado domingo</p>
     </div>
     <div>
       <strong>Contacto</strong>
-      <p>Tel (787) 892-3930<br>
+      <p class="muted">Tel (787) 892-3930<br>
       <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a><br>
       <a href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Facebook oficial</a> · <a href="https://share.google/dvr1Ooy7wO6Ku1w4d" target="_blank" rel="noopener">Deja tu reseña</a></p>
     </div>
@@ -265,9 +287,3 @@
 <script src="script.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
