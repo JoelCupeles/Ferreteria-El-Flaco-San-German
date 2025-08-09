@@ -8,21 +8,40 @@ setHeaderHeight();
 window.addEventListener('resize', setHeaderHeight);
 window.addEventListener('orientationchange', setHeaderHeight);
 
-// Menú móvil simple
+// Menú móvil con foco y bloqueo de scroll
 const menuBtn = document.getElementById('menuBtn');
 const menuList = document.getElementById('menuList');
+const firstMenuLink = menuList ? menuList.querySelector('a') : null;
+
+function lockScroll(on){
+  document.body.classList.toggle('menu-open', !!on);
+}
+
 function toggleMenu(force){
   const willOpen = typeof force==='boolean' ? force : !menuList.classList.contains('open');
   menuList.classList.toggle('open', willOpen);
   menuBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+  lockScroll(willOpen);
+  if (willOpen && firstMenuLink) {
+    // esperar al frame para que el menú sea focusable
+    requestAnimationFrame(()=> firstMenuLink.focus());
+  } else {
+    menuBtn.focus();
+  }
 }
+
 menuBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(); });
 Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
+
+// Cerrar con Escape
+window.addEventListener('keydown', (e)=>{
+  if(e.key==='Escape' && menuList.classList.contains('open')) toggleMenu(false);
+});
 
 // Año en footer
 const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-// Productos sin precios
+// Productos sin precios (precio oculto por CSS si viniera nulo)
 const productos=[
   {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
   {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -74,11 +93,10 @@ render(productos);
 // Ofertas
 offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
-// Hero ticker
+// Hero ticker (se mantiene)
 (function(){
   const el=document.getElementById('heroTicker');
   if(!el) return;
   const frases=['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
-
