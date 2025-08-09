@@ -28,53 +28,54 @@
   --verde:#17c964;--verde2:#20df78;
   --borde:rgba(255,255,255,.10);
   --texto:#ececf1;--muted:#b9bbc6;
-  --bg:#0f1012;--card:#17181c;--ink:#0a0b0c;
+  --bg:#0f1012;--card:#17181c;--ink:#0a0b0c;--blanco:#ffffff;
 }
 *{box-sizing:border-box}
 html,body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-html,body{margin:0;background:var(--bg);color:var(--texto);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.6;overflow-x:hidden}
+html,body{margin:0;background:var(--bg);color:var(--texto);font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;line-height:1.65;overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 .container{max-width:1200px;margin:0 auto;padding:0 16px}
-section{padding:40px 0}
-.section-title{display:flex;align-items:end;justify-content:space-between;margin-bottom:16px;gap:12px}
-.section-title h2{margin:0;font-size:28px}
-.section-title a{font-weight:800;color:#ffdede}
+section{padding:clamp(28px,5vw,56px) 0}
+.section-title{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.section-title h2{margin:0;line-height:1.1;font-size:28px}
+.section-title a{font-weight:800;color:#ffdede;white-space:nowrap}
 
 /* ===== NAV ===== */
-header{position:sticky;top:0;z-index:100;background:rgba(10,11,14,.76);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--borde)}
+header{position:sticky;top:0;z-index:3000;background:rgba(10,11,14,.76);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--borde)}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
 .brand{display:flex;gap:12px;align-items:center;min-width:0}
 .logo{width:44px;border-radius:10px}
 .brand-title{line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand-title strong{font-size:18px}
+nav{position:relative;z-index:3100}
 nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0;align-items:center;overflow:auto;scrollbar-width:none}
 nav ul::-webkit-scrollbar{display:none}
 nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;color:#f2f2f6}
 nav a:hover{background:rgba(225,6,0,.14)}
-.menu-btn{display:none;border:0;padding:10px 12px;border-radius:12px;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;box-shadow:0 10px 22px rgba(225,6,0,.28);cursor:pointer}
-.menu-btn:after{content:"  ☰"}
+.menu-btn{display:none;border:0;padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;box-shadow:0 10px 22px rgba(225,6,0,.28);cursor:pointer}
+.menu-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+.menu-btn::after{content:"  ☰"}
 
 /* ===== HERO ===== */
 .hero{
-  color:#fff; display:flex; align-items:center; min-height:clamp(520px,76vh,760px);
+  color:#fff;display:flex;align-items:center;min-height:clamp(520px,76vh,760px);
   background:
-    linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.40) 40%, rgba(0,0,0,.18) 80%),
-    linear-gradient(110deg, rgba(225,6,0,.14), transparent 55%),
+    linear-gradient(180deg, rgba(140,0,0,.28) 0%, rgba(0,0,0,.38) 40%, rgba(0,0,0,.16) 80%),
+    linear-gradient(110deg, rgba(225,6,0,.10), transparent 55%),
     url('assets/ferreteria-de-noche.jpg');
-  background-size:cover; background-position:center 46%;
+  background-size:cover;background-position:center 46%;
 }
 .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:center;width:100%}
 .hero h1{font-size:clamp(28px,5.1vw,50px);line-height:1.08;margin:0 0 10px;text-shadow:0 2px 14px rgba(0,0,0,.35)}
 .hero p{opacity:.97;margin:0 0 16px}
 .badges{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
-.badge{background:rgba(255,255,255,.08);border:1px solid var(--borde);padding:7px 11px;border-radius:999px;font-size:14px}
+.badge{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(3px);padding:7px 11px;border-radius:999px;font-size:14px}
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;font-weight:900;border:0;cursor:pointer;transition:.2s transform,.2s filter}
 .btn:active{transform:translateY(1px)}
 .btn-primary{background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;box-shadow:0 10px 24px rgba(225,6,0,.28)}
 .btn-primary:hover{filter:brightness(1.06)}
 
-/* stats más pequeños y bajitos en móvil */
 .stats-card{background:rgba(20,21,25,.78);border:1px solid var(--borde);backdrop-filter:blur(6px);border-radius:16px;padding:16px}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:14px;text-align:center}
@@ -83,25 +84,44 @@ nav a:hover{background:rgba(225,6,0,.14)}
 /* ===== PRODUCTOS / CARRUSEL MÓVIL, GRID DESKTOP ===== */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .filters input,.filters select{background:#121317;color:#fff;border:1px solid var(--borde);border-radius:12px;padding:10px}
-.products{display:grid;grid-auto-flow:column;grid-auto-columns:86%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 4px 10px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+
+/* Productos → carrusel en móvil, grid en desktop (fix ancho) */
+.products{
+  display:grid;
+  grid-auto-flow:column;
+  grid-auto-columns:85%;
+  gap:14px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  padding-bottom:10px;
+  margin:0 -8px;
+  padding-left:8px;
+  padding-right:8px;
+  mask-image:linear-gradient(90deg,transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
+}
 .products::-webkit-scrollbar{display:none}
-.card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--borde);transition:transform .25s ease, box-shadow .25s ease;scroll-snap-align:start;box-shadow:0 10px 24px rgba(0,0,0,.35)}
-.card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.55)}
+.products .card{scroll-snap-align:start;width:100%;max-width:460px}
+
+/* Desktop: grid estable */
+@media(min-width:900px){
+  .products{
+    grid-auto-flow:initial;grid-auto-columns:initial;
+    grid-template-columns:repeat(4, minmax(240px, 1fr));
+    overflow:visible;scroll-snap-type:none;margin:0;padding:0;
+  }
+}
+
+/* Cards */
+.card{background:var(--card);border-radius:14px;overflow:hidden;border:1px solid var(--borde);transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.card:hover{transform:translateY(-4px);box-shadow:0 16px 30px rgba(0,0,0,.55);border-color:rgba(225,6,0,.25)}
 .card .body{padding:14px}
 .card h3{margin:6px 0 6px;font-size:clamp(16px,2.1vw,18px)}
 .pill{display:inline-block;background:#0f1114;color:#fff;padding:3px 8px;border-radius:999px;font-size:12px;border:1px solid var(--borde)}
 .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .card .btn{width:100%;margin-top:10px}
 .price{display:none}
-
-/* GRID desktop/tablet */
-@media(min-width:900px){
-  .products{grid-auto-flow:initial;grid-auto-columns:initial;grid-template-columns:repeat(4,1fr);overflow:visible;scroll-snap-type:none}
-}
-
-/* Ofertas reutiliza cards */
-#ofertas .products{grid-auto-columns:86%}
-@media(min-width:900px){#ofertas .products{grid-template-columns:repeat(3,1fr)}}
 
 /* ===== INSTAGRAM ===== */
 .ig-card{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:18px}
@@ -112,7 +132,7 @@ nav a:hover{background:rgba(225,6,0,.14)}
 
 /* ===== REVIEWS ===== */
 .reviews{display:grid;grid-template-columns:1fr;gap:14px}
-@media(min-width:900px){.reviews{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:900px){.reviews{grid-template-columns:repeat(3,1fr)}}
 .review-card{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:16px;min-height:160px;display:flex;flex-direction:column;gap:8px}
 .review-head{display:flex;align-items:center;gap:10px}
 .avatar{width:40px;height:40px;border-radius:50%;background:#202227;display:grid;place-items:center;font-weight:800}
@@ -122,12 +142,7 @@ nav a:hover{background:rgba(225,6,0,.14)}
 
 /* ===== SERVICIOS ===== */
 .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.feature{
-  background:radial-gradient(120% 120% at -20% -20%, rgba(225,6,0,.16) 0%, transparent 55%), var(--card);
-  border:1px solid var(--borde);border-radius:14px;padding:20px 18px 16px;
-  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-  display:flex;flex-direction:column;gap:10px
-}
+.feature{background:radial-gradient(120% 120% at -20% -20%, rgba(225,6,0,.16) 0%, transparent 55%), var(--card);border:1px solid var(--borde);border-radius:14px;padding:20px 18px 16px;transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;display:flex;flex-direction:column;gap:10px}
 .feature:hover{transform:translateY(-4px);border-color:rgba(225,6,0,.35);box-shadow:0 14px 30px rgba(0,0,0,.55)}
 .feature-icon{font-size:28px;width:44px;height:44px;border-radius:10px;display:grid;place-items:center;background:rgba(225,6,0,.12);border:1px solid rgba(225,6,0,.22)}
 .feature-cta{align-self:flex-start;margin-top:auto;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;border-radius:10px;padding:10px 12px;border:0}
@@ -135,7 +150,7 @@ nav a:hover{background:rgba(225,6,0,.14)}
 /* ===== MAPA / CONTACTO ===== */
 .map{border:0;width:100%;height:360px;border-radius:14px;box-shadow:0 8px 20px rgba(0,0,0,.35)}
 .social-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.btn-social{display:flex;align-items:center;gap:10px;justify-content:center;border-radius:14px;padding:16px;font-weight:900;border:1px solid var(--borde);background:var(--card);color:#fff;text-align:center;transition:.2s transform,.2s filter}
+.btn-social{display:flex;align-items:center;gap:10px;justify-content:center;border-radius:14px;padding:16px;font-weight:900;border:0;background:var(--card);color:#fff;text-align:center;box-shadow:0 10px 20px rgba(0,0,0,.35);transition:.2s transform,.2s filter}
 .btn-social:hover{transform:translateY(-2px);filter:brightness(1.06)}
 .btn-facebook{background:#1877F2}
 .btn-instagram{background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af,#515bd4)}
@@ -148,29 +163,30 @@ footer a{color:#ffdede}
 
 /* ===== MOBILE ===== */
 @media (max-width:980px){
-  .menu-btn{display:inline-block}
-  nav ul{display:none;position:absolute;right:16px;top:58px;background:#101214;border:1px solid var(--borde);border-radius:12px;padding:10px;flex-direction:column;width:240px}
+  .menu-btn{display:inline-flex}
+  nav ul{display:none;position:absolute;right:16px;top:58px;background:#101214;border:1px solid var(--borde);border-radius:12px;padding:10px;flex-direction:column;width:240px;z-index:3200}
   nav ul.open{display:flex}
   nav a{display:block}
 
   .hero{background-position:center 48%}
-  .hero .wrap{grid-template-columns:1fr;padding:26px 0}
-  /* baja y reduce stats para ver más la foto */
-  .stats-card{margin-top:clamp(80px,32vh,160px);transform:scale(.95);transform-origin:center top}
+  .hero .wrap{grid-template-columns:1fr;padding:36px 0}
+  .stats-card{margin-top:clamp(18px,8vh,42px);transform:scale(.95);transform-origin:center top}
   .grid-2{grid-template-columns:1fr}
   .stat b{font-size:20px}
 
   .services{grid-template-columns:1fr 1fr}
   .foot{grid-template-columns:1fr}
   .social-grid{grid-template-columns:1fr}
-  section{padding:32px 0}
 }
 @media (max-width:620px){
   .services{grid-template-columns:1fr}
 }
 
-/* seguridad extra: nada se sale del viewport */
-.container, section, header, footer, .hero, .products{max-width:100vw;overflow-x:clip}
+/* Safety: nada se sale del viewport, pero el carrusel sí puede scrollear */
+.container, header, nav, .hero, .services, footer { max-width:100vw; overflow-x:clip; }
+
+/* Facebook plugin: que nunca exceda el ancho */
+.fb-page, .fb-page iframe, .fb-page span { max-width:100% !important; width:100% !important; }
 </style>
 </head>
 <body>
@@ -384,21 +400,25 @@ footer a{color:#ffdede}
   <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
 </footer>
 
-<a class="btn-social btn-whatsapp" style="position:fixed;right:18px;bottom:18px;z-index:80;border:0;box-shadow:0 10px 22px rgba(0,0,0,.35)" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
+<a class="btn-social btn-whatsapp" style="position:fixed;right:18px;bottom:18px;z-index:4000;border:0;box-shadow:0 10px 22px rgba(0,0,0,.35)" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
 
 <script>
-// Menú móvil
+// Menú móvil (encima del hero)
 const menuBtn=document.getElementById('menuBtn');
 const menuList=document.getElementById('menuList');
-menuBtn?.addEventListener('click',()=>menuList.classList.toggle('open'));
+menuBtn?.addEventListener('click',()=>{
+  menuList.classList.toggle('open');
+  const isOpen=menuList.classList.contains('open');
+  menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+});
 
 // Año
-document.getElementById('y').textContent=new Date().getFullYear();
+const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-// Productos
+// Productos (sin precios)
 const productos=[
   {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
   {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -412,11 +432,13 @@ const ofertas=[
   {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
 ];
 
+// Cargar categorías
 const catSelect=document.getElementById('categoria');
-const categorias=Array.from(new Set(productos.map(p=>p.categoria))).sort();
+const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
 categorias.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSelect.appendChild(o);});
 
 const grid=document.getElementById('productGrid');
+const offersGrid=document.getElementById('offersGrid');
 const search=document.getElementById('search');
 
 const cardHTML=p=>`
@@ -446,9 +468,9 @@ catSelect.addEventListener('change',filtrar);
 render(productos);
 
 // Ofertas
-document.getElementById('offersGrid').innerHTML=ofertas.map(cardHTML).join('');
+offersGrid.innerHTML=ofertas.map(cardHTML).join('');
 
-// Sombra en header
+// Header sombra on scroll
 const hdr=document.getElementById('siteHeader');
 window.addEventListener('scroll',()=>{hdr.style.boxShadow=window.scrollY>6?'0 6px 16px rgba(0,0,0,.35)':'none';});
 </script>
