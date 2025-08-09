@@ -1,7 +1,9 @@
-// script.js — versión estable 2025 con fixes de carrusel
+// ================================
+// script.js — versión estable 2025 (FIX carrusel + ofertas)
+// ================================
 
 document.addEventListener('DOMContentLoaded', () => {
-  // altura dinámica del header
+  // ===== Header height CSS var =====
   const headerEl = document.getElementById('siteHeader');
   function setHeaderHeight(){
     const h = headerEl ? (headerEl.offsetHeight || 64) : 64;
@@ -11,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('resize', setHeaderHeight);
   window.addEventListener('orientationchange', setHeaderHeight);
 
-  // menú móvil
+  // ===== Menú móvil =====
   const menuBtn = document.getElementById('menuBtn');
   const menuList = document.getElementById('menuList');
   function toggleMenu(force){
@@ -25,10 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
     Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
   }
 
-  // año en footer
+  // ===== Año en footer =====
   const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
 
-  // datos
+  // ========================
+  // Datos (productos / ofertas)
+  // ========================
   const productos=[
     {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
     {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
@@ -43,7 +47,9 @@ document.addEventListener('DOMContentLoaded', () => {
     {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
   ];
 
-  // UI catálogo y filtros
+  // ========================
+  // UI Catálogo / Filtros
+  // ========================
   const catSelect=document.getElementById('categoria');
   const grid=document.getElementById('productGrid');
   const offersGrid=document.getElementById('offersGrid');
@@ -56,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cardHTML=p=>`
     <article class="card">
-      <img loading="lazy" src="${p.foto}" alt="${p.nombre}" onerror="this.onerror=null;this.src='assets/placeholder.jpg';">
+      <img loading="lazy" src="${p.foto}" alt="${p.nombre}" onerror="this.onerror=null;this.src='assets/placeholder.jpg'">
       <div class="body">
         <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
         <h3>${p.nombre}</h3>
@@ -69,6 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!grid) return;
     grid.innerHTML=list.map(cardHTML).join('');
     buildDots(grid);
+    // Recalcular cuando carguen fotos (fix principal)
     Array.from(grid.querySelectorAll('img')).forEach(img=>{
       img.addEventListener('load', ()=> buildDots(grid), { once:true });
     });
@@ -95,11 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if(search) search.addEventListener('input',filtrar);
   if(catSelect) catSelect.addEventListener('change',filtrar);
 
-  // render inicial
+  // Render inicial
   render(productos);
   renderOffers();
 
-  // ticker del hero
+  // ===== Hero ticker =====
   (function(){
     const el=document.getElementById('heroTicker');
     if(!el) return;
@@ -107,9 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
   })();
 
-  // paginador de carrusel con dots
+  // ======================================
+  // Paginador de carrusel (máx 5 puntos)
+  // ======================================
   const MAX_DOTS = 5;
-  const state = new WeakMap();
+  const state = new WeakMap(); // { rafId, onScroll }
 
   function pagesCount(el){
     const w = el.clientWidth || 1;
@@ -198,10 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function buildDots(el){ renderDotsFor(el); }
 
-  // recalcular en cambios de layout
+  // Recalcular dots cuando cambie el layout
   window.addEventListener('resize', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
   window.addEventListener('orientationchange', ()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
 
+  // Recalcular dots si cambia el tamaño real de los carruseles
   const ro = new ResizeObserver(()=>{ if(grid) buildDots(grid); if(offersGrid) buildDots(offersGrid); });
   if(grid) ro.observe(grid);
   if(offersGrid) ro.observe(offersGrid);
