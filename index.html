@@ -42,6 +42,7 @@
         <li><a href="#ofertas">Ofertas</a></li>
         <li><a href="#reseñas">Reseñas</a></li>
         <li><a href="#servicios">Servicios</a></li>
+        <!-- Eliminado Instagram del navbar -->
         <li><a href="#ubicacion">Ubicación</a></li>
         <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
@@ -105,6 +106,8 @@
   </div>
 </section>
 
+<!-- Sección de Instagram eliminada -->
+
 <section id="tips" class="tips">
   <div class="container">
     <div class="section-title">
@@ -118,10 +121,7 @@
       <div class="content">
         <h3>¿Qué significan los colores en las cintas de aislar?</h3>
         <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
-          <a class="btn btn-outline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
-        </div>
+        <!-- Botones eliminados a solicitud -->
       </div>
     </div>
   </div>
@@ -164,73 +164,30 @@
 <section id="servicios">
   <div class="container">
     <div class="section-title"><h2>Servicios</h2><span></span></div>
+    <div class="services">
+      <article class="feature">
+        <div class="feature-icon">🪚</div>
+        <h3>Corte de madera</h3>
+        <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
+      </article>
 
-    <!-- Lista moderna con expansión ligera -->
-    <ul class="service-list" aria-label="Servicios disponibles">
-      <!-- CORTE DE MADERA (sin cobro, sin botón) -->
-      <li class="service-item reveal" id="svc-wood" role="button" tabindex="0" aria-controls="svc-wood-extra" aria-expanded="false" data-collapsible="true">
-        <div class="service-icon" aria-hidden="true">🪚</div>
-        <div class="service-body">
-          <h3>Corte de madera</h3>
-          <p>Medidas a la carta para carpintería y construcción. <strong>Sin costo por corte.</strong></p>
-          <div class="service-extra" id="svc-wood-extra">
-            <ul class="mini">
-              <li>Cortes precisos según tu medida</li>
-              <li>Listo para llevar</li>
-            </ul>
-          </div>
-        </div>
-      </li>
+      <article class="feature">
+        <div class="feature-icon">🔑</div>
+        <h3>Duplicado de llaves</h3>
+        <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
+      </article>
 
-      <!-- DUPLICADO DE LLAVES (sin botón de reservar) -->
-      <li class="service-item reveal" id="svc-keys" role="button" tabindex="0" aria-controls="svc-keys-extra" aria-expanded="false" data-collapsible="true">
-        <div class="service-icon" aria-hidden="true">🔑</div>
-        <div class="service-body">
-          <h3>Duplicado de llaves</h3>
-          <p>Rápido y preciso para hogar y candados. No autos.</p>
-          <div class="service-extra" id="svc-keys-extra">
-            <ul class="mini">
-              <li>Servicio al instante en tienda</li>
-              <li>Verificación en el momento</li>
-            </ul>
-          </div>
-        </div>
-      </li>
+      <article class="feature">
+        <div class="feature-icon">💦</div>
+        <h3>Alquiler de máquina de presión</h3>
+        <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
+      </article>
+    </div>
 
-      <!-- MÁQUINA DE PRESIÓN (único con botón) -->
-      <li class="service-item reveal" id="svc-pressure" role="button" tabindex="0" aria-controls="svc-pressure-extra" aria-expanded="false" data-collapsible="true">
-        <div class="service-icon" aria-hidden="true">💦</div>
-        <div class="service-body">
-          <h3>Alquiler de máquina de presión</h3>
-          <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
-          <div class="service-extra" id="svc-pressure-extra">
-            <ul class="mini">
-              <li>Incluye manguera y boquillas</li>
-              <li>Entrega y devolución en tienda</li>
-            </ul>
-            <a class="btn btn-primary btn-compact" target="_blank" rel="noopener"
-               href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20ver%20disponibilidad%20de%20m%C3%A1quina%20de%20presi%C3%B3n">
-               Ver disponibilidad
-            </a>
-          </div>
-        </div>
-      </li>
-
-      <!-- CORTE DE TUBOS/VARILLA (sin cobro, sin botón) -->
-      <li class="service-item reveal" id="svc-tubes" role="button" tabindex="0" aria-controls="svc-tubes-extra" aria-expanded="false" data-collapsible="true">
-        <div class="service-icon" aria-hidden="true">🧰</div>
-        <div class="service-body">
-          <h3>Corte de tubos de verja y varilla</h3>
-          <p>Trae tu medida y lo dejamos listo para instalar. <strong>Sin costo por corte.</strong></p>
-          <div class="service-extra" id="svc-tubes-extra">
-            <ul class="mini">
-              <li>Cortes limpios y parejos</li>
-              <li>Asesoría para la instalación</li>
-            </ul>
-          </div>
-        </div>
-      </li>
-    </ul>
+    <div class="feature" style="margin-top:14px">
+      <h3 style="margin:0 0 8px">Corte de tubos de verja y varilla</h3>
+      <p style="margin:0">Trae tu medida y te lo dejamos listo para instalar.</p>
+    </div>
 
     <div class="card" style="margin-top:14px">
       <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
