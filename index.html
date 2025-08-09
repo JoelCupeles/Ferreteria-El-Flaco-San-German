@@ -11,7 +11,6 @@
 <meta property="og:type" content="website" />
 <meta property="og:image" content="assets/ferreteria-de-noche.jpg" />
 <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
-
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -23,7 +22,6 @@
   "openingHours":["Mo-Sa 07:00-16:30"]
 }
 </script>
-
 <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -31,7 +29,7 @@
 <header id="siteHeader">
   <div class="container topbar">
     <div class="brand">
-      <img src="assets/Logo-flaco.jpg" alt="Ferretería El Flaco logo" class="logo" width="44" height="44">
+      <img src="assets/Logo-flaco.jpg" alt="Ferretería El Flaco logo" class="logo">
       <div class="brand-title">
         <strong>Ferretería El Flaco</strong><br>
         <small>San Germán, Puerto Rico</small>
@@ -39,44 +37,38 @@
     </div>
     <nav>
       <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuList">Menú</button>
-      <ul id="menuList" role="menu">
-        <li role="none"><a role="menuitem" href="#productos">Productos</a></li>
-        <li role="none"><a role="menuitem" href="#ofertas">Ofertas</a></li>
-        <li role="none"><a role="menuitem" href="#reseñas">Reseñas</a></li>
-        <li role="none"><a role="menuitem" href="#servicios">Servicios</a></li>
-        <li role="none"><a role="menuitem" href="#ubicacion">Ubicación</a></li>
-        <li role="none"><a role="menuitem" class="btn btn-primary" href="#contacto">Contacto</a></li>
+      <ul id="menuList">
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#ofertas">Ofertas</a></li>
+        <li><a href="#reseñas">Reseñas</a></li>
+        <li><a href="#servicios">Servicios</a></li>
+        <li><a href="#instagram">Instagram</a></li>
+        <li><a href="#ubicacion">Ubicación</a></li>
+        <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
     </nav>
   </div>
-  <div id="menuOverlay" class="menu-overlay" hidden></div>
 </header>
 
-<section class="hero" aria-label="Presentación">
+<section class="hero">
   <div class="container wrap">
     <div>
       <div class="hero-ticker" aria-live="polite"><span id="heroTicker">Desde <b>1989</b></span></div>
       <h1><span class="accent">Servicio personalizado</span> por más de 30 años</h1>
       <p>Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
-
-      <div class="badges" aria-hidden="true">
+      <div class="badges">
         <span class="badge">Marcas confiables</span>
         <span class="badge">Alquiler de máquina de presión</span>
         <span class="badge">Corte de madera</span>
         <span class="badge">Duplicado de llaves</span>
       </div>
-
-      <div class="cta-col">
+      <div class="cta-row">
         <a class="btn btn-primary" href="#productos">Ver catálogo</a>
-        <p class="links-inline">
-          <a class="link-inline" href="tel:+17878923930">Llamar ahora</a>
-          <span aria-hidden="true">·</span>
-          <a class="link-inline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
-        </p>
+        <a class="btn btn-outline" href="tel:+17878923930">Llamar ahora</a>
+        <a class="btn btn-outline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
       </div>
     </div>
-
-    <div class="stats-card" aria-label="Estadísticas">
+    <div class="stats-card">
       <div class="grid-2">
         <div class="stat"><b>+3,000</b> productos</div>
         <div class="stat"><b>7:00 a 4:30</b> horario (Lun–Sáb)</div>
@@ -94,23 +86,38 @@
       <a href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Novedades en Facebook</a>
     </div>
 
-    <div class="filters" role="search">
-      <input id="search" placeholder="Buscar por nombre o marca" aria-label="Buscar productos por nombre o marca" />
-      <select id="categoria" aria-label="Filtrar por categoría">
+    <div class="filters">
+      <input id="search" placeholder="Buscar por nombre o marca" />
+      <select id="categoria">
         <option value="">Todas las categorías</option>
       </select>
     </div>
 
-    <div class="products" id="productGrid" data-dots="#prodDots"></div>
-    <div class="dots" id="prodDots" aria-label="Páginas del carrusel de productos"></div>
+    <div class="products" id="productGrid"></div>
   </div>
 </section>
 
 <section id="ofertas">
   <div class="container">
     <div class="section-title"><h2>Ofertas</h2><span></span></div>
-    <div class="products" id="offersGrid" data-dots="#offersDots"></div>
-    <div class="dots" id="offersDots" aria-label="Páginas del carrusel de ofertas"></div>
+    <div class="products" id="offersGrid"></div>
+  </div>
+</section>
+
+<section id="instagram">
+  <div class="container">
+    <div class="section-title">
+      <h2>Síguenos en Instagram</h2>
+      <a class="ig-handle" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">@ferreteriael_flaco787.892.3930</a>
+    </div>
+    <div class="ig-card">
+      <p style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. ¡Síguenos para verlo primero!</p>
+      <div class="ig-grid" id="igGrid">
+        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500"></a>
+        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón"></a>
+        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/Dewalt-driver.webp" alt="DeWalt Driver"></a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -129,7 +136,7 @@
         <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
-          <a class="link-inline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
+          <a class="btn btn-outline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
         </div>
       </div>
     </div>
@@ -212,7 +219,7 @@
       <h2>Dónde estamos</h2>
       <a href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Abrir en Google Maps</a>
     </div>
-    <iframe class="map" src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20Inc%20San%20Germ%C3%A1n&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa Ferretería El Flaco"></iframe>
+    <iframe class="map" src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20Inc%20San%20Germ%C3%A1n&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     <p style="margin-top:10px"><strong>Ferretería El Flaco Inc</strong>, HC 04 Box 13385, San Germán, 00683, Puerto Rico. Teléfono <a href="tel:+17878923930">(787) 892-3930</a> · <a href="mailto:ferreteriaelflaco@hotmail.com">ferreteriaelflaco@hotmail.com</a></p>
   </div>
 </section>
@@ -251,17 +258,13 @@
   <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
 </footer>
 
-<a class="btn-social btn-whatsapp fab-whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">WhatsApp</a>
+<a class="btn-social btn-whatsapp" style="position:fixed;right:18px;bottom:18px;z-index:4000;border:0" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
 <script src="script.js" defer></script>
 </body>
 </html>
-
-
-
-
 
 
 
