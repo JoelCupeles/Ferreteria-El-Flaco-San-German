@@ -43,7 +43,6 @@ section{padding:clamp(28px,5vw,56px) 0}
 
 /* ===== NAV ===== */
 header{position:sticky;top:0;z-index:3000;background:rgba(10,11,14,.76);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--borde);transition:.25s transform,.25s box-shadow}
-/* header permanece visible; solo sombra en scroll */
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 0}
 .brand{display:flex;gap:12px;align-items:center;min-width:0}
 .logo{width:44px;border-radius:10px}
@@ -54,7 +53,7 @@ nav ul{display:flex;gap:14px;list-style:none;margin:0;padding:0;align-items:cent
 nav ul::-webkit-scrollbar{display:none}
 nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;color:#f2f2f6;border:1px solid transparent;transition:.2s background,.2s border-color}
 nav a:hover{background:rgba(225,6,0,.14);border-color:rgba(255,255,255,.12)}
-.menu-btn{display:none;border:0;padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;box-shadow:0 10px 22px rgba(225,6,0,.28);cursor:pointer}
+.menu-btn{display:none;border:0;padding:10px 14px;border-radius:999px;background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff;font-weight:900;box-shadow:0 10px 22px rgba(225,6,0,.28);cursor:pointer;touch-action:manipulation}
 .menu-btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
 .menu-btn::after{content:"  ☰"}
 
@@ -86,32 +85,12 @@ nav a:hover{background:rgba(225,6,0,.14);border-color:rgba(255,255,255,.12)}
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
 .filters input,.filters select{background:#121317;color:#fff;border:1px solid var(--borde);border-radius:12px;padding:10px}
 
-/* Productos → carrusel en móvil, grid en desktop (fix ancho) */
-.products{
-  display:grid;
-  grid-auto-flow:column;
-  grid-auto-columns:85%;
-  gap:14px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  padding-bottom:10px;
-  margin:0 -8px;
-  padding-left:8px;
-  padding-right:8px;
-  mask-image:linear-gradient(90deg,transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%);
-}
+.products{display:grid;grid-auto-flow:column;grid-auto-columns:85%;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:10px;margin:0 -8px;padding-left:8px;padding-right:8px;mask-image:linear-gradient(90deg,transparent 0, #000 28px, #000 calc(100% - 28px), transparent 100%)}
 .products::-webkit-scrollbar{display:none}
 .products .card{scroll-snap-align:start;width:100%;max-width:460px}
 
-/* Desktop: grid estable */
 @media(min-width:900px){
-  .products{
-    grid-auto-flow:initial;grid-auto-columns:initial;
-    grid-template-columns:repeat(4, minmax(240px, 1fr));
-    overflow:visible;scroll-snap-type:none;margin:0;padding:0;
-  }
+  .products{grid-auto-flow:initial;grid-auto-columns:initial;grid-template-columns:repeat(4, minmax(240px, 1fr));overflow:visible;scroll-snap-type:none;margin:0;padding:0}
 }
 
 /* Cards */
@@ -190,26 +169,24 @@ body.nav-open .nav-backdrop{display:block}
 .hero .cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
 .btn-outline{background:transparent;border:1px solid var(--borde);color:#fff;min-height:46px}
 .btn-outline:hover{background:rgba(255,255,255,.08)}
-
-/* Headline micro-gradient for a bit of wow */
 .hero h1 span.accent{background:linear-gradient(90deg,#fff, #ffdede, #fff);-webkit-background-clip:text;background-clip:text;color:transparent}
 
 /* ===== TIPS ===== */
 .tips{background:linear-gradient(180deg, rgba(225,6,0,.06), transparent 60%)}
 .tips-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:center}
-.tips .card{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:hidden}
-/* Fix: evitar bordes negros a los lados. Llenar el contenedor siempre */
-.tips img{width:100%;aspect-ratio:16/10;object-fit:cover;height:auto}
+.tips .card{background:var(--card);border:1px solid var(--borde);border-radius:14px;overflow:visible}
+/* Mostrar la foto completa sin recortar */
+.tips img{width:100%;height:auto;object-fit:contain;background:#0e0f12}
 .tips .content{padding:18px}
 .tips h3{margin:0 0 8px;font-size:clamp(20px,2.6vw,26px)}
 .tips p{margin:0 0 12px;color:var(--muted)}
-@media(max-width:980px){.tips-wrap{grid-template-columns:1fr}.tips img{aspect-ratio:16/10}}
+@media(max-width:980px){.tips-wrap{grid-template-columns:1fr}}
 
 .hero-ticker{opacity:.9;margin-bottom:6px;min-height:1.4em}
 .btn{min-height:46px}
 .btn-ghost{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--borde);padding:12px 14px;border-radius:12px;min-height:46px}
 
-/* Safety: nada se sale del viewport, evitar que sticky falle: no aplicar overflow al header */
+/* Safety: nada se sale del viewport, pero no tocamos el header para que sticky funcione bien */
 .container, nav, .hero, .services, footer { max-width:100vw; overflow-x:clip; }
 
 /* Facebook plugin: que nunca exceda el ancho */
@@ -304,7 +281,7 @@ body.nav-open .nav-backdrop{display:block}
       <a class="ig-handle" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">@ferreteriael_flaco787.892.3930</a>
     </div>
     <div class="ig-card">
-      <p style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. ¡Síguenos para verlo primero!</p>
+      <p style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. Síguenos para verlo primero</p>
       <div class="ig-grid" id="igGrid">
         <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500"></a>
         <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón"></a>
@@ -318,14 +295,14 @@ body.nav-open .nav-backdrop{display:block}
   <div class="container">
     <div class="section-title">
       <h2>Tips rápidos</h2>
-      <a href="#contacto">¿Tienes dudas? Escríbenos</a>
+      <a href="#contacto">Tienes dudas Escríbenos</a>
     </div>
     <div class="tips-wrap">
       <div class="card">
         <img loading="lazy" src="assets/colores-en-cintas-de-aislar-tips.jpg" alt="Colores en cintas de aislar — tips">
       </div>
       <div class="content">
-        <h3>¿Qué significan los colores en las cintas de aislar?</h3>
+        <h3>Qué significan los colores en las cintas de aislar</h3>
         <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
@@ -457,40 +434,41 @@ body.nav-open .nav-backdrop{display:block}
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
 
 <script>
-// ===== Menú móvil con bloqueo de doble click y backdrop safe =====
+// ===== Menú móvil endurecido contra el doble tap iOS =====
 const menuBtn = document.getElementById('menuBtn');
 const menuList = document.getElementById('menuList');
 const navBackdrop = document.getElementById('navBackdrop');
-let lock = false; // evita abrir y cerrar inmediato por doble click tap
-let canCloseBackdrop = false;
+let tapLock = false;         // evita abrir y cerrar con el mismo tap
+let canCloseBackdrop = false; // el backdrop se “arma” luego de un rato
 
+function armBackdrop(){
+  canCloseBackdrop = false;
+  navBackdrop.style.pointerEvents = 'none';
+  setTimeout(()=>{
+    canCloseBackdrop = true;
+    navBackdrop.style.pointerEvents = 'auto';
+  }, 450); // más que el click delay de iOS
+}
 function toggleMenu(force){
   const willOpen = typeof force==='boolean' ? force : !menuList.classList.contains('open');
   menuList.classList.toggle('open', willOpen);
   document.body.classList.toggle('nav-open', willOpen);
   menuBtn?.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-  if(willOpen){
-    canCloseBackdrop = false;
-    setTimeout(()=>{ canCloseBackdrop = true; }, 300);
-  }
+  if(willOpen) armBackdrop();
 }
 
 menuBtn?.addEventListener('click', (e)=>{
+  e.preventDefault();
   e.stopPropagation();
-  if(lock) return;
-  lock = true;
+  if(tapLock) return;
+  tapLock = true;
   toggleMenu();
-  setTimeout(()=>{ lock = false; }, 300);
+  setTimeout(()=>{ tapLock = false; }, 350);
 });
-
-// Evitar que toques dentro del menú cierren por bubbling
+// evita que clicks dentro del menú lo cierren
 menuList.addEventListener('click', (e)=>{ e.stopPropagation(); });
-
-// Cerrar tocando fuera
+// cerrar tocando fuera, solo si ya está “armado”
 navBackdrop.addEventListener('click', ()=>{ if(canCloseBackdrop) toggleMenu(false); });
-
-// Cerrar al navegar por un enlace
-Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
 
 // Año
 const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
@@ -565,13 +543,9 @@ window.addEventListener('scroll',()=>{
   ];
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
-
-// Robustez: cerrar menú si cambias orientación o agrandas a desktop
-window.addEventListener('resize', ()=>{
-  if(window.innerWidth>980 && menuList.classList.contains('open')) toggleMenu(false);
-});
 </script>
 </body>
 </html>
+
 
 
