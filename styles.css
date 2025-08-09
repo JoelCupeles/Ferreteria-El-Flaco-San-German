@@ -1,4 +1,3 @@
-<style>
 :root{
   --rojo:#e10600;--rojo2:#b10300;
   --verde:#17c964;--verde2:#20df78;
@@ -42,16 +41,10 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 16px;border-radius:12px;font-weight:900;border:0;cursor:pointer}
 .btn-primary{background:linear-gradient(135deg,var(--rojo),var(--rojo2));color:#fff}
 
-/* ===== STATS — minimalismo audaz y limpio ===== */
-.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:clamp(12px,2.6vh,18px) 0 0}
-.stats li{list-style:none;background:rgba(0,0,0,.34);border:1px solid var(--borde);border-radius:14px;padding:12px 10px;text-align:center}
-.stats b{display:block;font-size:clamp(18px,5.5vw,24px);line-height:1.05;letter-spacing:.2px}
-.stats span{display:block;font-size:12px;opacity:.92}
-@media(min-width:720px){
-  .stats{grid-template-columns:repeat(4,1fr);gap:12px}
-  .stats li{padding:14px 12px}
-  .stats b{font-size:22px}
-}
+.stats-card{background:#17181c;border:1px solid var(--borde);border-radius:16px;padding:16px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--card);border:1px solid var(--borde);border-radius:14px;padding:14px;text-align:center}
+.stat b{display:block;font-size:22px}
 
 /* ===== PRODUCTOS ===== */
 .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
@@ -105,7 +98,7 @@ footer{background:#000;color:#bdbdc6;padding:22px 0;margin-top:22px;border-top:1
 .foot{display:grid;grid-template-columns:2fr 1fr 1fr;gap:18px}
 footer a{color:#ffdede}
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE (base) ===== */
 @media (max-width:980px){
   .menu-btn{display:inline-flex}
   nav ul{display:block;position:fixed;left:12px;right:12px;top:var(--header-h);background:#101214;border:1px solid var(--borde);border-radius:14px;padding:12px;z-index:3300;opacity:0;pointer-events:none;transform:translateY(-6px)}
@@ -115,7 +108,8 @@ footer a{color:#ffdede}
 
   .hero{background-position:center 48%}
   .hero .wrap{grid-template-columns:1fr;padding:36px 0}
-  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats-card{margin-top:clamp(18px,8vh,42px)}
+  .grid-2{grid-template-columns:1fr}
   .services{grid-template-columns:1fr 1fr}
   .foot{grid-template-columns:1fr}
   .social-grid{grid-template-columns:1fr}
@@ -125,5 +119,16 @@ footer a{color:#ffdede}
 /* Safety */
 .container, nav, .hero, .services, footer { max-width:100vw; overflow-x:clip; }
 .fb-page, .fb-page iframe, .fb-page span { max-width:100% !important; width:100% !important; }
-</style>
 
+/* ===== AJUSTE MÓVIL — ocultar (sin mover) y mejorar visibilidad del hero ===== */
+@media (max-width:980px){
+  /* Oculta badges y CTA pero mantiene su espacio para no colapsar el layout */
+  .hero .badges,
+  .hero .cta-row { visibility:hidden; pointer-events:none; }
+
+  /* Asegura que la foto del hero se vea amplia en celular */
+  .hero{ min-height:84vh; background-position:center 50%; }
+
+  /* Un poquito más de “aire” arriba/abajo en el hero móvil */
+  .hero .wrap{ padding:48px 0; }
+}
