@@ -6,11 +6,17 @@
 <title>Ferretería El Flaco | San Germán, Puerto Rico</title>
 <meta name="description" content="Ferretería El Flaco (Est. 1989) en San Germán PR. Servicio personalizado por más de 30 años: herramientas, materiales, pinturas y más." />
 <link rel="icon" href="assets/favicon.png" />
+
 <meta property="og:title" content="Ferretería El Flaco" />
 <meta property="og:description" content="Todo para tu proyecto en un solo lugar. San Germán, Puerto Rico." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="assets/ferreteria-de-noche.jpg" />
 <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -22,7 +28,7 @@
   "openingHours":["Mo-Sa 07:00-16:30"]
 }
 </script>
-<link rel="stylesheet" href="styles.css?v=10" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -42,7 +48,6 @@
         <li><a href="#ofertas">Ofertas</a></li>
         <li><a href="#reseñas">Reseñas</a></li>
         <li><a href="#servicios">Servicios</a></li>
-        <li><a href="#instagram">Instagram</a></li>
         <li><a href="#ubicacion">Ubicación</a></li>
         <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
@@ -52,29 +57,18 @@
 
 <section class="hero">
   <div class="container wrap">
-    <div>
-      <div class="hero-ticker" aria-live="polite"><span id="heroTicker">Desde <b>1989</b></span></div>
+    <div class="hero-copy">
+      <div class="hero-eyebrow"><span id="heroTicker">Servicio con cariño boricua</span></div>
       <h1><span class="accent">Servicio personalizado</span> por más de 30 años</h1>
-      <p>Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
-      <div class="badges">
-        <span class="badge">Marcas confiables</span>
-        <span class="badge">Alquiler de máquina de presión</span>
-        <span class="badge">Corte de madera</span>
-        <span class="badge">Duplicado de llaves</span>
-      </div>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#productos">Ver catálogo</a>
-        <a class="btn btn-outline" href="tel:+17878923930">Llamar ahora</a>
-        <a class="btn btn-outline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
-      </div>
+      <p class="hero-sub">Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
     </div>
-    <div class="stats-card">
-      <div class="grid-2">
-        <div class="stat"><b>+3,000</b> productos</div>
-        <div class="stat"><b>7:00 a 4:30</b> horario (Lun–Sáb)</div>
-        <div class="stat"><b>San Germán</b> servicio local</div>
-        <div class="stat"><b>Desde 1989</b> experiencia</div>
-      </div>
+
+    <!-- Datos rápidos -->
+    <div class="hero-facts" aria-label="Datos rápidos">
+      <div class="chip"><b>+3,000</b><span>productos</span></div>
+      <div class="chip"><b>7:00–4:30</b><span>Lun–Sáb</span></div>
+      <div class="chip"><b>San Germán</b><span>servicio local</span></div>
+      <div class="chip"><b>Desde</b><span>1989</span></div>
     </div>
   </div>
 </section>
@@ -93,31 +87,16 @@
       </select>
     </div>
 
-    <div class="products" id="productGrid"></div>
+    <div class="products fade-mask" id="productGrid"></div>
+    <div class="carousel-dots" data-for="productGrid"></div>
   </div>
 </section>
 
 <section id="ofertas">
   <div class="container">
     <div class="section-title"><h2>Ofertas</h2><span></span></div>
-    <div class="products" id="offersGrid"></div>
-  </div>
-</section>
-
-<section id="instagram">
-  <div class="container">
-    <div class="section-title">
-      <h2>Síguenos en Instagram</h2>
-      <a class="ig-handle" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">@ferreteriael_flaco787.892.3930</a>
-    </div>
-    <div class="ig-card">
-      <p style="margin-top:0">Ofertas, llegadas nuevas y tips de ferretería. ¡Síguenos para verlo primero!</p>
-      <div class="ig-grid" id="igGrid">
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/crossco-5500.jpg" alt="Crossco 5500"></a>
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/gardner-100-silicone.jpg" alt="Gardner 100% Silicón"></a>
-        <a href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener"><img loading="lazy" src="assets/Dewalt-driver.webp" alt="DeWalt Driver"></a>
-      </div>
-    </div>
+    <div class="products fade-mask" id="offersGrid"></div>
+    <div class="carousel-dots" data-for="offersGrid"></div>
   </div>
 </section>
 
@@ -134,10 +113,6 @@
       <div class="content">
         <h3>¿Qué significan los colores en las cintas de aislar?</h3>
         <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="https://www.instagram.com/ferreteriael_flaco787.892.3930/" target="_blank" rel="noopener">Ver más tips</a>
-          <a class="btn btn-outline" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20tengo%20una%20pregunta%20sobre%20cintas%20de%20aislar" target="_blank" rel="noopener">Preguntar por WhatsApp</a>
-        </div>
       </div>
     </div>
   </div>
@@ -151,59 +126,84 @@
         <span class="rating-badge"><span class="stars">★★★★★</span> 4.7/5</span> Ver todas en Google
       </a>
     </div>
-    <div class="reviews">
+
+    <!-- Carrusel en móvil / grid en desktop -->
+    <div class="reviews fade-mask" id="reviewsGrid">
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">G</div>
-          <div><strong>Gabriel R. V.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>Gabriel R. V.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
+        <p class="review-text">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
       </article>
+
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">R</div>
-          <div><strong>Roberto F.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>Roberto F.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Gracias por su reseña y apoyo a esta empresa.</p>
+        <p class="review-text">Gracias por su reseña y apoyo a esta empresa.</p>
       </article>
+
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">D</div>
-          <div><strong>David B. R.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>David B. R.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Muy bien surtido y las atenciones son insuperables.</p>
+        <p class="review-text">Muy bien surtido y las atenciones son insuperables.</p>
       </article>
     </div>
+    <div class="carousel-dots" data-for="reviewsGrid"></div>
   </div>
 </section>
 
 <section id="servicios">
   <div class="container">
     <div class="section-title"><h2>Servicios</h2><span></span></div>
-    <div class="services">
-      <article class="feature">
-        <div class="feature-icon">🪚</div>
-        <h3>Corte de madera</h3>
-        <p>Medidas a la carta para tus proyectos de carpintería y construcción.</p>
-      </article>
 
-      <article class="feature">
-        <div class="feature-icon">🔑</div>
-        <h3>Duplicado de llaves</h3>
-        <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
-      </article>
+    <ul class="service-list">
+      <li class="service-item">
+        <div class="service-icon">🪚</div>
+        <div class="service-body">
+          <h3>Corte de madera</h3>
+          <p>Medidas a la carta para carpintería y construcción. <strong>Servicio sin costo</strong> (solo materiales).</p>
+        </div>
+      </li>
 
-      <article class="feature">
-        <div class="feature-icon">💦</div>
-        <h3>Alquiler de máquina de presión</h3>
-        <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
-      </article>
-    </div>
+      <li class="service-item">
+        <div class="service-icon">🔑</div>
+        <div class="service-body">
+          <h3>Duplicado de llaves</h3>
+          <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
+        </div>
+      </li>
 
-    <div class="feature" style="margin-top:14px">
-      <h3 style="margin:0 0 8px">Corte de tubos de verja y varilla</h3>
-      <p style="margin:0">Trae tu medida y te lo dejamos listo para instalar.</p>
-    </div>
+      <li class="service-item">
+        <div class="service-icon">💦</div>
+        <div class="service-body">
+          <h3>Alquiler de máquina de presión</h3>
+          <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
+          <p><a class="btn btn-cta-green btn-compact" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20%C2%BFhay%20disponibilidad%20hoy%20de%20la%20m%C3%A1quina%20de%20presi%C3%B3n%3F" target="_blank" rel="noopener">Ver disponibilidad</a></p>
+        </div>
+      </li>
+
+      <li class="service-item">
+        <div class="service-icon">🧰</div>
+        <div class="service-body">
+          <h3>Corte de tubos de verja y varilla</h3>
+          <p>Trae tu medida y te lo dejamos listo para instalar. <strong>Sin costo</strong>.</p>
+        </div>
+      </li>
+    </ul>
 
     <div class="card" style="margin-top:14px">
       <div class="fb-page" data-href="https://www.facebook.com/ferreterriaelflaco/" data-tabs="timeline" data-width="" data-height="420" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
@@ -258,14 +258,11 @@
   <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
 </footer>
 
+<!-- Botón flotante verde -->
 <a class="btn-social btn-whatsapp" style="position:fixed;right:18px;bottom:18px;z-index:4000;border:0" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
-<script src="script.js?v=12" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>
-
-
-
-
