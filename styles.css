@@ -92,6 +92,8 @@ nav a{padding:8px 12px;border-radius:12px;font-weight:800;white-space:nowrap;col
 }
 .service-body h3{margin:2px 0 6px;font-size:18px;line-height:1.2}
 .service-body p{margin:0;color:var(--muted);font-size:15px}
+.service-cta{margin-top:10px}
+.badge-free{margin-left:8px;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:800;background:rgba(23,201,100,.14);border:1px solid rgba(23,201,100,.32)}
 @media (min-width:900px){ .service-list{ grid-template-columns:1fr 1fr } }
 
 /* ===== MAPA / CONTACTO ===== */
@@ -123,15 +125,10 @@ footer a{color:#ffdede}
   .foot{grid-template-columns:1fr}
   .social-grid{grid-template-columns:1fr}
 }
-@media (max-width:620px){
-  /* nada extra: servicios ya es 1 columna por defecto */
-}
 
-/* Safety */
 .container, nav, .hero, footer { max-width:100vw; overflow-x:clip }
 .fb-page, .fb-page iframe, .fb-page span { max-width:100% !important; width:100% !important }
 
-/* ===== Ajuste móvil hero ===== */
 @media (max-width:980px){
   .hero .badges,
   .hero .cta-row { visibility:hidden; pointer-events:none }
@@ -139,12 +136,11 @@ footer a{color:#ffdede}
   .hero .wrap{ padding:48px 0 }
 }
 
-/* ===== UI carrusel: fade y puntos con ventana deslizante ===== */
+/* Carrusel */
 .fade-mask{
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
           mask-image: linear-gradient(to right, transparent 0, #000 16px, #000 calc(100% - 16px), transparent 100%);
 }
-
 .carousel-dots{
   display:flex;align-items:center;justify-content:center;gap:8px;
   padding:8px 0 0; user-select:none;
@@ -154,7 +150,6 @@ footer a{color:#ffdede}
   background:#3a3c44; opacity:.7; transition:transform .12s ease, opacity .12s ease, background-color .12s ease;
 }
 .carousel-dots button[aria-current="true"]{ background:#fff; opacity:1; transform:scale(1.15) }
-
 @media(min-width:900px){
   .carousel-dots{ display:none }
   .fade-mask{ -webkit-mask-image:none; mask-image:none }
