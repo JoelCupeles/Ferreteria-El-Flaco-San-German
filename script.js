@@ -8,95 +8,112 @@ setHeaderHeight();
 window.addEventListener('resize', setHeaderHeight);
 window.addEventListener('orientationchange', setHeaderHeight);
 
-// Menú móvil con foco y bloqueo de scroll
+// Menú móvil simple
 const menuBtn = document.getElementById('menuBtn');
 const menuList = document.getElementById('menuList');
-const firstMenuLink = menuList ? menuList.querySelector('a') : null;
-
-function lockScroll(on){
-  document.body.classList.toggle('menu-open', !!on);
-}
-
 function toggleMenu(force){
   const willOpen = typeof force==='boolean' ? force : !menuList.classList.contains('open');
   menuList.classList.toggle('open', willOpen);
   menuBtn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
-  lockScroll(willOpen);
-  if (willOpen && firstMenuLink) {
-    // esperar al frame para que el menú sea focusable
-    requestAnimationFrame(()=> firstMenuLink.focus());
-  } else {
-    menuBtn.focus();
-  }
 }
-
-menuBtn.addEventListener('click', (e)=>{ e.preventDefault(); e.stopPropagation(); toggleMenu(); });
-Array.from(document.querySelectorAll('nav a')).forEach(a=>a.addEventListener('click',()=>toggleMenu(false)));
-
-// Cerrar con Escape
-window.addEventListener('keydown', (e)=>{
-  if(e.key==='Escape' && menuList.classList.contains('open')) toggleMenu(false);
+menuBtn.addEventListener('click',()=>toggleMenu());
+menuList.addEventListener('click',(e)=>{
+  if(e.target.tagName==='A'){ toggleMenu(false); }
 });
 
-// Año en footer
-const yEl=document.getElementById('y'); if(yEl) yEl.textContent=new Date().getFullYear();
-
-// Productos sin precios (precio oculto por CSS si viniera nulo)
-const productos=[
-  {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
-  {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
-  {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
-  {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
-  {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
-  {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'}
+// Catálogo — data mínima de ejemplo
+const productos = [
+  { titulo:'Taladro percutor 1/2” 750W', cat:'Herramientas', img:'assets/products/taladro.jpg', precio:89 },
+  { titulo:'Pintura acrílica premium blanca 5 gal', cat:'Pinturas', img:'assets/products/pintura.jpg', precio:129 },
+  { titulo:'Cinta teflón pro 1/2” x 260”', cat:'Plomería', img:'assets/products/teflon.jpg', precio:3 },
 ];
 
-const ofertas=[
-  {nombre:'WECO W1000 Thin Set – Oferta especial', categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'}
+const ofertas = [
+  { titulo:'Juego de brocas de titanio 21 piezas', cat:'Herramientas', img:'assets/products/brocas.jpg', precio:19 },
+  { titulo:'Guantes de trabajo recubiertos', cat:'Seguridad', img:'assets/products/guantes.jpg', precio:4 },
 ];
 
-// Cargar categorías
-const catSelect=document.getElementById('categoria');
-const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
-categorias.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSelect.appendChild(o);});
+const productsGrid = document.getElementById('productsGrid');
+const offersGrid = document.getElementById('offersGrid');
+const searchInput = document.getElementById('searchInput');
+const catSelect = document.getElementById('catSelect');
 
-const grid=document.getElementById('productGrid');
-const offersGrid=document.getElementById('offersGrid');
-const search=document.getElementById('search');
-
-const cardHTML=p=>`
-  <article class="card">
-    <img loading="lazy" src="${p.foto}" alt="${p.nombre}">
+function cardHTML(p){
+  return `
+  <article class="card" data-title="${p.titulo.toLowerCase()}" data-cat="${p.cat}">
+    <img src="${p.img}" alt="${p.titulo}" loading="lazy">
     <div class="body">
-      <div class="tags"><span class="pill">${p.categoria}</span><span class="pill">${p.marca}</span></div>
-      <h3>${p.nombre}</h3>
-      ${p.precio!=null?('<div class="price">$'+p.precio.toFixed(2)+'</div>'):''}
-      <a class="btn btn-primary" href="https://api.whatsapp.com/send?phone=17878923930&text=${encodeURIComponent('Hola, quiero info del producto: '+p.nombre)}" target="_blank" rel="noopener">Pedir cotización</a>
+      <span class="pill">${p.cat}</span>
+      <h3>${p.titulo}</h3>
+      ${p.precio != null ? `<div class="price">$${p.precio}</div>` : ``}
+      <a class="btn btn-primary" href="https://wa.me/1787XXXXXXX" target="_blank" rel="noopener">Consultar por WhatsApp</a>
     </div>
   </article>`;
-
-function render(list){ grid.innerHTML=list.map(cardHTML).join(''); }
-function filtrar(){
-  const q=(search.value||'').toLowerCase().trim();
-  const c=catSelect.value;
-  const list=productos.filter(p=>{
-    const okCat=!c||p.categoria===c;
-    const okQ=!q||(`${p.nombre} ${p.marca}`).toLowerCase().includes(q);
-    return okCat&&okQ;
-  });
-  render(list);
 }
-search.addEventListener('input',filtrar);
-catSelect.addEventListener('change',filtrar);
+
+function render(list){
+  if(!productsGrid) return;
+  productsGrid.innerHTML = list.map(cardHTML).join('');
+}
+
+function filtrar(){
+  const term = (searchInput?.value || '').toLowerCase();
+  const cat = catSelect?.value || '';
+  const cards = productsGrid?.querySelectorAll('.card') || [];
+  cards.forEach(c=>{
+    const title = c.getAttribute('data-title') || '';
+    const ccat  = c.getAttribute('data-cat') || '';
+    const okTerm = !term || title.includes(term);
+    const okCat  = !cat || cat === ccat;
+    c.style.display = okTerm && okCat ? '' : 'none';
+  });
+}
+searchInput?.addEventListener('input',filtrar);
+catSelect?.addEventListener('change',filtrar);
 render(productos);
 
 // Ofertas
-offersGrid.innerHTML=ofertas.map(cardHTML).join('');
+if(offersGrid){ offersGrid.innerHTML=ofertas.map(cardHTML).join(''); }
 
-// Hero ticker (se mantiene)
+// Hero ticker
 (function(){
   const el=document.getElementById('heroTicker');
   if(!el) return;
   const frases=['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
+})();
+
+// === UX Minimalista: mejoras adicionales, sin romper nada existente ===
+// Cierre con Escape y control de scroll cuando el menú está abierto
+(function(){
+  const menu = document.getElementById('menuList') || document.getElementById('siteMenu');
+  const body = document.body;
+  function isOpen(){
+    return !!menu && menu.classList.contains('open');
+  }
+  function lockScroll(on){
+    if(on){ body.classList.add('menu-open'); }
+    else{ body.classList.remove('menu-open'); }
+  }
+  // Hook a los toggles existentes
+  const origToggle = window.toggleMenu;
+  if(typeof origToggle === 'function'){
+    window.toggleMenu = function(force){
+      const res = origToggle.apply(this, arguments);
+      lockScroll(isOpen());
+      return res;
+    };
+  }else{
+    // Fallback: observar cambios en la clase open
+    const obs = new MutationObserver(()=> lockScroll(isOpen()));
+    if(menu) obs.observe(menu, { attributes:true, attributeFilter:['class'] });
+  }
+  // Escape para cerrar
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && isOpen()){
+      if(typeof window.toggleMenu === 'function'){ window.toggleMenu(false); }
+      menu.classList.remove('open');
+      lockScroll(false);
+    }
+  });
 })();
