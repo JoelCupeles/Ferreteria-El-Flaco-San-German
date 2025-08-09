@@ -83,7 +83,7 @@
 
     /* Sections */
     section{padding:52px 0}
-    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+    .section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
     .section-title h2{margin:0;font-size:28px}
     .section-title a{font-weight:700;color:#ffdede}
 
@@ -156,6 +156,8 @@
       nav ul.open{display:flex}
       nav a{display:block}
       .social-grid{grid-template-columns:1fr}
+      /* Títulos: apilar y alinear correctamente en móvil */
+      .section-title{flex-direction:column;align-items:flex-start;gap:8px}
     }
     @media (max-width: 600px){.services{grid-template-columns:1fr}}
 
@@ -188,7 +190,7 @@
     .review-head{display:flex;align-items:center;gap:10px}
     .avatar{width:40px;height:40px;border-radius:50%;background:#202023;display:grid;place-items:center;font-weight:800}
     .stars{color:#f5c518;letter-spacing:1px}
-    .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#111214;border:1px solid var(--borde);border-radius:999px;padding:6px 10px;font-weight:800}
+    .rating-badge{display:inline-flex;align-items:center;gap:6px;background:#111214;border:1px solid var(--borde);border-radius:999px;padding:6px 10px;font-weight:800;white-space:nowrap}.stars{display:inline-block;line-height:1}
   </style>
 </head>
 <body>
@@ -438,7 +440,9 @@
       {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
       {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
       {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
-      {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'}
+      {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
+      {nombre:'Aceite 2‑Stroke Amsoil Saber (1 pt)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
+      {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'}
     ];
 
     // Cargar categorías en el select
@@ -510,7 +514,4 @@
   </script>
 </body>
 </html>
-
-
-
 
