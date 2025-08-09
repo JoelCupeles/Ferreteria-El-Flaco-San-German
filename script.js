@@ -81,3 +81,4 @@ offersGrid.innerHTML=ofertas.map(cardHTML).join('');
   const frases=['Desde <b>1989</b>','Llaves al instante','Asesoría experta','Servicio con cariño boricua'];
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
+
