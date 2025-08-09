@@ -149,5 +149,4 @@ footer a{color:#ffdede}
   .hero .cta-row { visibility:hidden; pointer-events:none; }
   .hero{ min-height:84vh; background-position:center 50%; }
   .hero .wrap{ padding:48px 0; }
-}()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
-})();
+}
