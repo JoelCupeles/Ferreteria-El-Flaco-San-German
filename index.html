@@ -11,28 +11,18 @@
 <meta property="og:type" content="website" />
 <meta property="og:image" content="assets/ferreteria-de-noche.jpg" />
 <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
-
-<!-- SOLO JSON-LD (no metas JS normal aquí adentro) -->
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"HardwareStore",
   "name":"Ferretería El Flaco",
-  "address":{
-    "@type":"PostalAddress",
-    "streetAddress":"HC 04 Box 13385",
-    "addressLocality":"San Germán",
-    "addressRegion":"PR",
-    "postalCode":"00683",
-    "addressCountry":"US"
-  },
+  "address":{"@type":"PostalAddress","streetAddress":"HC 04 Box 13385","addressLocality":"San Germán","addressRegion":"PR","postalCode":"00683","addressCountry":"US"},
   "telephone":"+1-787-892-3930",
   "foundingDate":"1989",
   "openingHours":["Mo-Sa 07:00-16:30"]
 }
 </script>
-
-<link rel="stylesheet" href="styles.css?v=21" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -52,6 +42,7 @@
         <li><a href="#ofertas">Ofertas</a></li>
         <li><a href="#reseñas">Reseñas</a></li>
         <li><a href="#servicios">Servicios</a></li>
+        <!-- Eliminado Instagram del navbar -->
         <li><a href="#ubicacion">Ubicación</a></li>
         <li><a class="btn btn-primary" href="#contacto">Contacto</a></li>
       </ul>
@@ -102,16 +93,20 @@
       </select>
     </div>
 
-    <div class="products" id="productGrid"></div>
+    <div class="products fade-mask" id="productGrid"></div>
+    <div class="carousel-dots" data-for="productGrid"></div>
   </div>
 </section>
 
 <section id="ofertas">
   <div class="container">
     <div class="section-title"><h2>Ofertas</h2><span></span></div>
-    <div class="products" id="offersGrid"></div>
+    <div class="products fade-mask" id="offersGrid"></div>
+    <div class="carousel-dots" data-for="offersGrid"></div>
   </div>
 </section>
+
+<!-- Sección de Instagram eliminada -->
 
 <section id="tips" class="tips">
   <div class="container">
@@ -254,6 +249,6 @@
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
-<script src="script.js?v=21" defer></script>
+<script src="script.js" defer></script>
 </body>
 </html>
