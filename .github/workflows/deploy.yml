@@ -2,11 +2,9 @@ name: Deploy Astro to GitHub Pages
 
 on:
   push:
-    # dispara al hacer push a estas ramas
-    branches: [ main, restructure-root ]
+    branches: ["main", "restructure-root"]
   workflow_dispatch:
 
-# Permisos mínimos para publicar Pages
 permissions:
   contents: read
   pages: write
@@ -27,16 +25,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build site with Astro (npx)
+        run: npx --yes astro@latest build
 
-      # Sube ./dist como artefacto para Pages
-      - name: Upload Pages artifact
+      - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
@@ -46,16 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deploy.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
-        id: deploy
+      - id: deployment
         uses: actions/deploy-pages@v4
-
-
-
-
-
-
-
-
