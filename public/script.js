@@ -34,22 +34,20 @@ const $ = (id) => document.getElementById(id);
 })();
 
 // ===== DATA =====
-// Catálogo (incluye nuevo: Abanicos con panel solar)
 const productos=[
-  {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'assets/Dewalt-driver.webp?v=1'},
-  {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'assets/gardner-100-silicone.jpg'},
-  {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'assets/crossco-5500.jpg'},
-  {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
-  {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'assets/2-stroke-oil.jpg'},
-  {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'assets/discos-strongjohn.jpg'},
-  {nombre:'Fluidmaster Better Than Wax – Sello Universal para Inodoros', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'assets/fluidmaster-better-than-wax.jpg'},
-  {nombre:'Abanicos con panel solar', precio:null, categoria:'Energía', marca:'AM-2501', foto:'assets/abanicos-con-panel-solar.jpg'}
+  {nombre:'Taladro DeWalt 20V MAX (driver)', precio:null, categoria:'Herramientas', marca:'DeWalt', foto:'/assets/Dewalt-driver.webp?v=1'},
+  {nombre:'Gardner 100% Silicón – Flat Roof Coat-N-Seal (4.75 gal)', precio:null, categoria:'Construcción', marca:'Gardner', foto:'/assets/gardner-100-silicone.jpg'},
+  {nombre:'Crossco 5500 – Sellador Acrílico 2 en 1', precio:null, categoria:'Construcción', marca:'Crossco', foto:'/assets/crossco-5500.jpg'},
+  {nombre:'Lanco Dry-Coat – Penetrating Surface Cleaner (1 gal)', precio:null, categoria:'Limpieza', marca:'LANCO', foto:'/assets/lanco-penetrating-surface-cleaner-dry-coat.jpg'},
+  {nombre:'Amsoil Saber 2-Stroke Oil (mezcla)', precio:null, categoria:'Lubricantes', marca:'Amsoil', foto:'/assets/2-stroke-oil.jpg'},
+  {nombre:'Discos de corte StrongJohn (varios)', precio:null, categoria:'Abrasivos', marca:'StrongJohn', foto:'/assets/discos-strongjohn.jpg'},
+  {nombre:'Fluidmaster Better Than Wax – Sello Universal para Inodoros', precio:null, categoria:'Plomería', marca:'Fluidmaster', foto:'/assets/fluidmaster-better-than-wax.jpg'},
+  {nombre:'Abanicos con panel solar', precio:null, categoria:'Energía', marca:'AM-2501', foto:'/assets/abanicos-con-panel-solar.jpg'}
 ];
 
-// Ofertas (ADICIONALES: WECO + Fortlev)
 const ofertas=[
-  {nombre:'WECO W1000 Thin Set – Oferta especial', precio:null, categoria:'Ofertas', marca:'WECO', foto:'assets/oferta-weco.jpg'},
-  {nombre:'Cisterna Fortlev – 5 años de garantía', precio:159.00, categoria:'Ofertas', marca:'FORTLEV', foto:'assets/fortlev-5anos-de-garantia.jpg'}
+  {nombre:'WECO W1000 Thin Set – Oferta especial', precio:null, categoria:'Ofertas', marca:'WECO', foto:'/assets/oferta-weco.jpg'},
+  {nombre:'Cisterna Fortlev – 5 años de garantía', precio:159.00, categoria:'Ofertas', marca:'FORTLEV', foto:'/assets/fortlev-5anos-de-garantia.jpg'}
 ];
 
 // ===== UI: filtros y grids =====
@@ -59,7 +57,6 @@ const ofertas=[
   const offersGrid = $('offersGrid');
   const search = $('search');
 
-  // Cargar categorías
   if (catSelect) {
     const categorias=[...new Set(productos.map(p=>p.categoria))].sort();
     categorias.forEach(c=>{
@@ -115,8 +112,8 @@ const ofertas=[
   if (search) search.addEventListener('input',filtrar);
   if (catSelect) catSelect.addEventListener('change',filtrar);
 
-  render(productos); // catálogo
-  if (offersGrid) offersGrid.innerHTML = ofertas.map(offerCardHTML).join(''); // ofertas (2)
+  render(productos);
+  if (offersGrid) offersGrid.innerHTML = ofertas.map(offerCardHTML).join('');
 })();
 
 // ===== Hero ticker =====
@@ -126,26 +123,22 @@ const ofertas=[
   let i=0; setInterval(()=>{ i=(i+1)%frases.length; el.innerHTML=frases[i]; }, 2500);
 })();
 
-// ===== Carrusel: puntos con ventana deslizante (máximo N) =====
+// ===== Carrusel dots =====
 (function(){
   const MAX_DOTS = 5;
-
   function pagesCount(scrollEl){
     const pageW = scrollEl.clientWidth || 1;
     if (scrollEl.scrollWidth <= pageW + 2) return 1;
     return Math.max(1, Math.round(scrollEl.scrollWidth / pageW));
   }
-
   function currentPageIndex(scrollEl){
     const pageW = scrollEl.clientWidth || 1;
     return Math.round(scrollEl.scrollLeft / pageW);
   }
-
   function scrollToPage(scrollEl, i){
     const pageW = scrollEl.clientWidth || 1;
     scrollEl.scrollTo({ left: i * pageW, behavior:'smooth' });
   }
-
   function calcWindowStart(curr, total, maxDots){
     const half = Math.floor(maxDots/2);
     let start = curr - half;
@@ -153,16 +146,12 @@ const ofertas=[
     start = Math.min(start, Math.max(0, total - maxDots));
     return start;
   }
-
   function setupDots(scrollEl, dotsEl){
     if(!scrollEl || !dotsEl) return;
-
     let total = pagesCount(scrollEl);
-
     function renderDots(){
       total = pagesCount(scrollEl);
       dotsEl.innerHTML = '';
-
       const visible = Math.min(MAX_DOTS, total);
       for(let i=0;i<visible;i++){
         const b=document.createElement('button');
@@ -175,12 +164,10 @@ const ofertas=[
       }
       sync();
     }
-
     function sync(){
       const curr = currentPageIndex(scrollEl);
       const visible = Math.min(MAX_DOTS, total);
       const start = total > visible ? calcWindowStart(curr, total, visible) : 0;
-
       const btns = dotsEl.querySelectorAll('button');
       btns.forEach((b, i)=>{
         const pageIndex = start + i;
@@ -189,21 +176,18 @@ const ofertas=[
         b.setAttribute('aria-label', `Ir a página ${pageIndex+1} de ${total}`);
       });
     }
-
     let raf;
     function onScroll(){ cancelAnimationFrame(raf); raf = requestAnimationFrame(sync); }
-
     const RO = window.ResizeObserver || class{ constructor(cb){ this.cb=cb; window.addEventListener('resize', ()=>cb()); } observe(){} };
     const ro = new RO(renderDots);
     ro.observe(scrollEl);
-
     scrollEl.addEventListener('scroll', onScroll, { passive:true });
     renderDots();
   }
-
   document.querySelectorAll('.carousel-dots').forEach(dots=>{
     const id = dots.getAttribute('data-for');
     const scroller = document.getElementById(id);
     setupDots(scroller, dots);
   });
 })();
+

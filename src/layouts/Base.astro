@@ -1,0 +1,39 @@
+---
+import "../styles/styles.css";
+
+const {
+  title = "Ferretería El Flaco | San Germán, Puerto Rico",
+  description = "Ferretería El Flaco (Est. 1989) en San Germán PR. Servicio personalizado por más de 30 años: herramientas, materiales, pinturas y más."
+} = Astro.props;
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/assets/favicon.svg" />
+
+    <meta property="og:title" content="Ferretería El Flaco" />
+    <meta property="og:description" content="Todo para tu proyecto en un solo lugar. San Germán, Puerto Rico." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/assets/ferreteria-de-noche.jpg" />
+    <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <slot />
+
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
+
+    <!-- JS desde /public -->
+    <script src="/script.js" defer></script>
+  </body>
+</html>
+
+
+
