@@ -6,11 +6,17 @@
 <title>Ferretería El Flaco | San Germán, Puerto Rico</title>
 <meta name="description" content="Ferretería El Flaco (Est. 1989) en San Germán PR. Servicio personalizado por más de 30 años: herramientas, materiales, pinturas y más." />
 <link rel="icon" href="assets/favicon.png" />
+
 <meta property="og:title" content="Ferretería El Flaco" />
 <meta property="og:description" content="Todo para tu proyecto en un solo lugar. San Germán, Puerto Rico." />
 <meta property="og:type" content="website" />
 <meta property="og:image" content="assets/ferreteria-de-noche.jpg" />
 <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+
 <script type="application/ld+json">
 {
   "@context":"https://schema.org",
@@ -51,29 +57,18 @@
 
 <section class="hero">
   <div class="container wrap">
-    <div>
-      <div class="hero-ticker" aria-live="polite"><span id="heroTicker">Desde <b>1989</b></span></div>
+    <div class="hero-copy">
+      <div class="hero-eyebrow"><span id="heroTicker">Servicio con cariño boricua</span></div>
       <h1><span class="accent">Servicio personalizado</span> por más de 30 años</h1>
-      <p>Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
-      <div class="badges">
-        <span class="badge">Marcas confiables</span>
-        <span class="badge">Alquiler de máquina de presión</span>
-        <span class="badge">Corte de madera</span>
-        <span class="badge">Duplicado de llaves</span>
-      </div>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#productos">Ver catálogo</a>
-        <a class="btn btn-outline" href="tel:+17878923930">Llamar ahora</a>
-        <a class="btn btn-outline" href="https://maps.app.goo.gl/dj1BSEjEbrLo2Jm48" target="_blank" rel="noopener">Cómo llegar</a>
-      </div>
+      <p class="hero-sub">Herramientas, materiales, pinturas y asesoría experta. Atención cercana y precios competitivos para el hogar, taller y construcción.</p>
     </div>
-    <div class="stats-card">
-      <div class="grid-2">
-        <div class="stat"><b>+3,000</b> productos</div>
-        <div class="stat"><b>7:00 a 4:30</b> horario (Lun–Sáb)</div>
-        <div class="stat"><b>San Germán</b> servicio local</div>
-        <div class="stat"><b>Desde 1989</b> experiencia</div>
-      </div>
+
+    <!-- Datos rápidos -->
+    <div class="hero-facts" aria-label="Datos rápidos">
+      <div class="chip"><b>+3,000</b><span>productos</span></div>
+      <div class="chip"><b>7:00–4:30</b><span>Lun–Sáb</span></div>
+      <div class="chip"><b>San Germán</b><span>servicio local</span></div>
+      <div class="chip"><b>Desde</b><span>1989</span></div>
     </div>
   </div>
 </section>
@@ -118,7 +113,6 @@
       <div class="content">
         <h3>¿Qué significan los colores en las cintas de aislar?</h3>
         <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
-        <!-- Botones eliminados a solicitud -->
       </div>
     </div>
   </div>
@@ -132,29 +126,43 @@
         <span class="rating-badge"><span class="stars">★★★★★</span> 4.7/5</span> Ver todas en Google
       </a>
     </div>
-    <div class="reviews">
+
+    <!-- Carrusel en móvil / grid en desktop -->
+    <div class="reviews fade-mask" id="reviewsGrid">
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">G</div>
-          <div><strong>Gabriel R. V.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>Gabriel R. V.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
+        <p class="review-text">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
       </article>
+
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">R</div>
-          <div><strong>Roberto F.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>Roberto F.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Gracias por su reseña y apoyo a esta empresa.</p>
+        <p class="review-text">Gracias por su reseña y apoyo a esta empresa.</p>
       </article>
+
       <article class="review-card">
         <div class="review-head">
           <div class="avatar">D</div>
-          <div><strong>David B. R.</strong><br><span class="stars">★★★★★</span></div>
+          <div class="meta">
+            <strong>David B. R.</strong>
+            <div class="stars-row"><span class="stars">★★★★★</span></div>
+          </div>
         </div>
-        <p style="margin:0">Muy bien surtido y las atenciones son insuperables.</p>
+        <p class="review-text">Muy bien surtido y las atenciones son insuperables.</p>
       </article>
     </div>
+    <div class="carousel-dots" data-for="reviewsGrid"></div>
   </div>
 </section>
 
@@ -162,21 +170,12 @@
   <div class="container">
     <div class="section-title"><h2>Servicios</h2><span></span></div>
 
-    <!-- Nuevo layout minimalista -->
     <ul class="service-list">
       <li class="service-item">
         <div class="service-icon">🪚</div>
         <div class="service-body">
-          <h3>Corte de madera <span class="badge-free">Sin costo</span></h3>
-          <p>Trae tu medida y nos encargamos del corte para que montes al llegar.</p>
-        </div>
-      </li>
-
-      <li class="service-item">
-        <div class="service-icon">🔩</div>
-        <div class="service-body">
-          <h3>Corte de tubos de verja y varilla <span class="badge-free">Sin costo</span></h3>
-          <p>Te lo dejamos listo para instalar, sin esperas largas.</p>
+          <h3>Corte de madera</h3>
+          <p>Medidas a la carta para carpintería y construcción. <strong>Servicio sin costo</strong> (solo materiales).</p>
         </div>
       </li>
 
@@ -184,7 +183,7 @@
         <div class="service-icon">🔑</div>
         <div class="service-body">
           <h3>Duplicado de llaves</h3>
-          <p>Hogar y candados <strong>(no autos)</strong>. Preciso y al momento.</p>
+          <p>Rápido y preciso para hogar y candados <strong>(no autos)</strong>.</p>
         </div>
       </li>
 
@@ -192,10 +191,16 @@
         <div class="service-icon">💦</div>
         <div class="service-body">
           <h3>Alquiler de máquina de presión</h3>
-          <p>Limpieza de pisos, techos y exteriores. Renta por día.</p>
-          <div class="service-cta">
-            <a class="btn btn-primary" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20quiero%20ver%20disponibilidad%20de%20la%20m%C3%A1quina%20de%20presi%C3%B3n." target="_blank" rel="noopener">Ver disponibilidad</a>
-          </div>
+          <p>Renta por día para limpieza de exteriores, pisos y techos.</p>
+          <p><a class="btn btn-cta-green btn-compact" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20El%20Flaco%2C%20%C2%BFhay%20disponibilidad%20hoy%20de%20la%20m%C3%A1quina%20de%20presi%C3%B3n%3F" target="_blank" rel="noopener">Ver disponibilidad</a></p>
+        </div>
+      </li>
+
+      <li class="service-item">
+        <div class="service-icon">🧰</div>
+        <div class="service-body">
+          <h3>Corte de tubos de verja y varilla</h3>
+          <p>Trae tu medida y te lo dejamos listo para instalar. <strong>Sin costo</strong>.</p>
         </div>
       </li>
     </ul>
@@ -253,6 +258,7 @@
   <div class="container" style="text-align:center;margin-top:8px;font-size:13px">© <span id="y"></span> Ferretería El Flaco</div>
 </footer>
 
+<!-- Botón flotante verde -->
 <a class="btn-social btn-whatsapp" style="position:fixed;right:18px;bottom:18px;z-index:4000;border:0" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%20Ferreter%C3%ADa%20El%20Flaco%2C%20necesito%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener">WhatsApp</a>
 
 <div id="fb-root"></div>
@@ -260,4 +266,3 @@
 <script src="script.js" defer></script>
 </body>
 </html>
-
