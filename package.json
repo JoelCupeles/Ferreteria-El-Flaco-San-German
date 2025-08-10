@@ -3,6 +3,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview"
+  },
+  "devDependencies": {
+    "astro": "^4.16.18"
   }
 }
-
