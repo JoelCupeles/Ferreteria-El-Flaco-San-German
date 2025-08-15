@@ -1,12 +1,16 @@
 ﻿---
+import "../styles/global.css"; // ✅ CSS procesado por Astro/Vite (doc)
 const {
   title = "Ferretería El Flaco | San Germán, Puerto Rico",
   description = "Ferretería El Flaco (Est. 1989) en San Germán PR. Servicio personalizado por más de 30 años."
 } = Astro.props;
----
 
+const BASE = import.meta.env.BASE_URL; // ✅ prefijo según `base` (doc)
+const siteUrl = Astro.site?.toString() ?? "https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/";
+const ogImage = `${BASE}assets/ferreteria-de-noche.jpg`;
+---
 <!doctype html>
-<html lang="es">
+<html lang="es" data-base={BASE}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,28 +19,18 @@ const {
     <meta property="og:title" content="Ferretería El Flaco" />
     <meta property="og:description" content="Todo para tu proyecto en un solo lugar. San Germán, Puerto Rico." />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/assets/ferreteria-de-noche.jpg" />
-    <meta property="og:url" content="https://joelcupeles.github.io/Ferreteria-El-Flaco-San-German/" />
-    <link rel="icon" href="/assets/favicon.png" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={siteUrl} />
+    <link rel="icon" href={`${BASE}assets/favicon.png`} />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"HardwareStore",
-      "name":"Ferretería El Flaco",
-      "address":{"@type":"PostalAddress","streetAddress":"HC 04 Box 13385","addressLocality":"San Germán","addressRegion":"PR","postalCode":"00683","addressCountry":"US"},
-      "telephone":"+1-787-892-3930",
-      "foundingDate":"1989",
-      "openingHours":["Mo-Sa 07:00-16:30"]
-    }
-    </script>
-    <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
     <div id="fb-root"></div>
     <slot />
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v20.0"></script>
-    <script src="/script.js" defer></script>
+
+    <!-- ✅ Script local dentro de src/; sin atributos extra (doc) -->
+    <script src="../scripts/main.js"></script>
   </body>
 </html>

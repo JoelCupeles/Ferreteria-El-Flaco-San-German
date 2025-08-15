@@ -1,12 +1,16 @@
 ﻿---
 import Base from "../layouts/Base.astro";
----
 
+/** Igual que en el layout: base + helper para rutas */
+const rawBase = import.meta.env.BASE_URL || "/";
+const BASE = rawBase.endsWith("/") ? rawBase : rawBase + "/";
+const asset = (p = "") => BASE + String(p).replace(/^\/+/, "");
+---
 <Base>
   <header id="siteHeader">
     <div class="container topbar">
       <div class="brand">
-        <img src="/assets/Logo-flaco.jpg" alt="Ferretería El Flaco logo" class="logo" />
+        <img src={asset("assets/Logo-flaco.jpg")} alt="Ferretería El Flaco logo" class="logo" />
         <div class="brand-title">
           <strong>Ferretería El Flaco</strong><br />
           <small>San Germán, Puerto Rico</small>
@@ -26,7 +30,8 @@ import Base from "../layouts/Base.astro";
     </div>
   </header>
 
-  <section class="hero" aria-label="Portada">
+  <!-- Hero: fondo usando asset() -->
+  <section class="hero" aria-label="Portada" style={`--hero-bg: url('${asset("assets/ferreteria-de-noche.jpg")}')`}>
     <div class="container wrap">
       <div>
         <div class="hero-eyebrow">Ferretería local en San Germán</div>
@@ -39,9 +44,7 @@ import Base from "../layouts/Base.astro";
           <div class="chip"><b>Desde</b><span>1989</span></div>
         </div>
       </div>
-      <div>
-        <p id="heroTicker" aria-live="polite">Servicio con cariño boricua</p>
-      </div>
+      <div><p id="heroTicker" aria-live="polite">Servicio con cariño boricua</p></div>
     </div>
   </section>
 
@@ -80,7 +83,7 @@ import Base from "../layouts/Base.astro";
       </div>
       <div class="tips-wrap">
         <div class="card">
-          <img loading="lazy" src="/assets/colores-en-cintas-de-aislar-tips.jpg" alt="Colores en cintas de aislar — tips" />
+          <img loading="lazy" src={asset("assets/colores-en-cintas-de-aislar-tips.jpg")} alt="Colores en cintas de aislar — tips" />
         </div>
         <div class="content">
           <h3>¿Qué significan los colores en las cintas de aislar?</h3>
@@ -101,35 +104,17 @@ import Base from "../layouts/Base.astro";
 
       <div class="reviews fade-mask" id="reviewsGrid">
         <article class="review-card">
-          <div class="review-head">
-            <div class="avatar">G</div>
-            <div class="meta">
-              <strong>Gabriel R. V.</strong>
-              <div class="stars-row"><span class="stars">★★★★★</span></div>
-            </div>
-          </div>
+          <div class="review-head"><div class="avatar">G</div><div class="meta"><strong>Gabriel R. V.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
           <p class="review-text">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
         </article>
 
         <article class="review-card">
-          <div class="review-head">
-            <div class="avatar">R</div>
-            <div class="meta">
-              <strong>Roberto F.</strong>
-              <div class="stars-row"><span class="stars">★★★★★</span></div>
-            </div>
-          </div>
+          <div class="review-head"><div class="avatar">R</div><div class="meta"><strong>Roberto F.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
           <p class="review-text">Gracias por su reseña y apoyo a esta empresa.</p>
         </article>
 
         <article class="review-card">
-          <div class="review-head">
-            <div class="avatar">D</div>
-            <div class="meta">
-              <strong>David B. R.</strong>
-              <div class="stars-row"><span class="stars">★★★★★</span></div>
-            </div>
-          </div>
+          <div class="review-head"><div class="avatar">D</div><div class="meta"><strong>David B. R.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
           <p class="review-text">Muy bien surtido y las atenciones son insuperables.</p>
         </article>
       </div>
@@ -140,9 +125,7 @@ import Base from "../layouts/Base.astro";
 
   <section id="servicios">
     <div class="container">
-      <div class="section-title">
-        <h2>Servicios</h2><span></span>
-      </div>
+      <div class="section-title"><h2>Servicios</h2><span></span></div>
       <ul class="service-list">
         <li class="service-item">
           <div class="service-icon">🔧</div>
@@ -199,8 +182,7 @@ import Base from "../layouts/Base.astro";
         <p>San Germán, Puerto Rico</p>
         <p>&copy; <span id="y"></span></p>
       </div>
-      <div></div>
-      <div></div>
+      <div></div><div></div>
     </div>
   </footer>
 
