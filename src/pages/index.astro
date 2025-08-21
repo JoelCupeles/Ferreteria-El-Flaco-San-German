@@ -30,150 +30,152 @@ const asset = (p = "") => BASE + String(p).replace(/^\/+/, "");
     </div>
   </header>
 
-  <!-- Hero: fondo usando asset() -->
-  <section class="hero" aria-label="Portada" style={`--hero-bg: url('${asset("assets/ferreteria-de-noche.jpg")}')`}>
-    <div class="container wrap">
-      <div>
-        <div class="hero-eyebrow">Ferretería local en San Germán</div>
-        <h1>Todo para tu proyecto en un solo lugar <span class="accent">con servicio de confianza</span></h1>
-        <p class="hero-sub">Asesoría de verdad, selección amplia, precios justos.</p>
-        <div class="hero-facts" aria-label="Datos rápidos">
-          <div class="chip"><b>+3,000</b><span>productos</span></div>
-          <div class="chip"><b>7:00–4:30</b><span>Lun–Sáb</span></div>
-          <div class="chip"><b>San Germán</b><span>servicio local</span></div>
-          <div class="chip"><b>Desde</b><span>1989</span></div>
+  <main>
+    <!-- Hero: fondo usando asset() -->
+    <section class="hero" aria-label="Portada" style={`--hero-bg: url('${asset("assets/ferreteria-de-noche.jpg")}')`}>
+      <div class="container wrap">
+        <div>
+          <div class="hero-eyebrow">Ferretería local en San Germán</div>
+          <h1>Todo para tu proyecto en un solo lugar <span class="accent">con servicio de confianza</span></h1>
+          <p class="hero-sub">Asesoría de verdad, selección amplia, precios justos.</p>
+          <div class="hero-facts" aria-label="Datos rápidos">
+            <div class="chip"><b>+3,000</b><span>productos</span></div>
+            <div class="chip"><b>7:00–4:30</b><span>Lun–Sáb</span></div>
+            <div class="chip"><b>San Germán</b><span>servicio local</span></div>
+            <div class="chip"><b>Desde</b><span>1989</span></div>
+          </div>
+        </div>
+        <div><p id="heroTicker" aria-live="polite">Servicio con cariño boricua</p></div>
+      </div>
+    </section>
+
+    <section id="productos">
+      <div class="container">
+        <div class="section-title">
+          <h2>Catálogo</h2>
+          <a href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Novedades en Facebook</a>
+        </div>
+
+        <div class="filters">
+          <input id="search" placeholder="Buscar por nombre o marca" />
+          <select id="categoria">
+            <option value="">Todas las categorías</option>
+          </select>
+        </div>
+
+        <div class="products fade-mask" id="productGrid"></div>
+        <div class="carousel-dots" data-for="productGrid"></div>
+      </div>
+    </section>
+
+    <section id="ofertas">
+      <div class="container">
+        <div class="section-title"><h2>Ofertas</h2><span></span></div>
+        <div class="products fade-mask" id="offersGrid"></div>
+        <div class="carousel-dots" data-for="offersGrid"></div>
+      </div>
+    </section>
+
+    <section id="tips" class="tips">
+      <div class="container">
+        <div class="section-title">
+          <h2>Tips rápidos</h2>
+          <a href="#contacto">¿Tienes dudas? Escríbenos</a>
+        </div>
+        <div class="tips-wrap">
+          <div class="card">
+            <img loading="lazy" src={asset("assets/colores-en-cintas-de-aislar-tips.jpg")} alt="Colores en cintas de aislar — tips" />
+          </div>
+          <div class="content">
+            <h3>¿Qué significan los colores en las cintas de aislar?</h3>
+            <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
+          </div>
         </div>
       </div>
-      <div><p id="heroTicker" aria-live="polite">Servicio con cariño boricua</p></div>
-    </div>
-  </section>
+    </section>
 
-  <section id="productos">
-    <div class="container">
-      <div class="section-title">
-        <h2>Catálogo</h2>
-        <a href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Novedades en Facebook</a>
-      </div>
-
-      <div class="filters">
-        <input id="search" placeholder="Buscar por nombre o marca" />
-        <select id="categoria">
-          <option value="">Todas las categorías</option>
-        </select>
-      </div>
-
-      <div class="products fade-mask" id="productGrid"></div>
-      <div class="carousel-dots" data-for="productGrid"></div>
-    </div>
-  </section>
-
-  <section id="ofertas">
-    <div class="container">
-      <div class="section-title"><h2>Ofertas</h2><span></span></div>
-      <div class="products fade-mask" id="offersGrid"></div>
-      <div class="carousel-dots" data-for="offersGrid"></div>
-    </div>
-  </section>
-
-  <section id="tips" class="tips">
-    <div class="container">
-      <div class="section-title">
-        <h2>Tips rápidos</h2>
-        <a href="#contacto">¿Tienes dudas? Escríbenos</a>
-      </div>
-      <div class="tips-wrap">
-        <div class="card">
-          <img loading="lazy" src={asset("assets/colores-en-cintas-de-aislar-tips.jpg")} alt="Colores en cintas de aislar — tips" />
+    <section id="reseñas">
+      <div class="container">
+        <div class="section-title">
+          <h2>Lo que dice la gente</h2>
+          <a class="btn-ghost" href="https://share.google/dvr1Ooy7wO6Ku1w4d" target="_blank" rel="noopener">
+            <span class="rating-badge"><span class="stars">★★★★★</span> 4.7/5</span> Ver todas en Google
+          </a>
         </div>
-        <div class="content">
-          <h3>¿Qué significan los colores en las cintas de aislar?</h3>
-          <p>Cuándo usar cada color para identificar cables y mantener instalaciones más seguras y organizadas.</p>
+
+        <div class="reviews fade-mask" id="reviewsGrid">
+          <article class="review-card">
+            <div class="review-head"><div class="avatar">G</div><div class="meta"><strong>Gabriel R. V.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
+            <p class="review-text">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-head"><div class="avatar">R</div><div class="meta"><strong>Roberto F.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
+            <p class="review-text">Gracias por su reseña y apoyo a esta empresa.</p>
+          </article>
+
+          <article class="review-card">
+            <div class="review-head"><div class="avatar">D</div><div class="meta"><strong>David B. R.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
+            <p class="review-text">Muy bien surtido y las atenciones son insuperables.</p>
+          </article>
+        </div>
+
+        <div class="carousel-dots" data-for="reviewsGrid"></div>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <div class="container">
+        <div class="section-title"><h2>Servicios</h2><span></span></div>
+        <ul class="service-list">
+          <li class="service-item">
+            <div class="service-icon">🔧</div>
+            <div class="service-body">
+              <h3>Duplicado de llaves</h3>
+              <p>Llaves al instante con cortes precisos.</p>
+              <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20necesito%20duplicado%20de%20llaves" target="_blank" rel="noopener" class="btn btn-compact btn-wa-red">Pedir</a>
+            </div>
+          </li>
+          <li class="service-item">
+            <div class="service-icon">🧼</div>
+            <div class="service-body">
+              <h3>Alquiler de máquina de presión</h3>
+              <p>Limpieza profunda para exteriores y techos.</p>
+              <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20quiero%20alquilar%20la%20m%C3%A1quina%20de%20presi%C3%B3n" target="_blank" rel="noopener" class="btn btn-compact btn-cta-green">Pedir</a>
+            </div>
+          </li>
+          <li class="service-item">
+            <div class="service-icon">🪚</div>
+            <div class="service-body">
+              <h3>Corte de madera</h3>
+              <p>Cortes a medida para tus proyectos.</p>
+              <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20quiero%20corte%20de%20madera" target="_blank" rel="noopener" class="btn btn-compact btn-wa-red">Pedir</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="ubicacion">
+      <div class="container">
+        <div class="section-title"><h2>Ubicación</h2><span></span></div>
+        <iframe class="map" loading="lazy"
+          src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20San%20Germ%C3%A1n&output=embed"
+          title="Mapa hacia Ferretería El Flaco"></iframe>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <div class="container">
+        <div class="section-title"><h2>Contáctanos</h2><span></span></div>
+        <div class="social-grid">
+          <a class="btn-social btn-facebook" href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn-social btn-instagram" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+          <a class="btn-social btn-whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20tengo%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section id="reseñas">
-    <div class="container">
-      <div class="section-title">
-        <h2>Lo que dice la gente</h2>
-        <a class="btn-ghost" href="https://share.google/dvr1Ooy7wO6Ku1w4d" target="_blank" rel="noopener">
-          <span class="rating-badge"><span class="stars">★★★★★</span> 4.7/5</span> Ver todas en Google
-        </a>
-      </div>
-
-      <div class="reviews fade-mask" id="reviewsGrid">
-        <article class="review-card">
-          <div class="review-head"><div class="avatar">G</div><div class="meta"><strong>Gabriel R. V.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
-          <p class="review-text">Buen trato, empleados atentos y te brindan la ayuda que necesitas. Buenos precios.</p>
-        </article>
-
-        <article class="review-card">
-          <div class="review-head"><div class="avatar">R</div><div class="meta"><strong>Roberto F.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
-          <p class="review-text">Gracias por su reseña y apoyo a esta empresa.</p>
-        </article>
-
-        <article class="review-card">
-          <div class="review-head"><div class="avatar">D</div><div class="meta"><strong>David B. R.</strong><div class="stars-row"><span class="stars">★★★★★</span></div></div></div>
-          <p class="review-text">Muy bien surtido y las atenciones son insuperables.</p>
-        </article>
-      </div>
-
-      <div class="carousel-dots" data-for="reviewsGrid"></div>
-    </div>
-  </section>
-
-  <section id="servicios">
-    <div class="container">
-      <div class="section-title"><h2>Servicios</h2><span></span></div>
-      <ul class="service-list">
-        <li class="service-item">
-          <div class="service-icon">🔧</div>
-          <div class="service-body">
-            <h3>Duplicado de llaves</h3>
-            <p>Llaves al instante con cortes precisos.</p>
-            <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20necesito%20duplicado%20de%20llaves" target="_blank" rel="noopener" class="btn btn-compact btn-wa-red">Pedir</a>
-          </div>
-        </li>
-        <li class="service-item">
-          <div class="service-icon">🧼</div>
-          <div class="service-body">
-            <h3>Alquiler de máquina de presión</h3>
-            <p>Limpieza profunda para exteriores y techos.</p>
-            <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20quiero%20alquilar%20la%20m%C3%A1quina%20de%20presi%C3%B3n" target="_blank" rel="noopener" class="btn btn-compact btn-cta-green">Pedir</a>
-          </div>
-        </li>
-        <li class="service-item">
-          <div class="service-icon">🪚</div>
-          <div class="service-body">
-            <h3>Corte de madera</h3>
-            <p>Cortes a medida para tus proyectos.</p>
-            <a href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20quiero%20corte%20de%20madera" target="_blank" rel="noopener" class="btn btn-compact btn-wa-red">Pedir</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="ubicacion">
-    <div class="container">
-      <div class="section-title"><h2>Ubicación</h2><span></span></div>
-      <iframe class="map" loading="lazy"
-        src="https://www.google.com/maps?q=Ferreter%C3%ADa%20El%20Flaco%20San%20Germ%C3%A1n&output=embed"
-        title="Mapa hacia Ferretería El Flaco"></iframe>
-    </div>
-  </section>
-
-  <section id="contacto">
-    <div class="container">
-      <div class="section-title"><h2>Contáctanos</h2><span></span></div>
-      <div class="social-grid">
-        <a class="btn-social btn-facebook" href="https://www.facebook.com/ferreterriaelflaco/" target="_blank" rel="noopener">Facebook</a>
-        <a class="btn-social btn-instagram" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
-        <a class="btn-social btn-whatsapp" href="https://api.whatsapp.com/send?phone=17878923930&text=Hola%2C%20tengo%20una%20consulta" target="_blank" rel="noopener">WhatsApp</a>
-      </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>
     <div class="container foot">
